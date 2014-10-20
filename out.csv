@@ -1,0 +1,7 @@
+"TotalCompressions","CorrectlyReleasedCompression","CompressionMeanDepth","AverageHandsOffTime","CompressionMeanRate","CompressionMeanRatio","CorrectHandPosition","TotalVentilations","CorrectlyReleasedVentilation","VentilationMeanVolume","VentilationMeanRate","SessionDuration","SessionCycles","TotalCprScore","CompressionScore","VentilationScore","FlowFractionScore","FlowFractionPercent","ScoreLevel","ManikinType"
+"137","6","43","12","113","0.83 (45% / 55%)","100","7","100","29","3","120","4","71","81","74","86","61","Intermediate CPR performer","Infant"
+"94","67","46","23","107","1.10 (52% / 48%)","100","4","100","595","1","120","2","14","78.10178","50","2.638931","43.80749","Basic CPR performer","Adult"
+"121","19","36","15","115","0.87 (46% / 54%)","100","10","100","53","5","120","4","39","86","66","29","52","Basic CPR performer","Infant"
+"156","97","41","8","113","0.93 (48% / 52%)","100","12","100","37","6","120","5","93","99","85","99","68","Advanced CPR performer","Infant"
+"150","98","53","7","103","0.99 (50% / 50%)","100","7","100","427","3","120","4","93","94.79726","85.99603","100","71.74306","Advanced CPR performer","Adult"
+"166","100","19","37","118","0.78 (44% / 56%)","100","21","100","534","10","120","1","24","0","94.24551","99.71244","69.33443","Basic CPR performer","Adult"
