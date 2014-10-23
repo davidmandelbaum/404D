@@ -79,6 +79,8 @@ for num in nums:
                                                str(y_vals_window[len(y_vals_window)-1][0]) + "]"
          
 
+        if stdout:
+            print y_vals_window
         window_vals = [x[1] for x in y_vals_window]
 
         comp_rate = calc_comp_rate(window_vals,
@@ -91,7 +93,8 @@ for num in nums:
 
         comp_depth = calc_comp_depth(window_vals,
                                      (y_vals_window[len(y_vals_window)-1][0] - y_vals_window[0][0]),
-                                     data_in)
+                                     data_in,
+                                     y_vals_window)
         if not stdout:
             stdscr.addstr(3, 24, (str(comp_depth) + " mm"))
         else:

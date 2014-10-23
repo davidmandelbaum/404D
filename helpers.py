@@ -20,14 +20,17 @@ def calc_comp_rate(y_vals, ms):
         rate = compressions/seconds*60
         return round(rate) 
 
-def calc_comp_depth(y_vals, ms, data):
+def calc_comp_depth(y_vals, ms, data, window_vals):
     if ms > 0:
         depths = []
         y = np.array(y_vals)
         max_extrema = sig.argrelextrema(y, np.greater)[0]
+        off = window_vals[0][0]
         for x in max_extrema:
-            depths.append(data[x][1])
+            depths.append(window_vals[x][1])
+        print max_extrema
         depths_np = np.array(depths)
+        print depths_np
         avg_depth = np.mean(depths_np)
         return round(avg_depth)
 
