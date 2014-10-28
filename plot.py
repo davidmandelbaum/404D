@@ -3,9 +3,13 @@ import sys
 import numpy as np
 import matplotlib as mpl
 import matplotlib.pyplot as plt
+import serial
 from scipy import signal as sig
 
 plt.ion()
+
+# read from arduino
+ser = serial.Serial('/dev/tty.usbserial-A602TSPH', 9600)
 
 data = mpl.mlab.csv2rec(sys.argv[1], delimiter=',')
 offset = 0

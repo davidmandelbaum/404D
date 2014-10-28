@@ -28,9 +28,7 @@ def calc_comp_depth(y_vals, ms, data, window_vals):
         off = window_vals[0][0]
         for x in max_extrema:
             depths.append(window_vals[x][1])
-        print max_extrema
         depths_np = np.array(depths)
-        print depths_np
         avg_depth = np.mean(depths_np)
         return round(avg_depth)
 
@@ -49,7 +47,7 @@ def final_stats(y_vals, time_limit, data):
     stats["time"] = str(seconds)
     rate = compressions/seconds*60
     # print "Average Compression Rate: " + str(rate)
-    stats["rate"] = str(rate)
+    stats["rate"] = str(round(rate, 2))
 
     depths = []
     for x in max_extrema:
@@ -60,6 +58,6 @@ def final_stats(y_vals, time_limit, data):
     avg_depth = np.mean(depths_np)
 
     # print "Average Compression Depth: " + str(avg_depth) + "mm"
-    stats["depth"] = str(avg_depth)
+    stats["depth"] = str(round(avg_depth, 2))
 
     return stats
