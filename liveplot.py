@@ -52,12 +52,14 @@ try:
     comp_depths = []
     nums = np.arange(0, time_limit, 10)
     old_num = 0
+    conversion = 1.395
+    ylim = 5
 
     # init
     plt.ion()
     plt.figure(0)
     out, = plt.plot([], [])
-    plt.ylim([2, 0])
+    plt.ylim([ylim, 0])
     plt.xlim([0, time_limit])
     plt.show(block=False)
     plt.figure(1)
@@ -81,7 +83,8 @@ try:
         now = round(time.time() - start_time, 4)
         if not stdout:
             stdscr.addstr(0, 24, str(now) + "s")
-            stdscr.addstr(1, 24, ("[" + str(y_vals_window[0][0]) + ", " + str(y_vals_window[len(y_vals_window)-1][0]) + "]"))
+            if len(y_vals_window) > 0:
+                stdscr.addstr(1, 24, ("[" + str(y_vals_window[0][0]) + ", " + str(y_vals_window[len(y_vals_window)-1][0]) + "]"))
             stdscr.refresh()
 
         if (now-last_calc) > 1 and now > 0 and len(y_vals_window) > 0:
@@ -140,9 +143,10 @@ try:
         num_in = ser.readline()
         try:
             num_in = float(num_in[0:4])
+            num_in *= conversion
             if old_num != num_in:
                 y_vals_window.append((now, num_in))
-                y_vals.append(num_in)
+                y_vals.append((now, num_in))
                 plt.figure(0)
                 data.append((now, num_in))
                 out.set_xdata(np.append(out.get_xdata(), now))
@@ -175,4 +179,9 @@ try:
         curses.endwin()
 
 except:
+    if not stdout:
+        curses.nocbreak()
+        stdscr.keypad(0)
+        curses.echo()
+        curses.endwin()
     raise

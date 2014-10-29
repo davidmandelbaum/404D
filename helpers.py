@@ -33,7 +33,10 @@ def calc_comp_depth(y_vals, s, data, window_vals):
 
 def final_stats(y_vals, time_limit, data):
     stats = {}
-    y_vals = np.array(y_vals)
+    oned_yvals = []
+    for y in y_vals:
+        oned_yvals.append(y[1])
+    y_vals = np.array(oned_yvals)
 
     max_extrema = sig.argrelextrema(y_vals, np.greater, 0)[0]
 
