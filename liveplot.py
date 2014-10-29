@@ -8,6 +8,7 @@ from scipy import signal as sig
 from helpers import *
 import curses as curses
 import serial
+import csv as csv
 
 # init arduino
 ser = serial.Serial('/dev/tty.usbserial-A602TSPH', 9600)
@@ -117,9 +118,9 @@ try:
                                          y_vals_window)
             if not stdout:
                 if comp_depth < 45 or comp_depth > 60:
-                    stdscr.addstr(3, 24, (str(comp_depth) + " mm"), curses.color_pair(2))
+                    stdscr.addstr(3, 24, (str(comp_depth) + " cm"), curses.color_pair(2))
                 else:
-                    stdscr.addstr(3, 24, (str(comp_depth) + " mm"), curses.color_pair(3))
+                    stdscr.addstr(3, 24, (str(comp_depth) + " cm"), curses.color_pair(3))
             else:
                 print "Depth: " + str(comp_depth)
             comp_depths.append( (now, comp_depth) )
@@ -162,13 +163,20 @@ try:
         stdscr.addstr(5, 4, ("Total compressions: " + stats["total_compressions"]))
         stdscr.addstr(6, 18, ("Time: " + stats["time"] + " s"))
         stdscr.addstr(7, 1, ("Avg. compression rate: " + stats["rate"] + " /m"))
-        stdscr.addstr(8, 0, ("Avg. compression depth: " + stats["depth"] + "mm"))
+        stdscr.addstr(8, 0, ("Avg. compression depth: " + stats["depth"] + "cm"))
         stdscr.refresh()
     if stdout:
         print "Total compressions: " + stats["total_compressions"]
         print "Time: " + stats["time"] + " s"
         print "Avg. compression rate: " + stats["rate"] + " /m"
-        print "Avg. compression depth: " + stats["depth"] + "mm"
+        print "Avg. compression depth: " + stats["depth"] + "cm"
+
+    # open output file
+    file_out = open('out.csv', 'wb')
+    writer = csv.writer(file_out)
+    writer.writerow(['Time (s)', 'Depth (cm)'])
+    for y in y_vals:
+        writer.writerow([round(y[0], 4), round(y[1], 4)])
 
     plt.show()
 
