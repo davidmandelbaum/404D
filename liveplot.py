@@ -1,6 +1,7 @@
 from __future__ import division
 import sys
 import numpy as np
+import time as time
 import matplotlib as mpl
 import matplotlib.pyplot as plt
 from scipy import signal as sig
@@ -28,7 +29,7 @@ try:
         curses.init_pair(3, curses.COLOR_WHITE, curses.COLOR_GREEN)
         stdscr.addstr("Time to plot (in seconds):")
         stdscr.refresh()
-        time_limit = int(stdscr.getstr(1, 0))*1000
+        time_limit = int(stdscr.getstr(1, 0))
         stdscr.clear()
         stdscr.refresh()
         stdscr.addstr("Sliding window length (in seconds):")
@@ -38,9 +39,9 @@ try:
         stdscr.refresh()
     else:
         print "Time to plot (in seconds):"
-        time_limit = int(raw_input())*1000
+        time_limit = int(raw_input())
         print "Sliding window length (in seconds):"
-        window_length = int(raw_input())*1000
+        window_length = int(raw_input())
 
     data = []
 
@@ -72,16 +73,21 @@ try:
         stdscr.addstr(3, 5, "Compression Depth: ")
         stdscr.refresh()
 
-    for num in nums:
+    start_time = time.time()
+    last_calc = time.time()
+
+    while True:
+        now = time.time() - start_time
         if not stdout:
             stdscr.addstr(0, 24, str(round((num)/1000, 2)) + "s")
             stdscr.addstr(1, 24, ("[" + str(y_vals_window[0][0]) + ", " + str(y_vals_window[len(y_vals_window)-1][0]) + "]"))
             stdscr.refresh()
 
-        if (num) % 1000 == 0 and (num) > 0:
+        if (now-last_calc) > 1 and now > 0:
+            last_calc = now
             # every 1 second, make necessary calculations
             if stdout:
-                print "time: " + str(num) + "ms; window: [" + \
+                print "time: " + str(now) + "ms; window: [" + \
                                                    str(y_vals_window[0][0]) + ", " + \
                                                    str(y_vals_window[len(y_vals_window)-1][0]) + "]"
 
@@ -99,7 +105,7 @@ try:
 
             else:
                 print "Compression rate: " + str(comp_rate)
-            comp_rates.append( (num, comp_rate) )
+            comp_rates.append( (now, comp_rate) )
 
             comp_depth = calc_comp_depth(window_vals,
                                          (y_vals_window[len(y_vals_window)-1][0] - y_vals_window[0][0]),
@@ -112,33 +118,33 @@ try:
                     stdscr.addstr(3, 24, (str(comp_depth) + " mm"), curses.color_pair(3))
             else:
                 print "Depth: " + str(comp_depth)
-            comp_depths.append( (num, comp_depth) )
+            comp_depths.append( (now, comp_depth) )
 
             if not stdout:
                 stdscr.refresh()
 
             plt.figure(1)
-            out_rate.set_xdata(np.append(out_rate.get_xdata(), num))
+            out_rate.set_xdata(np.append(out_rate.get_xdata(), now))
             out_rate.set_ydata(np.append(out_rate.get_ydata(), comp_rate))
             plt.draw()
 
-        if num > time_limit:
+        if now > time_limit:
             break
 
         for y in y_vals_window:
-            if y[0] < (num-window_length):
+            if y[0] < (now-window_length):
                 y_vals_window.remove(y)
 
         ser.write('?')
         num_in = ser.readline()
         try:
             num_in = float(num_in[0:4])
-            y_vals_window.append((num, num_in))
+            y_vals_window.append((now, num_in))
 
             y_vals.append(num_in)
             plt.figure(0)
-            data.append((num, num_in))
-            out.set_xdata(np.append(out.get_xdata(), num))
+            data.append((now, num_in))
+            out.set_xdata(np.append(out.get_xdata(), now))
             out.set_ydata(np.append(out.get_ydata(), (num_in)))
             plt.draw()
         except:
@@ -159,6 +165,10 @@ try:
         print "Avg. compression depth: " + stats["depth"] + "mm"
 
     plt.show()
+
+    end_time = time.time()
+    diff_time = end_time - curr_time
+    print "diff = " + str(diff_time)
 
 except:
     if not stdout:

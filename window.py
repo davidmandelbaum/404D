@@ -1,5 +1,6 @@
 from __future__ import division
 import sys
+import time
 import numpy as np
 import matplotlib as mpl
 import matplotlib.pyplot as plt
@@ -36,6 +37,7 @@ try:
         time_limit = int(raw_input())*1000
         print "Sliding window length (in seconds):"
         window_length = int(raw_input())*1000
+        start_time = time.time() 
 
     # read from file
     data_in = mpl.mlab.csv2rec(sys.argv[1], delimiter=',')
@@ -71,6 +73,9 @@ try:
         stdscr.refresh()
 
     for num in nums:
+        print "num = " + str(num)
+        print "time = " + str(time.time())
+
         if not stdout:
             stdscr.addstr(0, 24, str(round((num-offset)/1000, 2)) + "s")
             stdscr.addstr(1, 24, ("[" + str(y_vals_window[0][0]) + ", " + str(y_vals_window[len(y_vals_window)-1][0]) + "]"))
@@ -84,8 +89,8 @@ try:
                                                    str(y_vals_window[len(y_vals_window)-1][0]) + "]"
              
 
-            if stdout:
-                print y_vals_window
+            # if stdout:
+                # print y_vals_window
             window_vals = [x[1] for x in y_vals_window]
 
             comp_rate = calc_comp_rate(window_vals,
@@ -149,6 +154,10 @@ try:
         print "Time: " + stats["time"] + " s"
         print "Avg. compression rate: " + stats["rate"] + " Hz"
         print "Avg. compression depth: " + stats["depth"] + "mm"
+        
+        curr_time = time.time()
+        run_time = curr_time - start_time
+        print "runtime = " + str(run_time)
 
     plt.show()
 

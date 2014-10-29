@@ -11,17 +11,16 @@ def calc_offset(data):
             offset = data[0][0]
     return offset
 
-def calc_comp_rate(y_vals, ms):
-    if ms > 0:
+def calc_comp_rate(y_vals, s):
+    if s > 0:
         y = np.array(y_vals)
         max_extrema = sig.argrelextrema(y, np.greater)[0]
         compressions = max_extrema.size
-        seconds = ms/1000
-        rate = compressions/seconds*60
+        rate = compressions/s*60
         return round(rate) 
 
-def calc_comp_depth(y_vals, ms, data, window_vals):
-    if ms > 0:
+def calc_comp_depth(y_vals, s, data, window_vals):
+    if s > 0:
         depths = []
         y = np.array(y_vals)
         max_extrema = sig.argrelextrema(y, np.greater)[0]
@@ -42,7 +41,7 @@ def final_stats(y_vals, time_limit, data):
 
     stats["total_compressions"] = str(compressions)
     # print "Total Compressions: " + str(compressions)
-    seconds = time_limit/1000
+    seconds = time_limit
     # print "Time: " + str(seconds) + "s"
     stats["time"] = str(seconds)
     rate = compressions/seconds*60
