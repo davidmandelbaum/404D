@@ -51,6 +51,7 @@ try:
     comp_rates = []
     comp_depths = []
     nums = np.arange(0, time_limit, 10)
+    old_num = 0
 
     # init
     plt.ion()
@@ -79,14 +80,12 @@ try:
     while True:
         now = time.time() - start_time
         if not stdout:
-            stdscr.addstr(0, 24, str(round((num)/1000, 2)) + "s")
+            stdscr.addstr(0, 24, str(round((now)/1000, 2)) + "s")
             stdscr.addstr(1, 24, ("[" + str(y_vals_window[0][0]) + ", " + str(y_vals_window[len(y_vals_window)-1][0]) + "]"))
             stdscr.refresh()
 
-        print "now - last_calc = " + str(now-last_calc)
-        if (now-last_calc) > 1 and now > 0:
+        if (now-last_calc) > 1 and now > 0 and len(y_vals_window) > 0:
             last_calc = now
-            print "calculations at now = " + str(now)
             # every 1 second, make necessary calculations
             if stdout:
                 print "time: " + str(now) + "s; window: [" + \
@@ -171,7 +170,6 @@ try:
 
     end_time = time.time()
     diff_time = end_time - curr_time
-    print "diff = " + str(diff_time)
 
 except:
     if not stdout:
@@ -179,3 +177,4 @@ except:
         stdscr.keypad(0)
         curses.echo()
         curses.endwin()
+    raise
