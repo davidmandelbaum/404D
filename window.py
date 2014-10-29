@@ -95,6 +95,9 @@ try:
 
             comp_rate = calc_comp_rate(window_vals,
                                        (y_vals_window[len(y_vals_window)-1][0] - y_vals_window[0][0] ))
+
+            print "longest run = " + str(longest_run(window_vals))
+
             if not stdout:
                 if comp_rate > 130 or comp_rate < 100:
                     stdscr.addstr(2, 24, (str(comp_rate) + " Hz"), curses.color_pair(2))
@@ -162,6 +165,7 @@ try:
     plt.show()
 
 except:
+    raise
     if not stdout:
         curses.nocbreak()
         stdscr.keypad(0)

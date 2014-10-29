@@ -11,11 +11,25 @@ def calc_offset(data):
             offset = data[0][0]
     return offset
 
+def longest_run(array):
+    longest = 0
+    old_val = array[0]
+    for val in array:
+        if val == old_val:
+            longest += 1
+        old_val = val
+    return longest
+
 def calc_comp_rate(y_vals, s):
     if s > 0:
         y = np.array(y_vals)
-        max_extrema = sig.argrelextrema(y, np.greater)[0]
+        print "y vals = "
+        print y
+        longest = longest_run(y)
+        print "longest_run = " + str(longest)
+        max_extrema = sig.argrelextrema(y, np.greater, 0)[0]
         compressions = max_extrema.size
+        print "# of compressions = " + str(compressions)
         rate = compressions/s*60
         return round(rate) 
 
@@ -23,7 +37,7 @@ def calc_comp_depth(y_vals, s, data, window_vals):
     if s > 0:
         depths = []
         y = np.array(y_vals)
-        max_extrema = sig.argrelextrema(y, np.greater)[0]
+        max_extrema = sig.argrelextrema(y, np.greater, 0)[0]
         off = window_vals[0][0]
         for x in max_extrema:
             depths.append(window_vals[x][1])
@@ -35,7 +49,7 @@ def final_stats(y_vals, time_limit, data):
     stats = {}
     y_vals = np.array(y_vals)
 
-    max_extrema = sig.argrelextrema(y_vals, np.greater)[0]
+    max_extrema = sig.argrelextrema(y_vals, np.greater, 0)[0]
 
     compressions = max_extrema.size
 

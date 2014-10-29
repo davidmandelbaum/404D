@@ -10,7 +10,7 @@ void loop() {
     int c = Serial.read();
     if (c == '?'){
       int sensorValue = analogRead(A0);
-      float voltage = sensorValue * (5.0 / 1023.0);
+      float voltage = sensorValue * (1.8 / 1023.0);
       Serial.println(voltage);
     }
   }

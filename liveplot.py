@@ -56,7 +56,7 @@ try:
     plt.ion()
     plt.figure(0)
     out, = plt.plot([], [])
-    plt.ylim([10, 0])
+    plt.ylim([2, 0])
     plt.xlim([0, time_limit])
     plt.show(block=False)
     plt.figure(1)
@@ -74,7 +74,7 @@ try:
         stdscr.refresh()
 
     start_time = time.time()
-    last_calc = time.time()
+    last_calc = time.time() - start_time
 
     while True:
         now = time.time() - start_time
@@ -83,11 +83,13 @@ try:
             stdscr.addstr(1, 24, ("[" + str(y_vals_window[0][0]) + ", " + str(y_vals_window[len(y_vals_window)-1][0]) + "]"))
             stdscr.refresh()
 
+        print "now - last_calc = " + str(now-last_calc)
         if (now-last_calc) > 1 and now > 0:
             last_calc = now
+            print "calculations at now = " + str(now)
             # every 1 second, make necessary calculations
             if stdout:
-                print "time: " + str(now) + "ms; window: [" + \
+                print "time: " + str(now) + "s; window: [" + \
                                                    str(y_vals_window[0][0]) + ", " + \
                                                    str(y_vals_window[len(y_vals_window)-1][0]) + "]"
 
@@ -99,9 +101,9 @@ try:
                                        (y_vals_window[len(y_vals_window)-1][0] - y_vals_window[0][0] ))
             if not stdout:
                 if comp_rate > 130 or comp_rate < 100:
-                    stdscr.addstr(2, 24, (str(comp_rate) + " Hz"), curses.color_pair(2))
+                    stdscr.addstr(2, 24, (str(comp_rate) + " /m"), curses.color_pair(2))
                 else:
-                    stdscr.addstr(2, 24, (str(comp_rate) + " Hz"), curses.color_pair(3))
+                    stdscr.addstr(2, 24, (str(comp_rate) + " /m"), curses.color_pair(3))
 
             else:
                 print "Compression rate: " + str(comp_rate)
@@ -139,14 +141,15 @@ try:
         num_in = ser.readline()
         try:
             num_in = float(num_in[0:4])
-            y_vals_window.append((now, num_in))
-
-            y_vals.append(num_in)
-            plt.figure(0)
-            data.append((now, num_in))
-            out.set_xdata(np.append(out.get_xdata(), now))
-            out.set_ydata(np.append(out.get_ydata(), (num_in)))
-            plt.draw()
+            if old_num != num_in:
+                y_vals_window.append((now, num_in))
+                y_vals.append(num_in)
+                plt.figure(0)
+                data.append((now, num_in))
+                out.set_xdata(np.append(out.get_xdata(), now))
+                out.set_ydata(np.append(out.get_ydata(), (num_in)))
+                plt.draw()
+            old_num = num_in
         except:
             print "ERR: num_in"
 
@@ -155,13 +158,13 @@ try:
     if not stdout:
         stdscr.addstr(5, 4, ("Total compressions: " + stats["total_compressions"]))
         stdscr.addstr(6, 18, ("Time: " + stats["time"] + " s"))
-        stdscr.addstr(7, 1, ("Avg. compression rate: " + stats["rate"] + " Hz"))
+        stdscr.addstr(7, 1, ("Avg. compression rate: " + stats["rate"] + " /m"))
         stdscr.addstr(8, 0, ("Avg. compression depth: " + stats["depth"] + "mm"))
         stdscr.refresh()
     if stdout:
         print "Total compressions: " + stats["total_compressions"]
         print "Time: " + stats["time"] + " s"
-        print "Avg. compression rate: " + stats["rate"] + " Hz"
+        print "Avg. compression rate: " + stats["rate"] + " /m"
         print "Avg. compression depth: " + stats["depth"] + "mm"
 
     plt.show()
