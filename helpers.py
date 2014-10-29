@@ -29,7 +29,7 @@ def calc_comp_depth(y_vals, s, data, window_vals):
             depths.append(window_vals[x][1])
         depths_np = np.array(depths)
         avg_depth = np.mean(depths_np)
-        return round(avg_depth)
+        return round(avg_depth, 3)
 
 def final_stats(y_vals, time_limit, data):
     stats = {}

@@ -34,7 +34,7 @@ try:
         stdscr.refresh()
         stdscr.addstr("Sliding window length (in seconds):")
         stdscr.refresh()
-        window_length = int(stdscr.getstr(1, 0))*1000
+        window_length = int(stdscr.getstr(1, 0))
         stdscr.clear()
         stdscr.refresh()
     else:
@@ -78,9 +78,9 @@ try:
     last_calc = time.time() - start_time
 
     while True:
-        now = time.time() - start_time
+        now = round(time.time() - start_time, 4)
         if not stdout:
-            stdscr.addstr(0, 24, str(round((now)/1000, 2)) + "s")
+            stdscr.addstr(0, 24, str(now) + "s")
             stdscr.addstr(1, 24, ("[" + str(y_vals_window[0][0]) + ", " + str(y_vals_window[len(y_vals_window)-1][0]) + "]"))
             stdscr.refresh()
 
@@ -103,9 +103,9 @@ try:
                     stdscr.addstr(2, 24, (str(comp_rate) + " /m"), curses.color_pair(2))
                 else:
                     stdscr.addstr(2, 24, (str(comp_rate) + " /m"), curses.color_pair(3))
-
             else:
                 print "Compression rate: " + str(comp_rate)
+
             comp_rates.append( (now, comp_rate) )
 
             comp_depth = calc_comp_depth(window_vals,
@@ -168,13 +168,11 @@ try:
 
     plt.show()
 
-    end_time = time.time()
-    diff_time = end_time - curr_time
-
-except:
     if not stdout:
         curses.nocbreak()
         stdscr.keypad(0)
         curses.echo()
         curses.endwin()
+
+except:
     raise
