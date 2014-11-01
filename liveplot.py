@@ -53,8 +53,10 @@ try:
     comp_depths = []
     nums = np.arange(0, time_limit, 10)
     old_num = 0
-    conversion = 1.395
+    conversion = 3.84
     ylim = 5
+    comp_status = 0
+    depth_status = 0
 
     # init
     plt.ion()
@@ -104,8 +106,10 @@ try:
                                        (y_vals_window[len(y_vals_window)-1][0] - y_vals_window[0][0] ))
             if not stdout:
                 if comp_rate > 130 or comp_rate < 100:
+                    comp_status = 0
                     stdscr.addstr(2, 24, (str(comp_rate) + " /m"), curses.color_pair(2))
                 else:
+                    comp_status = 1
                     stdscr.addstr(2, 24, (str(comp_rate) + " /m"), curses.color_pair(3))
             else:
                 print "Compression rate: " + str(comp_rate)
@@ -117,13 +121,22 @@ try:
                                          data,
                                          y_vals_window)
             if not stdout:
-                if comp_depth < 45 or comp_depth > 60:
+                if comp_depth < 4.5 or comp_depth > 6.0:
                     stdscr.addstr(3, 24, (str(comp_depth) + " cm"), curses.color_pair(2))
+                    depth_status = 0
                 else:
+                    depth_status = 1
                     stdscr.addstr(3, 24, (str(comp_depth) + " cm"), curses.color_pair(3))
             else:
                 print "Depth: " + str(comp_depth)
             comp_depths.append( (now, comp_depth) )
+
+            if comp_status == 1 and depth_status == 1:
+                ser.write('r')
+                ser.write('G')
+            else:
+                ser.write('g')
+                ser.write('R')
 
             if not stdout:
                 stdscr.refresh()
