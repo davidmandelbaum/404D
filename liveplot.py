@@ -53,8 +53,8 @@ try:
     comp_depths = []
     nums = np.arange(0, time_limit, 10)
     old_num = 0
-    conversion = 3.84
-    ylim = 5
+    conversion = 3.84 # calculated given length of potentiometer
+    ylim = 7
     comp_status = 0
     depth_status = 0
 
@@ -132,6 +132,7 @@ try:
             comp_depths.append( (now, comp_depth) )
 
             if comp_status == 1 and depth_status == 1:
+                # if compressions are good, turn red light off and green light on
                 ser.write('r')
                 ser.write('G')
             else:
