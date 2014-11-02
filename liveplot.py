@@ -9,6 +9,7 @@ from helpers import *
 import curses as curses
 import serial
 import csv as csv
+import unirest
 
 # init arduino
 ser = serial.Serial('/dev/tty.usbserial-A602TSPH', 9600)
@@ -142,6 +143,10 @@ try:
             if not stdout:
                 stdscr.refresh()
 
+            thread = unirest.post("http://localhost:3000/data_point", params={ "time": now,
+                                                                        "rate": comp_rate,
+                                                                        "depth": comp_depth })
+
             plt.figure(1)
             out_rate.set_xdata(np.append(out_rate.get_xdata(), now))
             out_rate.set_ydata(np.append(out_rate.get_ydata(), comp_rate))
@@ -168,6 +173,9 @@ try:
                 out.set_ydata(np.append(out.get_ydata(), (num_in)))
                 plt.draw()
             old_num = num_in
+            thread = unirest.post("http://localhost:3000/data_point", params={ "time": now,
+                                                                               "depth": num_in })
+
         except:
             print "ERR: num_in"
 
