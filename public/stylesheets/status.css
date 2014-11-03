@@ -1,8 +1,18 @@
+body {
+  padding-top: 0px;
+}
+
 #status {
   padding: 10px;
   font-family: "Helvetica", "Arial", sans-serif;
   height: 200px;
   font-size: 20px;
+  line-height: 1.5;
+}
+
+#status span {
+  width: 100px;
+  height: 25px; 
 }
 
 .good {

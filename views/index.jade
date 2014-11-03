@@ -15,7 +15,7 @@ block content
     span#rate.good
     br
     | Depth: 
-    span#depth.bad
+    span#depth.good
     br
   div#container(style='min-width: 300px; height: 400px; margin: 0 auto')
   script(type='text/javascript').
@@ -113,10 +113,16 @@ block content
       $("#time").html(time + "s");
       $("#rate").html(rate + " /m");
       if (rate > 130 || rate < 100) {
-        $("#rate").toggleClass("bad", 0);
+        $("#rate").addClass("bad");
       }
       else {
-        $("#rate").toggleClass("bad", 1);
+        $("#rate").removeClass("bad");
+      }
+      if (depth > 4 || depth > 6){
+        $("#depth").addClass("bad");
+      }
+      else {
+        $("#depth").removeClass("bad");
       }
       $("#depth").html(depth + " cm");
     });

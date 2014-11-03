@@ -146,7 +146,7 @@ try:
                                          data,
                                          y_vals_window)
             if not stdout:
-                if comp_depth < 4.5 or comp_depth > 6.0:
+                if comp_depth < 4 or comp_depth > 6.0:
                     stdscr.addstr(3, 24, (str(comp_depth) + " cm"), curses.color_pair(2))
                     depth_status = 0
                 else:
