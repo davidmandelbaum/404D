@@ -8,3 +8,8 @@ andtest <- function(x,y){
 
 cars <- c(1,2,3,4,5)
 plot(cars, type="o", col="blue")
+
+
+# newtest <- function(x,y){
+#   if(x > 5, return(x), return(y))
+# }

@@ -1,0 +1,89 @@
+extends layout
+
+block content
+  script(src='//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js')
+  script(src='//code.highcharts.com/highcharts.js')
+  script(src='//code.highcharts.com/modules/exporting.js')
+  script(src='/socket.io/socket.io.js')
+  h1= title
+  div#data_points
+  div#container(style='min-width: 300px; height: 400px; margin: 0 auto')
+  script(type='text/javascript').
+    var chart;
+    var data = [];
+
+    Highcharts.setOptions({
+      global: {
+        useUTC: false
+      }
+    });
+
+    chart = new Highcharts.Chart({
+        chart: {
+            type: 'spline',
+            animation: Highcharts.svg, // don't animate in old IE
+            marginRight: 10,
+            renderTo: 'container',
+            events: {
+                load: function () {
+                    console.log("loaded!");
+
+                    // set up the updating of the chart each second
+                    // var series = this.series[0];
+                    // setInterval(function () {
+                    //     var x = (new Date()).getTime(), // current time
+                    //         y = Math.random();
+                    //     series.addPoint([x, y], true, true);
+                    // }, 1000);
+                }
+            }
+        },
+        title: {
+            text: 'Live random data'
+        },
+        xAxis: {
+            type: 'linear',
+            tickPixelInterval: 150,
+            min: 0,
+            max: 10
+        },
+        yAxis: {
+            min: 0,
+            max: 6,
+            title: {
+                text: 'Value'
+            },
+            plotLines: [{
+                value: 0,
+                width: 1,
+                color: '#808080'
+            }]
+        },
+        tooltip: {
+            formatter: function () {
+                return '<b>' + this.series.name + '</b><br/>' +
+                    Highcharts.dateFormat('%Y-%m-%d %H:%M:%S', this.x) + '<br/>' +
+                    Highcharts.numberFormat(this.y, 2);
+            }
+        },
+        legend: {
+            enabled: false
+        },
+        exporting: {
+            enabled: false
+        },
+        series: [{
+            name: 'Random data',
+            data: data
+        }]
+    });
+
+    var socket = io();
+    socket.on('data_point', function(data_point) {
+      console.log('data point!');
+      console.log(data_point);
+      var x = parseFloat(data_point["time"]);
+      console.log('time = ' + x);
+      var y = parseFloat(data_point["depth"]);
+      chart.series[0].addPoint([x, y], true);
+    });

@@ -9,6 +9,7 @@ from helpers import *
 import curses as curses
 import serial
 import csv as csv
+import unirest
 
 # init arduino
 ser = serial.Serial('/dev/tty.usbserial-A602TSPH', 9600)
@@ -53,8 +54,8 @@ try:
     comp_depths = []
     nums = np.arange(0, time_limit, 10)
     old_num = 0
-    conversion = 3.84
-    ylim = 5
+    conversion = 3.84 # calculated given length of potentiometer
+    ylim = 7
     comp_status = 0
     depth_status = 0
 
@@ -132,6 +133,7 @@ try:
             comp_depths.append( (now, comp_depth) )
 
             if comp_status == 1 and depth_status == 1:
+                # if compressions are good, turn red light off and green light on
                 ser.write('r')
                 ser.write('G')
             else:
@@ -140,6 +142,10 @@ try:
 
             if not stdout:
                 stdscr.refresh()
+
+            thread = unirest.post("http://localhost:3000/data_point", params={ "time": now,
+                                                                        "rate": comp_rate,
+                                                                        "depth": comp_depth })
 
             plt.figure(1)
             out_rate.set_xdata(np.append(out_rate.get_xdata(), now))
@@ -167,6 +173,9 @@ try:
                 out.set_ydata(np.append(out.get_ydata(), (num_in)))
                 plt.draw()
             old_num = num_in
+            thread = unirest.post("http://localhost:3000/data_point", params={ "time": now,
+                                                                               "depth": num_in })
+
         except:
             print "ERR: num_in"
 
