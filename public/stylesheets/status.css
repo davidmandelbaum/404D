@@ -1,0 +1,15 @@
+#status div {
+  padding: 10px;
+  font-family: "Helvetica", "Arial", sans-serif;
+  height: 100px;
+}
+
+.good {
+  background-color: green;
+  color: white;
+}
+
+.bad {
+  background-color: red;
+  color: black;
+}
