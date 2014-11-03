@@ -47,11 +47,12 @@ block content
             type: 'linear',
             tickPixelInterval: 150,
             min: 0,
-            max: 10
+            max: 30
         },
         yAxis: {
             min: 0,
             max: 6,
+            reversed: true,
             title: {
                 text: 'Value'
             },
@@ -88,6 +89,19 @@ block content
       console.log('time = ' + x);
       var y = parseFloat(data_point["depth"]);
       chart.series[0].addPoint([x, y], true);
+    });
+
+    socket.on('data_points', function(data_points) {
+      console.log('data points!');
+      console.log(data_points);
+      points = JSON.parse(data_points["points"]);
+      console.log('points = ' + points);
+      var i = 0;
+      for (i = 0; i < points.length; i++){
+        var x = parseFloat(points[i][0]);
+        var y = parseFloat(points[i][1]);
+        chart.series[0].addPoint([x, y], true);
+      }
     });
 
     socket.on('status', function(status) {

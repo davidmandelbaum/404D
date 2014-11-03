@@ -10,6 +10,8 @@ import curses as curses
 import serial
 import csv as csv
 import unirest
+import json
+import urllib
 
 # init arduino
 ser = serial.Serial('/dev/tty.usbserial-A602TSPH', 9600)
@@ -66,7 +68,8 @@ try:
     ylim = 7
     comp_status = 0
     depth_status = 0
-    address = "http://meng404d.herokuapp.com/"
+    # address = "http://meng404d.herokuapp.com/"
+    address = "http://localhost:3000/"
     second_values = []
 
     # init
@@ -161,6 +164,9 @@ try:
                 thread = unirest.post(address + "status", params={ "time": now,
                                                                             "rate": comp_rate,
                                                                            "depth": comp_depth })
+                thread = unirest.post(address + "data_points", params={ "points": json.dumps(second_values) })
+
+            second_values = []
 
             plt.figure(1)
             out_rate.set_xdata(np.append(out_rate.get_xdata(), now))
@@ -183,15 +189,16 @@ try:
             if old_num != num_in:
                 y_vals_window.append((now, num_in))
                 y_vals.append((now, num_in))
+                second_values.append((now, num_in))
                 plt.figure(0)
                 data.append((now, num_in))
                 out.set_xdata(np.append(out.get_xdata(), now))
                 out.set_ydata(np.append(out.get_ydata(), (num_in)))
                 plt.draw()
             old_num = num_in
-            if web:
-                thread = unirest.post(address + "data_point", params={ "time": now,
-                                                                                   "depth": num_in })
+            # if web:
+            #     thread = unirest.post(address + "data_point", params={ "time": now,
+            #                                                                       "depth": num_in })
 
         except:
             print "ERR: num_in"
