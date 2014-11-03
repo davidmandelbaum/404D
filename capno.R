@@ -1,7 +1,8 @@
 # TO DO
 
+# continue tweaking algorithm numbers
 # add ventilations
-# 
+# allow conversion to kPa?
 
 
 # import the CSV file
@@ -101,7 +102,7 @@ capscore <- function(user, start){
   allmin = NULL
   allscore = NULL
 
-  score = start # try 500 to start with
+  score = start # try 20 mmHg to start with
 
   time <- function(i){
     user[i,1]
