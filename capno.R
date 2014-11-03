@@ -1,3 +1,9 @@
+# TO DO
+
+# add ventilations
+# 
+
+
 # import the CSV file
 
 setwd("C:/Users/Aaron/Dropbox/code")
@@ -12,8 +18,6 @@ angie = read.csv("angie.csv")
 
 baxtest = head(baxter, n = 100)
 angtest = head(angie, n = 100)
-
-
 
 
   # create local maxima function
@@ -108,23 +112,35 @@ capscore <- function(user, start){
   }
   
 for (i in 3:nrow(user)){
-  score = (score - 1)
+  score = (score - 0.9) # set this constant to whatever
+  
+  if(score > 500){
+    riserate = 5   # recovery rate is faster when mmHg > 10
+  }
+  
+  if(score <= 500){
+    riserate = 3   # recovery rate is slower when mmHg < 10
+  }
+  
   if(depth(i-2) < depth(i-1) & depth(i) < depth(i-1)){
     allmax = rbind(allmax, c(depth(i-1), time(i-1)))
-    score = score + 5*(maxalg(depth(i-1)))    #assuming we're measuring in cm, easy change
-                  + 5*(timealg(tail(allmax, n=1),
+    score = score + riserate*(maxalg(depth(i-1)))    #assuming we're measuring in cm, easy change
+                  + riserate*(timealg(tail(allmax, n=1),
                             head(tail(allmax, n=2), n=1))) 
   }
+  
   if(depth(i-2) > depth(i-1) & depth(i) > depth(i-1)){
     allmin = rbind(allmin, c(depth(i-1), time(i-1)))
-    score = score + (5*minalg(depth(i-1)))
+    score = score + (riserate*minalg(depth(i-1)))
   }
-#   if(score > 1750){  # whatever corresponds to a score of 35 mmHg or more
-#     score = 1750  # we could also drop the score a few points to allow "rewards" for continued good compressions
-#   }
-#   if(score < 500){  # Whatever corresponds to a score of 10 mmHg or less
-#     return("point of no return")
-#   }
+  
+  if(score > 1250){  # whatever corresponds to a score of 25 mmHg or more
+    score = 1250  # we could also drop the score a few points to allow "rewards" for continued good compressions
+  }
+  
+  if(score < 250){  # Whatever corresponds to a score of 5 mmHg or less
+    return("point of no return")
+  }
   
   allscore <- c(allscore, score)
 }
