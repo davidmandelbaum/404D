@@ -1,0 +1,30 @@
+Pseudocode for algorithms:
+
+1. Setting ideal waveforms
+
+We could use one of the sample files for this. Or we could take the same snippet of code
+and paste it lots of times to create a set of perfect compressions at 100 bpm (or 110?)
+
+
+2. Comparing perfection to the user's rate
+
+Every time a compression hits bottom, we readjust the rate and judge the depth
+
+We're not comparing the two waveforms, just the number/depth of compressions so far
+
+Start with a score of... 100? 50? Will we have any scores other than the ETCO2 score?
+
+Every perfect compression makes up some distance between current level and perfect
+
+
+
+
+
+
+3. Creating realistic ETCO2 algorithm
+
+Things I've noticed from the CO2 papers:
+
+--We may want to set different "initial values"; patients who survive start with a score of 18.5 on average, while those who don't start with a score of 10
+
+--

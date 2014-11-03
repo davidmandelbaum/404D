@@ -3,13 +3,15 @@ import csv
 import glob
 from xml.dom import minidom
 
-out = open("out.csv", 'wt')
+out = open("out.csv", 'wt')  # Open the CSV file with collective average data
 
 try:
     writer = csv.writer(out, quoting=csv.QUOTE_NONNUMERIC)
     writer.writerow( ('TotalCompressions', 'CorrectlyReleasedCompression', 'CompressionMeanDepth', 'AverageHandsOffTime', 'CompressionMeanRate', 'CompressionMeanRatio', 'CorrectHandPosition', 'TotalVentilations', 'CorrectlyReleasedVentilation', 'VentilationMeanVolume', 'VentilationMeanRate', 'SessionDuration', 'SessionCycles', 'TotalCprScore', 'CompressionScore', 'VentilationScore', 'FlowFractionScore', 'FlowFractionPercent', 'ScoreLevel', 'ManikinType') )
     
     files = glob.glob("xml/*")
+
+    # So we're creating a new file in here somewhere? What is the end result of this parser?
 
     print files
 
