@@ -119,7 +119,7 @@ for (i in 3:nrow(user)){
     allmin = rbind(allmin, c(depth(i-1), time(i-1)))
     score = score + (5*minalg(depth(i-1)))
   }
-#   if(score > 1750){  # whatever corresponds to a score of 335 mmHg or more
+#   if(score > 1750){  # whatever corresponds to a score of 35 mmHg or more
 #     score = 1750  # we could also drop the score a few points to allow "rewards" for continued good compressions
 #   }
 #   if(score < 500){  # Whatever corresponds to a score of 10 mmHg or less
