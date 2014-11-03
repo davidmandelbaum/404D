@@ -31,12 +31,11 @@ router.get('/', function(req, res) {
 
 router.post('/data_point', function(req, res) {
   io.emit("data_point", req.body);
-  console.log(req.body);
   res.send('response');
 });
 
 router.post('/status', function(req, res) {
-  console.log(req.body);
+  io.emit("status", req.body);
   res.send('response');
 });
 

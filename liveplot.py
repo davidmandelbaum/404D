@@ -22,6 +22,14 @@ if input == "y" or input == "Y":
 else:
     stdout = False
 
+# ask if user wants web output
+print "Web output (y)?"
+input = raw_input()
+if input == "y" or input == "Y":
+    web = True
+else:
+    web = False
+
 try:
     if not stdout:
         stdscr = curses.initscr()
@@ -83,6 +91,10 @@ try:
     start_time = time.time()
     last_calc = time.time() - start_time
 
+    # calibrate to initial depth
+    ser.write('?')
+    init_depth = float(ser.readline()[0:4])
+
     while True:
         now = round(time.time() - start_time, 4)
         if not stdout:
@@ -143,9 +155,10 @@ try:
             if not stdout:
                 stdscr.refresh()
 
-            thread = unirest.post("http://localhost:3000/data_point", params={ "time": now,
-                                                                        "rate": comp_rate,
-                                                                        "depth": comp_depth })
+            if web:
+                thread = unirest.post("http://localhost:3000/status", params={ "time": now,
+                                                                            "rate": comp_rate,
+                                                                           "depth": comp_depth })
 
             plt.figure(1)
             out_rate.set_xdata(np.append(out_rate.get_xdata(), now))
@@ -163,6 +176,7 @@ try:
         num_in = ser.readline()
         try:
             num_in = float(num_in[0:4])
+            num_in -= init_depth
             num_in *= conversion
             if old_num != num_in:
                 y_vals_window.append((now, num_in))
@@ -173,8 +187,9 @@ try:
                 out.set_ydata(np.append(out.get_ydata(), (num_in)))
                 plt.draw()
             old_num = num_in
-            thread = unirest.post("http://localhost:3000/data_point", params={ "time": now,
-                                                                               "depth": num_in })
+            if web:
+                thread = unirest.post("http://localhost:3000/data_point", params={ "time": now,
+                                                                                   "depth": num_in })
 
         except:
             print "ERR: num_in"

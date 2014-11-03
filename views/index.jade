@@ -5,8 +5,18 @@ block content
   script(src='//code.highcharts.com/highcharts.js')
   script(src='//code.highcharts.com/modules/exporting.js')
   script(src='/socket.io/socket.io.js')
-  h1= title
-  div#data_points
+  link(href='/stylesheets/status.css', rel='stylesheet')
+  div#status
+    h1 Status
+    | Time: 
+    span#time
+    br
+    | Rate: 
+    span#rate.good
+    br
+    | Depth: 
+    span#depth.bad
+    br
   div#container(style='min-width: 300px; height: 400px; margin: 0 auto')
   script(type='text/javascript').
     var chart;
@@ -27,19 +37,11 @@ block content
             events: {
                 load: function () {
                     console.log("loaded!");
-
-                    // set up the updating of the chart each second
-                    // var series = this.series[0];
-                    // setInterval(function () {
-                    //     var x = (new Date()).getTime(), // current time
-                    //         y = Math.random();
-                    //     series.addPoint([x, y], true, true);
-                    // }, 1000);
                 }
             }
         },
         title: {
-            text: 'Live random data'
+            text: 'Compression data'
         },
         xAxis: {
             type: 'linear',
@@ -86,4 +88,21 @@ block content
       console.log('time = ' + x);
       var y = parseFloat(data_point["depth"]);
       chart.series[0].addPoint([x, y], true);
+    });
+
+    socket.on('status', function(status) {
+      console.log('status!');
+      console.log(status);
+      var time = parseFloat(status["time"]);
+      var rate = parseFloat(status["rate"]);
+      var depth = parseFloat(status["depth"]);
+      $("#time").html(time + "s");
+      $("#rate").html(rate + " /m");
+      if (rate > 130 || rate < 100) {
+        $("#rate").toggleClass("bad", 0);
+      }
+      else {
+        $("#rate").toggleClass("bad", 1);
+      }
+      $("#depth").html(depth + " cm");
     });
