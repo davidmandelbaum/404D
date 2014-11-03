@@ -1,7 +1,8 @@
-#status div {
+#status {
   padding: 10px;
   font-family: "Helvetica", "Arial", sans-serif;
-  height: 100px;
+  height: 200px;
+  font-size: 20px;
 }
 
 .good {

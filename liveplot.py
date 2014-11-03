@@ -66,6 +66,8 @@ try:
     ylim = 7
     comp_status = 0
     depth_status = 0
+    address = "http://meng404d.herokuapp.com/"
+    second_values = []
 
     # init
     plt.ion()
@@ -156,7 +158,7 @@ try:
                 stdscr.refresh()
 
             if web:
-                thread = unirest.post("http://localhost:3000/status", params={ "time": now,
+                thread = unirest.post(address + "status", params={ "time": now,
                                                                             "rate": comp_rate,
                                                                            "depth": comp_depth })
 
@@ -188,7 +190,7 @@ try:
                 plt.draw()
             old_num = num_in
             if web:
-                thread = unirest.post("http://localhost:3000/data_point", params={ "time": now,
+                thread = unirest.post(address + "data_point", params={ "time": now,
                                                                                    "depth": num_in })
 
         except:
