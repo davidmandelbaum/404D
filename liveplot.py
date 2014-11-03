@@ -32,6 +32,15 @@ if input == "y" or input == "Y":
 else:
     web = False
 
+# ask if user wants to send local or remote
+print "Remote (r) or local (l)?"
+input = raw_input()
+if input == "r" or input == "R":
+    address = "http://meng404d.herokuapp.com/"
+elif input == "l" or input == "L":
+    address = "http://localhost:3000/"
+
+
 try:
     if not stdout:
         stdscr = curses.initscr()
@@ -68,8 +77,6 @@ try:
     ylim = 7
     comp_status = 0
     depth_status = 0
-    # address = "http://meng404d.herokuapp.com/"
-    address = "http://localhost:3000/"
     second_values = []
 
     # init
