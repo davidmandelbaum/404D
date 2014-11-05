@@ -24,6 +24,11 @@ body {
   left: 137px;
 }
 
+#status #time {
+  border: 1px solid black;
+  width: 73px;
+}
+
 .good {
   background-color: green;
   color: black;
