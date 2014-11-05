@@ -109,7 +109,7 @@ block content
       console.log(status);
       var time = parseFloat(status["time"]);
       var rate = parseFloat(status["rate"]);
-      var depth = parseFloat(status["depth"]);
+      var depth = parseFloat(status["depth"]).toFixed(2);
       $("#time").html(time + "s");
       $("#rate").html(rate + " /m");
       if (rate > 130 || rate < 100) {
