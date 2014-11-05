@@ -9,14 +9,13 @@ block content
   div#status
     h1#title Status
     | Time: 
-    span#time
+    div#time
     br
-    span#compressions
     | Rate: 
-    span#rate.good
+    div#rate.good
     br
     | Depth: 
-    span#depth.good
+    div#depth.good
     br
   div#container(style='min-width: 300px; height: 400px; margin: 0 auto')
   script(type='text/javascript').
@@ -132,12 +131,10 @@ block content
       console.log('final stats!');
       console.log(final_stats);
       var time = parseFloat(final_stats["time"]);
-      var total_compressions = parseFloat(final_stats["total_compressions"]);
       var rate = parseFloat(final_stats["rate"]);
       var depth = parseFloat(final_stats["depth"]);
       $("#title").html("Final Statistics");
       $("#time").html(time + "s");
-      $("#compression").html("Total compressions: " + total_compressions);
       $("#rate").html(rate + " /m");
       $("#depth").html(depth + " cm");
       if (rate > 130 || rate < 100) {

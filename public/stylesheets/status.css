@@ -1,18 +1,27 @@
 body {
   padding-top: 0px;
+  margin-top: -30px;
 }
 
 #status {
   padding: 10px;
   font-family: "Helvetica", "Arial", sans-serif;
-  height: 200px;
+  height: 250px;
   font-size: 20px;
-  line-height: 1.5;
+  line-height: 2.1;
 }
 
-#status span {
-  width: 100px;
-  height: 25px; 
+#status div {
+  width: 75px;
+  height: 23px; 
+  display: inline-block;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-top: 3px;
+  padding-bottom: 12px;
+  line-height: 1.7;
+  position: absolute;
+  left: 137px;
 }
 
 .good {
