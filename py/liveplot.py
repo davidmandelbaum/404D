@@ -225,7 +225,7 @@ try:
         print "Avg. compression depth: " + stats["depth"] + "cm"
 
     # open output file
-    file_out = open('../csv/out.csv', 'wb')
+    file_out = open('csv/out.csv', 'wb')
     writer = csv.writer(file_out)
     writer.writerow(['Time (s)', 'Depth (cm)'])
     for y in y_vals:

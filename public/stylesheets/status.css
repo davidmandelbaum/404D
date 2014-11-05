@@ -17,10 +17,10 @@ body {
 
 .good {
   background-color: green;
-  color: white;
+  color: black;
 }
 
 .bad {
   background-color: red;
-  color: black;
+  color: white;
 }
