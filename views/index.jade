@@ -7,10 +7,11 @@ block content
   script(src='/socket.io/socket.io.js')
   link(href='/stylesheets/status.css', rel='stylesheet')
   div#status
-    h1 Status
+    h1#title Status
     | Time: 
     span#time
     br
+    span#compressions
     | Rate: 
     span#rate.good
     br
@@ -125,4 +126,30 @@ block content
         $("#depth").removeClass("bad");
       }
       $("#depth").html(depth + " cm");
+    });
+
+    socket.on('final_stats', function(final_stats) {
+      console.log('final stats!');
+      console.log(final_stats);
+      var time = parseFloat(final_stats["time"]);
+      var total_compressions = parseFloat(final_stats["total_compressions"]);
+      var rate = parseFloat(final_stats["rate"]);
+      var depth = parseFloat(final_stats["depth"]);
+      $("#title").html("Final Statistics");
+      $("#time").html(time + "s");
+      $("#compression").html("Total compressions: " + total_compressions);
+      $("#rate").html(rate + " /m");
+      $("#depth").html(depth + " cm");
+      if (rate > 130 || rate < 100) {
+        $("#rate").addClass("bad");
+      }
+      else {
+        $("#rate").removeClass("bad");
+      }
+      if (depth < 4 || depth > 6){
+        $("#depth").addClass("bad");
+      }
+      else {
+        $("#depth").removeClass("bad");
+      }
     });

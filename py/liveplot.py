@@ -203,9 +203,6 @@ try:
                 out.set_ydata(np.append(out.get_ydata(), (num_in)))
                 plt.draw()
             old_num = num_in
-            # if web:
-            #     thread = unirest.post(address + "data_point", params={ "time": now,
-            #                                                                       "depth": num_in })
 
         except:
             print "ERR: num_in"
@@ -223,6 +220,13 @@ try:
         print "Time: " + stats["time"] + " s"
         print "Avg. compression rate: " + stats["rate"] + " /m"
         print "Avg. compression depth: " + stats["depth"] + "cm"
+
+    if web:
+        thread = unirest.post(address + "final_stats", 
+                              params={ "time":               stats["time"], 
+                                       "total_compressions": stats["total_compressions"],
+                                       "rate":               stats["rate"],
+                                       "depth":              stats["depth"] })
 
     # open output file
     file_out = open('csv/out.csv', 'wb')

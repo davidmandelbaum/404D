@@ -39,6 +39,11 @@ router.post('/data_points', function(req, res) {
   res.send('response');
 });
 
+router.post('/final_stats', function(req, res) {
+  io.emit("final_stats", req.body);
+  res.send('response');
+});
+
 router.post('/status', function(req, res) {
   io.emit("status", req.body);
   res.send('response');
