@@ -13,22 +13,31 @@ def calc_offset(data):
 
 def calc_comp_rate(y_vals, s):
     if s > 0:
-        y = np.array(y_vals)
-        max_extrema = sig.argrelextrema(y, np.greater, 0)[0]
-        compressions = max_extrema.size
-        rate = compressions/s*60
+        if len(y_vals) > 0:
+            y = np.array(y_vals)
+            max_extrema = sig.argrelextrema(y, np.greater, 0)[0]
+            compressions = max_extrema.size
+            rate = compressions/s*60
+        else:
+            rate = 0
         return round(rate) 
 
 def calc_comp_depth(y_vals, s, data, window_vals):
     if s > 0:
-        depths = []
-        y = np.array(y_vals)
-        max_extrema = sig.argrelextrema(y, np.greater, 0)[0]
-        off = window_vals[0][0]
-        for x in max_extrema:
-            depths.append(window_vals[x][1])
-        depths_np = np.array(depths)
-        avg_depth = np.mean(depths_np)
+        if len(y_vals) > 0:
+            depths = []
+            y = np.array(y_vals)
+            max_extrema = sig.argrelextrema(y, np.greater, 0)[0]
+            off = window_vals[0][0]
+            for x in max_extrema:
+                depths.append(window_vals[x][1])
+            depths_np = np.array(depths)
+            if len(depths_np) > 0:
+                avg_depth = np.mean(depths_np)
+            else:
+                avg_depth = 0
+        else:
+            avg_depth = 0
         return round(avg_depth, 3)
 
 def final_stats(y_vals, time_limit, data):

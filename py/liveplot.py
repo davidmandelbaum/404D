@@ -78,7 +78,6 @@ try:
     comp_status = 0
     depth_status = 0
     second_values = []
-    freq = .5 # sampling frequency
 
     # init
     plt.ion()
@@ -116,7 +115,7 @@ try:
                 stdscr.addstr(1, 24, ("[" + str(y_vals_window[0][0]) + ", " + str(y_vals_window[len(y_vals_window)-1][0]) + "]"))
             stdscr.refresh()
 
-        if (now-last_calc) > freq and now > 0 and len(y_vals_window) > 0:
+        if (now-last_calc) > 1 and now > 0 and len(y_vals_window) > 0:
             last_calc = now
             # every 1 second, make necessary calculations
             if stdout:
