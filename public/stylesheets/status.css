@@ -24,7 +24,7 @@ body {
   left: 137px;
 }
 
-#status #time {
+#status #time, #status #capno {
   border: 1px solid black;
   width: 73px;
 }
