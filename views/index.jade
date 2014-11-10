@@ -65,7 +65,7 @@ block content
         tooltip: {
             formatter: function () {
                 return '<b>' + this.series.name + '</b><br/>' +
-                    Highcharts.dateFormat('%Y-%m-%d %H:%M:%S', this.x) + '<br/>' +
+                    Hichcharts.numberFormat(this.x, 2) + '<br/>' +
                     Highcharts.numberFormat(this.y, 2);
             }
         },
