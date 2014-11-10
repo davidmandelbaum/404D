@@ -14,8 +14,18 @@ import json
 import urllib
 
 plt.ion()
+out, = plt.plot([], [])
+plt.ylim([0, 2000])
+plt.xlim([0, 50000])
+plt.show(block=False)
 
-data = mpl.mlab.csv2rec(sys.argv[1], delimiter=',')
+data_in = mpl.mlab.csv2rec(sys.argv[1], delimiter=',')
+data = []
+
+offset = data_in[0][0]
+
+for x in data_in:
+    data.append((x[0] - offset, x[1]))
 
 def max_alg(depth):
     depth = depth/10
@@ -51,14 +61,15 @@ def cap_score(data, start):
     
     nums = np.arange(0, len(data)) 
 
-    for x in nums:
+    for i in nums:
         score = (score - 0.9)
 
         if score > 500:
             rise_rate = 5
         elif score <= 500:
             rise_rate = 3
-        if data[i-2][1] < data[i-1][1] and data[i][1] < data[i-1][1]:
+        # what to do when not enough data points
+        if data[i-2][1] < data[i-1][1] and data[i][1] < data[i-1][1] and len(allmax) > 2:
             allmax.append((data[i-1][0], data[i-1][1]))
             score = score + rise_rate * max_alg(data[i-1][1]) \
                           + rise_rate * time_alg(allmax[-1][0], allmax[-2][0])
@@ -76,5 +87,15 @@ def cap_score(data, start):
 
         allscore.append((data[i-1][0], score))
 
-        print "time = " + str(data[i-1][0])
-        print "score = " + str(score)
+        # print "time = " + str(data[i-1][0])
+        # print "score = " + str(score)
+
+        out.set_xdata(np.append(out.get_xdata(), data[i-1][0]))
+        out.set_ydata(np.append(out.get_ydata(), score))
+        plt.draw()
+
+    return allscore
+
+scores = cap_score(data, 2000)
+
+plt.show()

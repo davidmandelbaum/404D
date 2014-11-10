@@ -40,7 +40,6 @@ if input == "r" or input == "R":
 elif input == "l" or input == "L":
     address = "http://localhost:3000/"
 
-
 try:
     if not stdout:
         stdscr = curses.initscr()
@@ -193,6 +192,7 @@ try:
             num_in = float(num_in[0:4])
             num_in -= init_depth
             num_in *= conversion
+            # TODO: deal with issue of numbers not being the same
             if old_num != num_in:
                 y_vals_window.append((now, num_in))
                 y_vals.append((now, num_in))
