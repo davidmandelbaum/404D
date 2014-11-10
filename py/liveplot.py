@@ -233,10 +233,10 @@ try:
                 maxes.append((data[-2][1], data[-2][0]))
                 if len(maxes) > 2:
                     score = score + (rise_rate * max_alg(data[-2][1])) \
-                                  + (rise_rate * time_alg(maxes[-1][0], maxes[-2, 0]))
+                                  + (rise_rate * time_alg(maxes[-1][0], maxes[-2][0]))
 
             if data[-3][1] > data[-2][1] and data[-1][1] > data[-2][1]:
-                mins.append(data[-2][1], data[-2][0])
+                mins.append((data[-2][1], data[-2][0]))
                 score = score + rise_rate * min_alg(data[-2][1])
 
             if score > 1250:
@@ -252,7 +252,7 @@ try:
             plt.draw()
             plt.figure(0)
 
-            print "score = " + score
+            print "score = " + str(score)
 
     stats = final_stats(y_vals, time_limit, data)
 
