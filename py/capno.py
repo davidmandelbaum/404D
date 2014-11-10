@@ -1,6 +1,7 @@
 from __future__ import division
 import sys
 import numpy as np
+from math import *
 import time as time
 import matplotlib as mpl
 import matplotlib.pyplot as plt
@@ -26,6 +27,8 @@ offset = data_in[0][0]
 
 for x in data_in:
     data.append((x[0] - offset, x[1]))
+
+data = data[0:1000]
 
 def max_alg(depth):
     depth = depth/10
@@ -59,7 +62,7 @@ def cap_score(data, start):
 
     score = start
     
-    nums = np.arange(0, len(data)) 
+    nums = np.arange(2, len(data), 1) 
 
     for i in nums:
         score = (score - 0.9)
@@ -69,13 +72,15 @@ def cap_score(data, start):
         elif score <= 500:
             rise_rate = 3
         # what to do when not enough data points
-        if data[i-2][1] < data[i-1][1] and data[i][1] < data[i-1][1] and len(allmax) > 2:
-            allmax.append((data[i-1][0], data[i-1][1]))
-            score = score + rise_rate * max_alg(data[i-1][1]) \
-                          + rise_rate * time_alg(allmax[-1][0], allmax[-2][0])
+        # TODO: figure out how to handle max in plateau situation
+        if data[i-2][1] < data[i-1][1] and data[i][1] < data[i-1][1]:
+            allmax.append((data[i-1][1], data[i-1][0]))
+            if len(allmax) > 2:
+                score = score + (rise_rate * max_alg(data[i-1][1])) \
+                              + (rise_rate * time_alg(allmax[-1][0], allmax[-2][0]))
 
         if data[i-2][1] > data[i-1][1] and data[i][1] > data[i-1][1]:
-            allmin.append((data[i-1][0], data[i-1][1]))
+            allmin.append((data[i-1][1], data[i-1][0]))
             score = score + rise_rate * min_alg(data[i-1][1])
 
         if score > 1250:
@@ -87,8 +92,8 @@ def cap_score(data, start):
 
         allscore.append((data[i-1][0], score))
 
-        # print "time = " + str(data[i-1][0])
-        # print "score = " + str(score)
+        print "time = " + str(data[i-1][0])
+        print "score = " + str(score)
 
         out.set_xdata(np.append(out.get_xdata(), data[i-1][0]))
         out.set_ydata(np.append(out.get_ydata(), score))
@@ -96,6 +101,8 @@ def cap_score(data, start):
 
     return allscore
 
-scores = cap_score(data, 2000)
+scores = cap_score(data, 1250)
+
+print str(scores)
 
 plt.show()
