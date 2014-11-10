@@ -17,6 +17,9 @@ block content
     | Depth: 
     div#depth.good
     br
+    | Capno:
+    div#capno.good
+    br
   div#container(style='min-width: 300px; height: 400px; margin: 0 auto')
   script(type='text/javascript').
     var chart;
@@ -110,6 +113,7 @@ block content
       var time = parseFloat(status["time"]);
       var rate = parseFloat(status["rate"]);
       var depth = parseFloat(status["depth"]).toFixed(2);
+      var capno = parseFloat(status["capno"]).toFixed(2);
       $("#time").html(time + "s");
       $("#rate").html(rate + " /m");
       if (rate > 130 || rate < 100) {
@@ -125,6 +129,7 @@ block content
         $("#depth").removeClass("bad");
       }
       $("#depth").html(depth + " cm");
+      $("#capno").html(capno);
     });
 
     socket.on('final_stats', function(final_stats) {

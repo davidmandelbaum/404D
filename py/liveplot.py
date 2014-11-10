@@ -179,8 +179,10 @@ try:
 
             if web:
                 thread = unirest.post(address + "status", params={ "time": now,
-                                                                            "rate": comp_rate,
-                                                                           "depth": comp_depth })
+                                                                   "rate": comp_rate,
+                                                                   "depth": comp_depth,
+                                                                   "capno": score })
+
                 thread = unirest.post(address + "data_points", params={ "points": json.dumps(second_values) })
 
             second_values = []
