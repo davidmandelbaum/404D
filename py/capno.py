@@ -7,6 +7,7 @@ import matplotlib as mpl
 import matplotlib.pyplot as plt
 from scipy import signal as sig
 from helpers import *
+from capno_helpers import *
 import curses as curses
 import serial
 import csv as csv
@@ -30,31 +31,6 @@ for x in data_in:
 
 data = data[0:1000]
 
-def max_alg(depth):
-    depth = depth/10
-    if 4 < depth and depth < 5:
-        return 2.5
-    elif depth > 5:
-        return (1-(10*depth-5))
-    else:
-        return (2.5 - (2 - (0.25*sqrt(depth))))
-
-def min_alg(depth):
-    depth = depth/10
-    if depth == 0:
-        return 1
-    else:
-        return 1-depth
-
-def time_alg(current, last):
-    rate = (current - last)/100
-    if 0.5 < rate and rate < 0.6:
-        return 1
-    elif 0.3 < rate and rate < 0.8:
-        return (1 - (2*abs(0.55-rate)))
-    else:
-        return 0
-
 def cap_score(data, start):
     allmax = []
     allmin = []
@@ -71,16 +47,14 @@ def cap_score(data, start):
             rise_rate = 5
         elif score <= 500:
             rise_rate = 3
-        # what to do when not enough data points
-        # TODO: figure out how to handle max in plateau situation
         if data[i-2][1] < data[i-1][1] and data[i][1] < data[i-1][1]:
-            allmax.append((data[i-1][1], data[i-1][0]))
+            allmax.append((data[i-1][0], data[i-1][1])) # ask Aaron about flipping these
             if len(allmax) > 2:
                 score = score + (rise_rate * max_alg(data[i-1][1])) \
-                              + (rise_rate * time_alg(allmax[-1][0], allmax[-2][0]))
+                              + (rise_rate * time_alg(allmax[-1][1], allmax[-2][1]))
 
         if data[i-2][1] > data[i-1][1] and data[i][1] > data[i-1][1]:
-            allmin.append((data[i-1][1], data[i-1][0]))
+            allmin.append((data[i-1][0], data[i-1][1])) # ask Aaron about flipping these
             score = score + rise_rate * min_alg(data[i-1][1])
 
         if score > 1250:

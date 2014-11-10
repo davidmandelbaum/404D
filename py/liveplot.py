@@ -6,6 +6,7 @@ import matplotlib as mpl
 import matplotlib.pyplot as plt
 from scipy import signal as sig
 from helpers import *
+from capno_helpers import *
 import curses as curses
 import serial
 import csv as csv
@@ -63,8 +64,6 @@ try:
         print "Sliding window length (in seconds):"
         window_length = int(raw_input())
 
-    data = []
-
     # globals
     y_vals = []
     y_vals_window = [(0, 0)]
@@ -77,6 +76,12 @@ try:
     comp_status = 0
     depth_status = 0
     second_values = []
+    data = []
+    # capno alg
+    scores = []
+    maxes = []
+    mins = []
+    score = 1250
 
     # init
     plt.ion()
@@ -90,6 +95,12 @@ try:
     plt.ylim([0, 150])
     plt.xlim([0, time_limit])
     plt.show(block=False)
+    plt.figure(2)
+    out_scores, = plt.plot([], [])
+    plt.ylim([0, 1300])
+    plt.xlim([0, time_limit])
+    plt.show(block=False)
+    plt.title("capnography")
     plt.figure(0)
 
     if not stdout:
@@ -206,6 +217,40 @@ try:
 
         except:
             print "ERR: num_in"
+
+        # capno alg
+        # TODO: change so adjusted for amount of time since last calculation
+        if len(data) > 3:
+            score = (score - 0.9)
+
+            if score > 500:
+                rise_rate = 5
+            elif score <= 500:
+                rise_rate = 3
+            if data[-3][1] < data[-2][1] and data[-1][1] < data[-2][1]:
+                maxes.append((data[-2][1], data[-2][0]))
+                if len(maxes) > 2:
+                    score = score + (rise_rate * max_alg(data[-2][1])) \
+                                  + (rise_rate * time_alg(maxes[-1][0], maxes[-2, 0]))
+
+            if data[-3][1] > data[-2][1] and data[-1][1] > data[-2][1]:
+                mins.append(data[-2][1], data[-2][0])
+                score = score + rise_rate * min_alg(data[-2][1])
+
+            if score > 1250:
+                score = 1250
+
+            if score < 250:
+                score = 250
+            
+            scores.append((data[-2][0], score))
+            plt.figure(2)
+            out_scores.set_xdata(np.append(out_scores.get_xdata(), data[-2][0]))
+            out_scores.set_ydata(np.append(out_scores.get_ydata(), score))
+            plt.draw()
+            plt.figure(0)
+
+            print "score = " + score
 
     stats = final_stats(y_vals, time_limit, data)
 
