@@ -1,3 +1,4 @@
 xml/*
 .ipynb_checkpoints/
 out.csv
+*.pyc
