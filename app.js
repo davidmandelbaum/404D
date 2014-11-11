@@ -91,6 +91,7 @@ var server = app.listen(app.get('port'), function() {
 });
 
 var io = require('socket.io')(server);
+io.set('origins', '*:*');
 
 io.on('connection', function(socket) {
     console.log('a user connected');
