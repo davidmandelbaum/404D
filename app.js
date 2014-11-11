@@ -91,3 +91,11 @@ var server = app.listen(app.get('port'), function() {
 });
 
 var io = require('socket.io')(server);
+
+io.on('connection', function(socket) {
+    console.log('a user connected');
+});
+
+io.on('message', function(msg) {
+  console.log('Message: ' + msg);
+});

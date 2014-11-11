@@ -16,5 +16,17 @@
     "morgan": "~1.0.0",
     "socket.io": "^1.2.0",
     "static-favicon": "~1.0.0"
-  }
+  },
+  "main": "app.js",
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/davidmandelbaum/404D.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/davidmandelbaum/404D/issues"
+  },
+  "homepage": "https://github.com/davidmandelbaum/404D"
 }
