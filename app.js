@@ -9,6 +9,12 @@ var users = require('./routes/users');
 
 var app = express();
 
+app.use(function(req, res, next) {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+  return next();
+});
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
@@ -23,13 +29,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/users', users);
 
 var router = express.Router();
-
-app.use(function(req, res, next) {
-  res.header('Access-Control-Allow-Origin', '*');
-  res.header('Access-Control-Allow-Methods', 'GET, OPTIONS');
-  res.header('Access-Control-Allow-Headers', 'Content-Type');
-  return next();
-});
 
 /* GET home page. */
 router.get('/', function(req, res) {
