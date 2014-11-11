@@ -105,8 +105,7 @@ io.on('connection', function(socket) {
   socket.on('disconnect', function() {
     console.log('a user disconnected');
   });
-});
-
-io.on('message', function(msg) {
-  console.log('Message: ' + msg);
+  socket.on('message', function(msg) {
+    console.log('Message: ' + msg);
+  });
 });
