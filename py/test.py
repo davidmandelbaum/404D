@@ -1,5 +1,5 @@
 import sys
+import json
 
-for line in sys.stdin:
-    int_in = int(line)
-    print str(int_in*2)
+status = json.dumps({"time": "5", "depth": "30"})
+sys.stdout.write(status + "\n")

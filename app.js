@@ -100,7 +100,9 @@ var server = app.listen(app.get('port'), function() {
 var io = require('socket.io')(server);
 io.set('origins', '*:*');
 
-io.on('connection', function(socket) {
+var bbb = io.of('/bbb');
+
+bbb.on('connection', function(socket) {
   console.log('a user connected');
   socket.on('disconnect', function() {
     console.log('a user disconnected');
