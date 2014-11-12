@@ -6,7 +6,7 @@ status['time'] = 5
 status['depth'] = 4
 status['rate'] = 110
 status['capno'] = 1000
-status_out = json.dumps({ "status_msg": json.dumps(status)})
+status_out = json.dumps({ "status_msg": status})
 sys.stdout.write(status_out + "\n")
 
 final_stats = {}
