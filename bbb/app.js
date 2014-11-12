@@ -14,10 +14,10 @@ var options = {
 var pyshell = new PythonShell('test.py', options);
 
 pyshell.on('message', function (message) {
-  socket.emit('message', message);
   console.log(message);
   if ('second_values' in message){
-    console.log('second_values!');
+    socket.emit('second_values', message.second_values);
+    console.log('second_values: ' + message.second_values);
   }
 });
 
