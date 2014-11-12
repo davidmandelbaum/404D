@@ -32,7 +32,16 @@ var router = express.Router();
 
 /* GET home page. */
 router.get('/', function(req, res) {
-  res.render('index', { title: 'Express' });
+  res.render('index', { title: 'Welcome!' });
+});
+
+router.post('/post', function(req, res) {
+  console.log(req.body);
+  res.render('live', { title: 'Live trial' });
+});
+
+router.get('/live', function(req, res) {
+  res.render('live', { title: 'Live trial' });
 });
 
 router.post('/data_point', function(req, res) {
@@ -100,17 +109,30 @@ var server = app.listen(app.get('port'), function() {
 var io = require('socket.io')(server);
 io.set('origins', '*:*');
 
+io.on('connection', function (socket) {
+  console.log('[WEB] user connected');
+
+  socket.on('time', function(msg) {
+    console.log('[WEB] time = ' + msg);
+  });
+
+  socket.on('click', function() {
+
+  });
+});
+
 var bbb = io.of('/bbb');
 
 bbb.on('connection', function(socket) {
-  console.log('a user connected');
+  console.log('[BBB] user connected');
 
   socket.on('disconnect', function() {
-    console.log('a user disconnected');
+    console.log('[BBB] user disconnected');
   });
 
   socket.on('init', function() {
-    console.log('init!');
+    io.emit('bbb_connect', 'connected');
+    console.log('[BBB] init!');
   });
 
   socket.on('data_point', function(data_point) {

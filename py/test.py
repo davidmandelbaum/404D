@@ -11,13 +11,14 @@ status['capno'] = 1000
 status_out = json.dumps({ "status_msg": status})
 sys.stdout.write(status_out + "\n")
 
-nums = range(0, 300, 1)
-nums = [x/10 for x in nums]
-for n in nums:
-    data_point = []
-    data_point.append((n, round((n%1), 2)))
-    data_point_out = json.dumps({ "data_point": data_point })
-    sys.stdout.write(data_point_out + "\n")
+# nums = range(0, 300, 1)
+# nums = [x/10 for x in nums]
+# for n in nums:
+#     data_point = []
+#     data_point.append((n, round((n%1), 2)))
+#     data_point_out = json.dumps({ "data_point": data_point })
+#     sys.stdout.write(data_point_out + "\n")
+#     # sleep(0.1)
 
 sys.stdout.write("end!")
 

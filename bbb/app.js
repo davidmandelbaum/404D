@@ -1,10 +1,12 @@
 // var b = require('bonescript');
 
-var socket = require('socket.io-client')('http://meng404d.herokuapp.com:80/bbb');
+var socket = require('socket.io-client')('http://localhost:3000/bbb');
 
 socket.on('connect', function() {
   console.log('connected to remote socket');
+  socket.emit('init', '');
 });
+
 
 // b.pinMode('P8_19', b.INPUT);
 // setInterval(check, 100);
@@ -31,6 +33,8 @@ var options = {
 };
 
 var pyshell = new PythonShell('test.py', options);
+
+console.log('starting pyshell');
 
 pyshell.on('message', function (message) {
   console.log(message);
