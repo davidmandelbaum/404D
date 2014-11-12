@@ -114,14 +114,17 @@ bbb.on('connection', function(socket) {
   });
 
   socket.on('data_points', function(data_points) {
+    io.emit('data_points', data_points);
     console.log('data_points: ' + data_points);
   });
 
   socket.on('status_msg', function(status_msg) {
+    io.emit('status_msg', status_msg);
     console.log('status: ' + status_msg);
   });
 
   socket.on('final_stats', function(final_stats) {
+    io.emit('final_stats', final_stats);
     console.log('final_stats: ' + final_stats);
   });
 });

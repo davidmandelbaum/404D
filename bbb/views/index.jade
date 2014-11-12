@@ -107,13 +107,13 @@ block content
       }
     });
 
-    socket.on('status', function(status) {
-      console.log('status!');
-      console.log(status);
-      var time = parseFloat(status["time"]);
-      var rate = parseFloat(status["rate"]);
-      var depth = parseFloat(status["depth"]).toFixed(2);
-      var capno = parseFloat(status["capno"]).toFixed(2);
+    socket.on('status_msg', function(status_msg) {
+      console.log('status_msg!');
+      console.log(status_msg);
+      var time = parseFloat(status_msg["time"]);
+      var rate = parseFloat(status_msg["rate"]);
+      var depth = parseFloat(status_msg["depth"]).toFixed(2);
+      var capno = parseFloat(status_msg["capno"]).toFixed(2);
       $("#time").html(time + "s");
       $("#rate").html(rate + " /m");
       if (rate > 130 || rate < 100) {
