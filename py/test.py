@@ -9,6 +9,11 @@ status['capno'] = 1000
 status_out = json.dumps({ "status_msg": status})
 sys.stdout.write(status_out + "\n")
 
+data_point = []
+data_point.append((1, 2))
+data_point_out = json.dumps({ "data_point": data_point })
+sys.stdout.write(data_point_out + "\n")
+
 final_stats = {}
 final_stats['time'] = 100
 final_stats['depth'] = 20

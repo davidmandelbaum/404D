@@ -11,9 +11,11 @@ import unirest
 import json
 import urllib
 
+# TODO: init connection with sensors
+
 # init arduino
-ser = serial.Serial('/dev/tty.usbserial-A602TSPH', 9600)
-init = ser.readline()
+# ser = serial.Serial('/dev/tty.usbserial-A602TSPH', 9600)
+# init = ser.readline()
 
 try:
     time_limit = 30
@@ -42,9 +44,11 @@ try:
     start_time = time.time()
     last_calc = time.time() - start_time
 
+    # TODO: initial depth calibration
+
     # calibrate to initial depth
-    ser.write('?')
-    init_depth = float(ser.readline()[0:4])
+    # ser.write('?')
+    # init_depth = float(ser.readline()[0:4])
 
     while True:
         now = round(time.time() - start_time, 4)
@@ -70,19 +74,16 @@ try:
 
             comp_depths.append( (now, comp_depth) )
 
-            # LED screen output
-            if comp_status == 1 and depth_status == 1:
-                # if compressions are good, turn red light off and green light on
-                ser.write('r')
-                ser.write('G')
-            else:
-                ser.write('g')
-                ser.write('R')
+            # TODO: LCD screen output
 
-            thread = unirest.post(address + "status", params={ "time": now,
-                                                                   "rate": comp_rate,
-                                                                   "depth": comp_depth,
-                                                                   "capno": score })
+            # LED screen output
+            # if comp_status == 1 and depth_status == 1:
+            #     # if compressions are good, turn red light off and green light on
+            #     ser.write('r')
+            #     ser.write('G')
+            # else:
+            #     ser.write('g')
+            #     ser.write('R')
 
             status_out = json.dumps({ "status_msg": { 
                                         "time": now,
@@ -104,8 +105,10 @@ try:
             if y[0] < (now-window_length):
                 y_vals_window.remove(y)
 
-        ser.write('?')
-        num_in = ser.readline()
+        # TODO: read value from linear pot.
+        # ser.write('?')
+        # num_in = ser.readline()
+
         try:
             num_in = float(num_in[0:4])
             num_in -= init_depth
@@ -115,11 +118,11 @@ try:
                 y_vals_window.append((now, num_in))
                 y_vals.append((now, num_in))
                 second_values.append((now, num_in))
-                plt.figure(0)
                 data.append((now, num_in))
-                out.set_xdata(np.append(out.get_xdata(), now))
-                out.set_ydata(np.append(out.get_ydata(), (num_in)))
-                plt.draw()
+
+                # TODO: test if socket can handle sending each point
+                # point_out = json.dumps({ "data_point": (now, num_in) })
+                # sys.stdout.write(point_out)
             old_num = num_in
 
         except:
@@ -152,23 +155,21 @@ try:
             
             scores.append((data[-2][0], score))
 
-            # send capno score
-
-            print "score = " + str(score)
+            # TODO: send capno score more often
 
     stats = final_stats(y_vals, time_limit, data)
 
     stats_out = json.dumps({ "final_stats": stats }) 
     sys.stdout.write(stats_out)
 
-    # send final stats
+    # TODO: rewrite CSV writing on server side?
 
     # open output file
-    file_out = open('csv/out.csv', 'wb')
-    writer = csv.writer(file_out)
-    writer.writerow(['Time (s)', 'Depth (cm)'])
-    for y in y_vals:
-        writer.writerow([round(y[0], 4), round(y[1], 4)])
+    # file_out = open('csv/out.csv', 'wb')
+    # writer = csv.writer(file_out)
+    # writer.writerow(['Time (s)', 'Depth (cm)'])
+    # for y in y_vals:
+    #     writer.writerow([round(y[0], 4), round(y[1], 4)])
 
 except:
     raise

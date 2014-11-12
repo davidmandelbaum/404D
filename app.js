@@ -113,6 +113,11 @@ bbb.on('connection', function(socket) {
     console.log('init!');
   });
 
+  socket.on('data_point', function(data_point) {
+    io.emit('data_point', data_point);
+    console.log('data_point: ' + data_point);
+  });
+
   socket.on('data_points', function(data_points) {
     io.emit('data_points', data_points);
     console.log('data_points: ' + data_points);

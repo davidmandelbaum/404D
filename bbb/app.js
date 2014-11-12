@@ -35,6 +35,11 @@ var pyshell = new PythonShell('test.py', options);
 pyshell.on('message', function (message) {
   console.log(message);
 
+  if ('data_point' in message){
+    socket.emit('data_point', message.data_point);
+    console.log('data_point: ' + message.data_point);
+  }
+
   if ('data_points' in message){
     socket.emit('data_points', message.data_points);
     console.log('data_points: ' + message.data_points);
