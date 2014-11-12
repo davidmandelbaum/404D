@@ -1,9 +1,14 @@
 import sys
 import json
 
-second_values = []
-second_values.append((1, 2))
-second_values.append((2, 3))
+data_points = []
+data_points.append((1, 2))
+data_points.append((2, 3))
 
 status = json.dumps({ "data_points": data_points})
 sys.stdout.write(status + "\n")
+
+status = []
+status.append((1, 2))
+status_out = json.dumps({ "status": status})
+sys.stdout.write(status_out + "\n")

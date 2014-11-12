@@ -19,6 +19,10 @@ pyshell.on('message', function (message) {
     socket.emit('data_points', message.data_points);
     console.log('data_points' + message.data_points);
   }
+  if ('status' in message){
+    socket.emit('status', message.status);
+    console.log('status', message.status);
+  }
 });
 
 pyshell.end(function (err) {
