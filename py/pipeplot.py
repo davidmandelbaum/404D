@@ -21,7 +21,7 @@ ADC.setup()
 # init = ser.readline()
 
 try:
-    time_limit = 30
+    time_limit = 10
     window_length = 5
 
     # globals
@@ -53,7 +53,7 @@ try:
     # ser.write('?')
     # init_depth = float(ser.readline()[0:4])
 
-    init_depth = float(ADC.read("P9_40"))
+    init_depth = round(ADC.read("P9_40"), 2)
 
     while True:
         now = round(time.time() - start_time, 4)
@@ -110,13 +110,10 @@ try:
             if y[0] < (now-window_length):
                 y_vals_window.remove(y)
 
-        # TODO: read value from linear pot.
-        # ser.write('?')
-        # num_in = ser.readline()
         num_in = ADC.read("P9_40")
 
         try:
-            num_in = float(num_in[0:4])
+            num_in = round(num_in, 2)
             num_in -= init_depth
             num_in *= conversion
             # TODO: deal with issue of numbers not being the same
