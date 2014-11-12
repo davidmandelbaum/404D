@@ -20,6 +20,9 @@ block content
     | Depth: 
     div#depth.good
     br
+    | Point
+    div#point
+    br
   div#container(style='min-width: 300px; height: 400px; margin: 0 auto')
   script(type='text/javascript').
     var chart;
@@ -92,6 +95,7 @@ block content
       console.log('time = ' + x);
       var y = parseFloat(data_point[0][1]);
       console.log('depth = ' + y);
+      $("#point").html('[' + x ',' + y +']');
       // chart.series[0].addPoint([x, y], true);
     });
 
