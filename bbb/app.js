@@ -1,6 +1,6 @@
 // var b = require('bonescript');
 
-var socket = require('socket.io-client')('http://meng404d.herokuapp.com/bbb');
+var socket = require('socket.io-client')('http://meng404d.herokuapp.com:80/bbb');
 
 socket.on('connect', function() {
   console.log('connected to remote socket');

@@ -110,6 +110,7 @@ block content
     socket.on('status_msg', function(status_msg) {
       console.log('status_msg!');
       console.log(status_msg);
+      console.log(status_msg['time']);
       var time = parseFloat(status_msg["time"]);
       var rate = parseFloat(status_msg["rate"]);
       var depth = parseFloat(status_msg["depth"]).toFixed(2);

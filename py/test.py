@@ -12,5 +12,5 @@ sys.stdout.write(status_out + "\n")
 final_stats = {}
 final_stats['time'] = 100
 final_stats['depth'] = 20
-final_stats_out = json.dumps({ "final_stats": json.dumps(final_stats) })
+final_stats_out = json.dumps({ "final_stats": final_stats })
 # sys.stdout.write(final_stats_out + "\n")
