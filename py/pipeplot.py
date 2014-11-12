@@ -10,13 +10,7 @@ import csv as csv
 import json
 import urllib
 
-# TODO: init connection with sensors
-
 ADC.setup()
-
-# init arduino
-# ser = serial.Serial('/dev/tty.usbserial-A602TSPH', 9600)
-# init = ser.readline()
 
 try:
     time_limit = 10
@@ -156,7 +150,7 @@ try:
             
             scores.append((data[-2][0], score))
 
-            # TODO: send capno score more often
+            # TODO: send capno score more often?
 
     stats = final_stats(y_vals, time_limit, data)
 

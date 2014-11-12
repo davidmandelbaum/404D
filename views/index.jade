@@ -92,7 +92,7 @@ block content
       console.log('time = ' + x);
       var y = parseFloat(data_point[0][1]);
       console.log('depth = ' + y);
-      chart.series[0].addPoint([x, y], true);
+      // chart.series[0].addPoint([x, y], true);
     });
 
     socket.on('data_points', function(data_points) {
