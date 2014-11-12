@@ -6,9 +6,7 @@ import time as time
 from scipy import signal as sig
 from helpers import *
 from capno_helpers import *
-import serial
 import csv as csv
-import unirest
 import json
 import urllib
 
