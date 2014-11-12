@@ -23,6 +23,10 @@ pyshell.on('message', function (message) {
     socket.emit('status_msg', message.status_msg);
     console.log('status: ', message.status_msg);
   }
+  if ('final_stats' in message){
+    socket.emit('final_stats', message.final_stats);
+    console.log('final_stats: ', message.final_stats);
+  }
 });
 
 pyshell.end(function (err) {

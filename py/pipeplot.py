@@ -158,6 +158,9 @@ try:
 
     stats = final_stats(y_vals, time_limit, data)
 
+    stats_out = json.dumps({ "final_stats": stats }) 
+    sys.stdout.write(stats_out)
+
     # send final stats
 
     # open output file

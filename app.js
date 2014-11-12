@@ -113,4 +113,7 @@ bbb.on('connection', function(socket) {
   socket.on('status_msg', function(status_msg) {
     console.log('status: ' + status_msg);
   });
+  socket.on('final_stats', function(final_stats) {
+    console.log('final_stats: ' + final_stats);
+  });
 });
