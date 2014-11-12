@@ -110,4 +110,7 @@ bbb.on('connection', function(socket) {
   socket.on('data_points', function(data_points) {
     console.log('data_points: ' + data_points);
   });
+  socket.on('status_msg', function(status_msg) {
+    console.log('status: ' + status_msg);
+  });
 });

@@ -84,10 +84,11 @@ try:
                                                                    "depth": comp_depth,
                                                                    "capno": score })
 
-            status_out = json.dumps({ "time": now,
-                                      "rate": comp_rate,
-                                      "depth": comp_depth,
-                                      "capno": score })
+            status_out = json.dumps({ "status_msg": { 
+                                        "time": now,
+                                        "rate": comp_rate,
+                                        "depth": comp_depth,
+                                        "capno": score }})
 
             values_out = json.dumps({ "data_points": second_values })
 

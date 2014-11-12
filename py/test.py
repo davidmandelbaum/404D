@@ -10,5 +10,5 @@ sys.stdout.write(status + "\n")
 
 status = []
 status.append((1, 2))
-status_out = json.dumps({ "status": status})
+status_out = json.dumps({ "status_msg": status})
 sys.stdout.write(status_out + "\n")

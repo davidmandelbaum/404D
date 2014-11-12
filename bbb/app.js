@@ -17,11 +17,11 @@ pyshell.on('message', function (message) {
   console.log(message);
   if ('data_points' in message){
     socket.emit('data_points', message.data_points);
-    console.log('data_points' + message.data_points);
+    console.log('data_points: ' + message.data_points);
   }
-  if ('status' in message){
-    socket.emit('status', message.status);
-    console.log('status', message.status);
+  if ('status_msg' in message){
+    socket.emit('status_msg', message.status_msg);
+    console.log('status: ', message.status_msg);
   }
 });
 
