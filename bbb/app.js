@@ -15,9 +15,9 @@ var pyshell = new PythonShell('test.py', options);
 
 pyshell.on('message', function (message) {
   console.log(message);
-  if ('second_values' in message){
-    socket.emit('second_values', message.second_values);
-    console.log('second_values: ' + message.second_values);
+  if ('data_points' in message){
+    socket.emit('data_points', message.data_points);
+    console.log('data_points' + message.data_points);
   }
 });
 

@@ -107,7 +107,7 @@ bbb.on('connection', function(socket) {
   socket.on('disconnect', function() {
     console.log('a user disconnected');
   });
-  socket.on('second_values', function(second_values) {
-    console.log('Second values: ' + second_values);
+  socket.on('data_points', function(data_points) {
+    console.log('data_points: ' + data_points);
   });
 });
