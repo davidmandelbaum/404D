@@ -88,9 +88,10 @@ block content
     socket.on('data_point', function(data_point) {
       console.log('data point!');
       console.log(data_point);
-      var x = parseFloat(data_point["time"]);
+      var x = parseFloat(data_point[0]);
       console.log('time = ' + x);
-      var y = parseFloat(data_point["depth"]);
+      var y = parseFloat(data_point[1]);
+      console.log('depth = ' + y);
       chart.series[0].addPoint([x, y], true);
     });
 
