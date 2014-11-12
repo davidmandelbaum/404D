@@ -1,4 +1,5 @@
 from __future__ import division
+import Adafruit_BBIO.ADC as ADC
 import sys
 import numpy as np
 import time as time
@@ -12,6 +13,8 @@ import json
 import urllib
 
 # TODO: init connection with sensors
+
+ADC.setup()
 
 # init arduino
 # ser = serial.Serial('/dev/tty.usbserial-A602TSPH', 9600)
@@ -49,6 +52,8 @@ try:
     # calibrate to initial depth
     # ser.write('?')
     # init_depth = float(ser.readline()[0:4])
+
+    init_depth = float(ADC.read("P9_40"))
 
     while True:
         now = round(time.time() - start_time, 4)
@@ -108,6 +113,7 @@ try:
         # TODO: read value from linear pot.
         # ser.write('?')
         # num_in = ser.readline()
+        num_in = ADC.read("P9_40")
 
         try:
             num_in = float(num_in[0:4])
