@@ -108,6 +108,8 @@ bbb.on('connection', function(socket) {
     console.log('a user disconnected');
   });
   socket.on('message', function(msg) {
-    console.log('Message: ' + msg);
+    if ('second_values' in msg){
+      console.log('Second values: ' + msg.second_values);
+    }
   });
 });

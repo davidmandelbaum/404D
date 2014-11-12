@@ -7,7 +7,7 @@ socket.on('connect', function() {
 var PythonShell = require('python-shell');
 
 var options = {
-  mode: 'text',
+  mode: 'json',
   scriptPath: '../py/'
 };
 
@@ -16,6 +16,9 @@ var pyshell = new PythonShell('test.py', options);
 pyshell.on('message', function (message) {
   socket.emit('message', message);
   console.log(message);
+  if ('second_values' in message){
+    console.log('second_values!');
+  }
 });
 
 pyshell.end(function (err) {

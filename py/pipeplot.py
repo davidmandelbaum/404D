@@ -79,7 +79,8 @@ try:
                 ser.write('g')
                 ser.write('R')
 
-            # output via stdout
+            values_out = json.dumps({ "second_values": second_values })
+            sys.stdout.write(json.dumps(second_values))
 
             second_values = []
 
