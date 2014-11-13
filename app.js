@@ -35,9 +35,9 @@ router.get('/', function(req, res) {
   res.render('index', { title: 'Welcome!' });
 });
 
-router.post('/post', function(req, res) {
+router.post('/trial_inputs', function(req, res) {
   console.log(req.body);
-  res.render('live', { title: 'Live trial' });
+  res.redirect('/live');
 });
 
 router.get('/live', function(req, res) {

@@ -7,7 +7,6 @@ socket.on('connect', function() {
   socket.emit('init', '');
 });
 
-
 // b.pinMode('P8_19', b.INPUT);
 // setInterval(check, 100);
 //

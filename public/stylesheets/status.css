@@ -9,11 +9,13 @@ body {
   height: 300px;
   font-size: 20px;
   line-height: 2.1;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 #status div {
-  width: 75px;
-  height: 23px; 
+  width: 100px;
+  height: 38px; 
   display: inline-block;
   padding-left: 10px;
   padding-right: 10px;
@@ -26,7 +28,7 @@ body {
 
 #status #time, #status #capno {
   border: 1px solid black;
-  width: 73px;
+  width: 100px;
 }
 
 .good {
@@ -37,4 +39,24 @@ body {
 .bad {
   background-color: red;
   color: white;
+}
+
+#connect {
+  margin-top: 50px;
+  font-weight: bold;
+  text-align: center;
+  padding: 10px;
+  height: 48px;
+  width: 200px;
+  color: white;
+  font-size: 18px;
+  transition: background-color .5s;
+}
+
+.green {
+  background-color: green;
+}
+
+#input_form {
+  display: none;
 }
