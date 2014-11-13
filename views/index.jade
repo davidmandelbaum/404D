@@ -2,6 +2,9 @@ extends layout
 
 block content
   link(href='/stylesheets/status.css', rel='stylesheet')
+  link(href='/stylesheets/nouislider.css', rel='stylesheet')
+  script(src='/javascripts/nouislider.js', type='text/javascript')
+  script(src='/javascripts/liblink.js', type='text/javascript')
 
   div#manikin-info.center-block.waiting
     | Waiting for manikin connection...
@@ -9,15 +12,21 @@ block content
   br
   br
 
-  div#input_form.center-block
-    form(action='trial_inputs', method='post', role='form')
+  div#input_form.center-block.input_disabled
+    div#overlay
+    form(action='trial_inputs', method='post', role='form', class='form-horizontal')
       div.form-group
-        label(for='time'). Session length 
-        input#time.form-control(type='text', name='time')
+        label.col-sm-3.control-label(for='time',). Session length 
+        div#time-content.col-sm-9
+          div#time-slider(disabled='disabled')
+          br
+          input#time-input.form-control.input-lg(type='text', name='time', disabled)
+          &nbsp;mins
       div.form-group
-        label(for='capno'). Starting capno score
-        input#capno.form-control(type='text', name='capno')
-      input.btn.btn-default(type='submit', value='submit')
+        label.col-sm-3.control-label(for='capno'). Starting capno score
+        div#capno-content.col-sm-9
+          input#capno-input.form-control.input-lg(type='text', name='capno', disabled)
+      input.btn.btn-default(type='submit', value='Start trial', disabled)
 
   script(type='text/javascript').
     var socket = io();
@@ -26,5 +35,24 @@ block content
       console.log('bbb connected');
       $("#manikin-info").html("Manikin connected");
       $("#manikin-info").addClass("connected");
-      $("#input_form").fadeIn();
+      window.setTimeout( function() {
+        $("#overlay").fadeOut();
+        $("#input_form").addClass("input_connected");
+        $("#input_form input").each(function() {
+          $(this).removeAttr("disabled");
+        });
+        $("#time-content").removeAttr("disabled");
+        $("#time-slider").removeAttr("disabled");
+      }, 200);
     });
+
+    $("#time-slider").noUiSlider({
+      start: [1],
+      step: .1,
+      range: {
+        'min': [.1],
+        'max': [10]
+      }
+    });
+
+    $("#time-slider").Link('lower').to($('#time-input'));

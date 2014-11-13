@@ -18,9 +18,6 @@ sys.stdout.write(status_out + "\n")
 #     data_point.append((n, round((n%1), 2)))
 #     data_point_out = json.dumps({ "data_point": data_point })
 #     sys.stdout.write(data_point_out + "\n")
-#     # sleep(0.1)
-
-sys.stdout.write("end!")
 
 # final_stats = {}
 # final_stats['time'] = 100

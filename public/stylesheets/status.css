@@ -31,6 +31,15 @@ body {
   width: 100px;
 }
 
+#time-input {
+  text-align: right;
+  width: 80%;
+}
+
+#capno_input {
+
+}
+
 .good {
   background-color: green;
   color: black;
@@ -42,8 +51,29 @@ body {
 }
 
 #input_form {
-  display: none;
   width: 500px;
+  transition: opacity .5s;
+  position: relative;
+}
+
+.input_disabled {
+  opacity: .5;
+}
+
+.input_connected {
+  background-color: white;
+  opacity: 1;
+}
+
+#overlay {
+  position: absolute;
+  top: -15px;
+  bottom: -15px;
+  right: -15px;
+  left: -15px;
+  background-color: gray;
+  opacity: .3;
+  border-radius: 4px;
 }
 
 #manikin-info {
@@ -55,6 +85,7 @@ body {
   text-align: center;
   transition: background-color 1s;
   transition: color 1s;
+  border-radius: 3px;
 }
 
 .waiting {
