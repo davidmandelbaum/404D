@@ -1,7 +1,11 @@
 // var b = require('bonescript');
 
-var socket = require('socket.io-client')('http://localhost:3000/bbb');
-// var socket = require('socket.io-client')('http://meng404d.herokuapp.com:80/bbb');
+var socket = require('socket.io-client')('http://meng404d.herokuapp.com:80/bbb');
+
+if (process.argv.length > 2 && process.argv[2] == '-l'){
+  socket = require('socket.io-client')('http://localhost:3000/bbb');
+  console.log('local!');
+}
 
 socket.on('connect', function() {
   console.log('connected to remote socket');
