@@ -28,11 +28,6 @@ socket.on('connect', function() {
 //     handle anything?
 //   }
 
-socket.on('manikin_inputs', function(msg) {
-  console.log('manikin inputs:');
-  console.log(msg);
-});
-
 var PythonShell = require('python-shell');
 
 var options = {
@@ -40,35 +35,51 @@ var options = {
   scriptPath: '../py/'
 };
 
-var pyshell = new PythonShell('test.py', options);
+function run_script(inputs) {
+  console.log('inputs: ' + inputs);
+  var pyshell = new PythonShell('test.py', options);
 
-console.log('starting pyshell');
+  console.log('starting pyshell');
 
-pyshell.on('message', function (message) {
-  console.log(message);
+  socket.emit('init', '');
 
-  if ('data_point' in message){
-    socket.emit('data_point', message.data_point);
-    console.log('data_point: ' + message.data_point);
-  }
+  pyshell.on('message', function (message) {
+    console.log(message);
 
-  if ('data_points' in message){
-    socket.emit('data_points', message.data_points);
-    console.log('data_points: ' + message.data_points);
-  }
+    if ('data_point' in message){
+      socket.emit('data_point', message.data_point);
+      console.log('data_point: ' + message.data_point);
+    }
 
-  if ('status_msg' in message){
-    socket.emit('status_msg', message.status_msg);
-    console.log('status: ', message.status_msg);
-  }
+    if ('data_points' in message){
+      socket.emit('data_points', message.data_points);
+      console.log('data_points: ' + message.data_points);
+    }
 
-  if ('final_stats' in message){
-    socket.emit('final_stats', message.final_stats);
-    console.log('final_stats: ', message.final_stats);
-  }
-});
+    if ('status_msg' in message){
+      socket.emit('status_msg', message.status_msg);
+      console.log('status: ', message.status_msg);
+    }
 
-pyshell.end(function (err) {
-  if (err) throw err;
-  console.log('finished');
+    if ('final_stats' in message){
+      socket.emit('final_stats', message.final_stats);
+      console.log('final_stats: ', message.final_stats);
+    }
+  });
+
+  pyshell.end(function (err) {
+    if (err) throw err;
+    console.log('finished');
+  });
+}
+
+socket.on('manikin_inputs', function(msg) {
+  console.log('manikin inputs:');
+  console.log(msg);
+
+  setTimeout(function() {
+    console.log('starting script');
+    run_script(msg);
+  }, 2000);
+
 });
