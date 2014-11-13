@@ -1,11 +1,23 @@
+
+# Factor out the ability to grab tables fill of maxes/mins
+
+
+
+
+
 # TO DO
 
 # continue tweaking algorithm numbers
 # add ventilations
-# allow conversion to kPa?
+# Search for influence of airflow on ETCO2, translate rate/depth into airflow and then airflow into ETCO2?
+# Search for more papers to set better parameters
+
+# what should the max depth be? The min?
+
+# divide everything by 50?
 
 
-# import the CSV file
+# IMPORT THE CSV FILE
 
 setwd("C:/Users/Aaron/Dropbox/code")
 
@@ -13,81 +25,77 @@ setwd('404')
 
 baxter = read.csv("baxter.csv")
 angie = read.csv("angie.csv")
-
-# Gather time and depth into two proper arrays (subtract if necessary) (data cleaning)
-# Make sure the arrays are paired and whatnot
-
-baxtest = head(baxter, n = 100)
-angtest = head(angie, n = 100)
+charlie = read.csv("charlie.csv")
+chocolate = read.csv("chocolate.csv")
+daniel = read.csv("daniel.csv")
+farfell = read.csv("farfell.csv")
 
 
-  # create local maxima function
-  #
-  # scratch that, we'll get maxes as we go along, 
-  # can't get all data before creating score
+# CLEAN THE DATASET
 
-# getmaxes <- function(user){ # finds local depth maxima
-#   library(zoo)
-#   x = data.frame(user$Depth)
-#   max <- as.zoo(x)
-#   maxlist <- rollapply(max, 3, function(x) which.max(x)==2)
-#   head(maxlist, n = 30) # check your work
-# }
-# 
-# getmins <- function(user){ # finds local depth minima
-#   library(zoo)
-#   x = data.frame(user$Depth)
-#   min <- as.zoo(x)
-#   minlist <- rollapply(min, 3, function(x) which.min(x)==2)
-#   head(minlist, n = 30) # check your work
-# }
+test <- function(data){
+  data <- head(data, n = 100) 
+}
 
 
-# setscore function
+clean <- function(data){
+  time <- data[1]
+  depth <- data[2]
+  depth <- depth[ depth > 0 & depth < 80]
+  time <- head(time, n = length(depth))
+  data <- data.frame(time, depth) 
+}
 
-# For each i, check i - 1. Is it a local max? If so, record it for scoring
-# for each i, check i - 1. Is it a local min? If so, record it for scoring
-# each new max manipulates score (deeper is better)
-# each new min manipulates score (0 is best, anything else is worse)
 
-# whenever we get a new max, check the time at that point. How long since the last one?
-# ideal is 600 milliseconds, higher/lower is lost points
+# SET VARIABLES FOR CANOGRAPHY SCORING
 
-# score is a separate array
+mindepth = 4.0
+maxdepth = 5.5
 
+depthscore = 2.5
 
 
 maxalg <- function(depth){
   depth = depth/10
-  if (4 < depth & depth < 5){
-    return(2.5)
+  if (mindepth < depth & depth < maxdepth){
+    return(depthscore)
   }
-  if (depth > 5){
-    return(1-(10*depth-5)) 
+  if (depth > maxdepth){
+    return(depthscore-(10*(depth-maxdepth))) 
     # serious penalty for too-deep compression, you could break something
   }
   else{
-    return(2.5-(2-(0.25*sqrt(depth)))) 
+    return(depthscore-(sqrt(mindepth)-(0.25*sqrt(depth)))) 
     # probably not penalizing very shallow compressions steeply enough
   }
 }
 
 minalg <- function(depth){
+  
   depth = depth/10
+  recoilscore = 1
+  
   if (depth == 0){
-    return(1)
+    return(recoilscore)
   }
   else  
-    return(1-depth) # score decreases linearly with partial recoil
+    return(recoilscore-depth) # score decreases linearly with partial recoil
 }
 
 timealg <- function(current, last){
+  
   rate = (current - last)/100
-  if (0.5 < rate && rate < 0.6){
-    return(1)
+  ratescore = 1
+  
+  goodrates = c(0.5, 0.6)
+  weakrates = c(0.3, 0.8)
+  
+  
+  if (min(goodrates) < rate && rate < max(goodrates)){
+    return(ratescore)
   }
-  if (0.3 < rate && rate < 0.8){
-    return(1-(2*abs(0.55-rate)))
+  if (min(weakrates) < rate && rate < max(weakrates)){
+    return(ratescore-(2*abs(mean(weakrates)-rate)))
   }
   else
     return(0)
@@ -97,6 +105,8 @@ timealg <- function(current, last){
 # capscore function
 
 capscore <- function(user, start){
+  
+  user = clean(user)
   
   allmax = NULL
   allmin = NULL
@@ -135,9 +145,9 @@ for (i in 3:nrow(user)){
     score = score + (riserate*minalg(depth(i-1)))
   }
   
-  if(score > 1250){  # whatever corresponds to a score of 25 mmHg or more
-    score = 1250  # we could also drop the score a few points to allow "rewards" for continued good compressions
-  }
+#   if(score > 1250){  # whatever corresponds to a score of 25 mmHg or more
+#     score = 1250  # we could also drop the score a few points to allow "rewards" for continued good compressions
+#   }
   
   if(score < 250){  # Whatever corresponds to a score of 5 mmHg or less
     return("point of no return")
@@ -145,14 +155,10 @@ for (i in 3:nrow(user)){
   
   allscore <- c(allscore, score)
 }
-#   return(score)
-#   return(tail(allscore, n = 100)
-  plot(allscore)
-  return(colMeans(allmax, dims = 1))
+    return(allscore)
+    print(colMeans(allmax, dims = 1))
 }
-  #plot(score)
-  #plot(depth, time)
 
-# If score reaches certain minimum, output "dead"
-
-
+  plot(capscore(daniel, 3000))
+  lines(capscore(baxter, 3000), col="blue")
+  lines(capscore(angie, 3000), col="red")
