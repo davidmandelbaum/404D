@@ -3,28 +3,28 @@ extends layout
 block content
   link(href='/stylesheets/status.css', rel='stylesheet')
 
-  div.row
-    div.col-md-6
-      div#connect
+  div#manikin-info.center-block.waiting
+    | Waiting for manikin connection...
 
-      br
-      br
+  br
+  br
 
-      form(action='trial_inputs', method='post', role='form', id='input_form')
-        div.form-group
-          label(for='time'). Session length 
-          input#time.form-control(type='text', name='time')
-        div.form-group
-          label(for='capno'). Starting capno score
-          input#capno.form-control(type='text', name='capno')
-        input.btn.btn-default(type='submit', value='submit')
+  div#input_form.center-block
+    form(action='trial_inputs', method='post', role='form')
+      div.form-group
+        label(for='time'). Session length 
+        input#time.form-control(type='text', name='time')
+      div.form-group
+        label(for='capno'). Starting capno score
+        input#capno.form-control(type='text', name='capno')
+      input.btn.btn-default(type='submit', value='submit')
 
   script(type='text/javascript').
     var socket = io();
 
     socket.on('bbb_connect', function() {
       console.log('bbb connected');
+      $("#manikin-info").html("Manikin connected");
+      $("#manikin-info").addClass("connected");
       $("#input_form").fadeIn();
-      $("#connect").addClass("green");
-      $("#connect").html("Manikin connected!");
     });

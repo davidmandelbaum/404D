@@ -41,22 +41,27 @@ body {
   color: white;
 }
 
-#connect {
-  margin-top: 50px;
-  font-weight: bold;
-  text-align: center;
-  padding: 10px;
-  height: 48px;
-  width: 200px;
-  color: white;
-  font-size: 18px;
-  transition: background-color .5s;
-}
-
-.green {
-  background-color: green;
-}
-
 #input_form {
   display: none;
+  width: 500px;
+}
+
+#manikin-info {
+  margin-top: 70px;
+  width: 300px;
+  height: 100px;
+  padding-top: 35px;
+  font-size: 18px;
+  text-align: center;
+  transition: background-color 1s;
+  transition: color 1s;
+}
+
+.waiting {
+  background-color: #eee;
+}
+
+.connected {
+  background-color: green;
+  color: white;
 }
