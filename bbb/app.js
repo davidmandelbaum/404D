@@ -1,6 +1,7 @@
 // var b = require('bonescript');
 
 var socket = require('socket.io-client')('http://localhost:3000/bbb');
+// var socket = require('socket.io-client')('http://meng404d.herokuapp.com:80/bbb');
 
 socket.on('connect', function() {
   console.log('connected to remote socket');
@@ -23,6 +24,10 @@ socket.on('connect', function() {
 //     handle anything?
 //   }
 
+socket.on('manikin_inputs', function(msg) {
+  console.log('manikin inputs:');
+  console.log(msg);
+});
 
 var PythonShell = require('python-shell');
 

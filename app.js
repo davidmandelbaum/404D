@@ -37,6 +37,7 @@ router.get('/', function(req, res) {
 
 router.post('/trial_inputs', function(req, res) {
   console.log(req.body);
+  bbb.emit('manikin_inputs', req.body);
   res.redirect('/live');
 });
 
