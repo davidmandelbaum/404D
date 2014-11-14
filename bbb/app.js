@@ -31,7 +31,7 @@ socket.on('connect', function() {
 var PythonShell = require('python-shell');
 
 var options = {
-  mode: 'json',
+  mode: 'text',
   scriptPath: '../py/'
 };
 

@@ -9,7 +9,11 @@ import csv as csv
 import json
 import urllib
 
+print "pre-setup"
+
 ADC.setup()
+
+print "post-setup"
 
 try:
     time_limit = 10
