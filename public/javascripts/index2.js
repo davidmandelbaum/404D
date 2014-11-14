@@ -34,7 +34,7 @@ socket.on('data_points', function(data_points) {
     min_y: 6,
     max_y: 0,
     area: false,
-    interpolate: linear
+    interpolate: "linear"
   });
 });
 
