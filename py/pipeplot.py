@@ -90,7 +90,7 @@ try:
 
             values_out = json.dumps({ "data_points": second_values })
 
-            sys.stdout.write(values_out + "\n")
+            # sys.stdout.write(values_out + "\n")
             sys.stdout.write(status_out + "\n")
             sys.stdout.flush()
 
