@@ -92,6 +92,7 @@ try:
 
             sys.stdout.write(values_out + "\n")
             sys.stdout.write(status_out + "\n")
+            sys.stdout.flush()
 
             second_values = []
 
@@ -157,6 +158,7 @@ try:
 
     stats_out = json.dumps({ "final_stats": stats }) 
     sys.stdout.write(stats_out + "\n")
+    sys.stdout.flush()
 
     # TODO: rewrite CSV writing on server side?
 
