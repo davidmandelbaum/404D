@@ -74,7 +74,7 @@ socket.on('data_point', function(data_point) {
 socket.on('data_points', function(data_points) {
   console.log('data points!');
   console.log(data_points);
-  points = JSON.parse(data_points["points"]);
+  points = JSON.parse(data_points);
   console.log('points = ' + points);
   var i = 0;
   for (i = 0; i < points.length; i++){
