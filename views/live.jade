@@ -4,7 +4,10 @@ block content
   script(src='//code.highcharts.com/highcharts.js')
   script(src='//code.highcharts.com/modules/exporting.js')
   script(src='/socket.io/socket.io.js')
+  script(src='//cdnjs.cloudflare.com/ajax/libs/d3/3.4.11/d3.min.js', charset='utf-8')
   link(href='/stylesheets/status.css', rel='stylesheet')
+  link(href='/stylesheets/metricsgraphics.css', rel='stylesheet')
+  link(href='/stylesheets/highlightjs-default.css', rel='stylesheet')
   div#status
     h1#title Status
     | Time: 
@@ -19,5 +22,25 @@ block content
     | Depth: 
     div#depth.good
     br
+  div#compressions
   div#container(style='min-width: 300px; height: 400px; margin: 0 auto')
-  script(src='/javascripts/index.js', type='text/javascript')
+  // script(src='/javascripts/index.js', type='text/javascript')
+  script(src='/javascripts/metricsgraphics.min.js')
+  script(src='/javascripts/lib/highlight.pack.js')
+  script(type='text/javascript').
+    var socket = io();
+    var data;
+    var compressions = [{"time": 0, "depth": 3}, {"time": 1, "depth": 4}]
+    socket.on('data_point', function(data_point) {
+      data = data_point;
+      console.log(data_point);
+      compressions.push({"time": parseInt(data_point.time), "depth": parseInt(data_point.depth)});
+      console.log(compressions);
+      data_graphic({
+        title: "Compressions",
+        data: compressions,
+        target: "#compressions",
+        x_accessor: 'time',
+        y_accessor: 'depth'
+      })
+    });
