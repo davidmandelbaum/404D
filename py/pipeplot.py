@@ -107,6 +107,7 @@ try:
             num_in = round(num_in, 2)
             num_in -= init_depth
             num_in *= conversion
+            num_in = round(num_in, 2)
             # TODO: deal with issue of numbers not being the same
             if old_num != num_in:
                 y_vals_window.append((now, num_in))
