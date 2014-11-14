@@ -9,22 +9,7 @@ import csv as csv
 import json
 import urllib
 
-print "pre-setup"
-
 ADC.setup()
-
-print "post-setup"
-
-value = ADC.read("P9_40")
-print value
-value = ADC.read("P9_40")
-print value
-value = ADC.read("P9_40")
-print value
-value = ADC.read("P9_40")
-print value
-value = ADC.read("P9_40")
-print value
 
 try:
     time_limit = 10
@@ -105,8 +90,8 @@ try:
 
             values_out = json.dumps({ "data_points": second_values })
 
-            sys.stdout.write(values_out)
-            sys.stdout.write(status_out)
+            sys.stdout.write(values_out + "\n")
+            sys.stdout.write(status_out + "\n")
 
             second_values = []
 
@@ -171,7 +156,7 @@ try:
     stats = final_stats(y_vals, time_limit, data)
 
     stats_out = json.dumps({ "final_stats": stats }) 
-    sys.stdout.write(stats_out)
+    sys.stdout.write(stats_out + "\n")
 
     # TODO: rewrite CSV writing on server side?
 

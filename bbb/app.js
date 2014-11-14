@@ -31,7 +31,7 @@ socket.on('connect', function() {
 var PythonShell = require('python-shell');
 
 var options = {
-  mode: 'text',
+  mode: 'json',
   scriptPath: '../py/'
 };
 
@@ -45,7 +45,6 @@ function run_script(inputs) {
 
   pyshell.on('message', function (message) {
     console.log(message);
-    /*
 
     if ('data_point' in message){
       socket.emit('data_point', message.data_point);
@@ -66,7 +65,6 @@ function run_script(inputs) {
       socket.emit('final_stats', message.final_stats);
       console.log('final_stats: ', message.final_stats);
     }
-    */
   });
 
   pyshell.end(function (err) {
