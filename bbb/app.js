@@ -33,12 +33,13 @@ var PythonShell = require('python-shell');
 
 function run_script(inputs) {
   console.log('inputs: ' + inputs);
-  var pyshell = new PythonShell('pipeplot.py', options);
   var options = {
     mode: 'json',
     scriptPath: '../py/',
-    args: [inputs.time]
+    args: [inputs.time*60]
   };
+
+  var pyshell = new PythonShell('pipeplot.py', options);
 
   console.log('starting pyshell');
 
