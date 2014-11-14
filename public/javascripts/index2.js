@@ -25,6 +25,65 @@ socket.on('data_points', function(data_points) {
     data: compressions,
     target: "#compressions",
     x_accessor: 'time',
-    y_accessor: 'depth'
+    y_accessor: 'depth',
+    width: 500,
+    height: 500,
+    min_x: 0,
+    // TODO: actual time of trial
+    max_x: 60,
+    min_y: 6,
+    max_y: 0,
+    area: false,
+    interpolate: linear
   });
+});
+
+socket.on('status_msg', function(status_msg) {
+  console.log('status_msg!');
+  console.log(status_msg);
+  console.log(status_msg['time']);
+  var time = parseFloat(status_msg["time"]);
+  var rate = parseFloat(status_msg["rate"]);
+  var depth = parseFloat(status_msg["depth"]).toFixed(2);
+  var capno = parseFloat(status_msg["capno"]).toFixed(2);
+  $("#time").html(time + "s");
+  $("#rate").html(rate + " /m");
+  if (rate > 130 || rate < 100) {
+    $("#rate").addClass("bad");
+  }
+  else {
+    $("#rate").removeClass("bad");
+  }
+if (depth < 4 || depth > 6){
+  $("#depth").addClass("bad");
+}
+else {
+  $("#depth").removeClass("bad");
+}
+$("#depth").html(depth + " cm");
+$("#capno").html(capno);
+});
+
+socket.on('final_stats', function(final_stats) {
+  console.log('final stats!');
+  console.log(final_stats);
+  var time = parseFloat(final_stats["time"]);
+  var rate = parseFloat(final_stats["rate"]);
+  var depth = parseFloat(final_stats["depth"]);
+  $("#title").html("Final Statistics");
+  $("#time").html(time + "s");
+  $("#rate").html(rate + " /m");
+  $("#depth").html(depth + " cm");
+  if (rate > 130 || rate < 100) {
+    $("#rate").addClass("bad");
+  }
+  else {
+    $("#rate").removeClass("bad");
+  }
+if (depth < 4 || depth > 6){
+  $("#depth").addClass("bad");
+}
+else {
+  $("#depth").removeClass("bad");
+}
 });
