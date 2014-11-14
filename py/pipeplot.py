@@ -44,7 +44,8 @@ try:
     # ser.write('?')
     # init_depth = float(ser.readline()[0:4])
 
-    init_depth = round(ADC.read("P9_40"), 2)
+    init_depth = 0
+    # init_depth = round(ADC.read("P9_40"), 3)
 
     while True:
         now = round(time.time() - start_time, 4)
