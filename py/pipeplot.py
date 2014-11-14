@@ -105,6 +105,7 @@ try:
         num_in = ADC.read("P9_40")
 
         try:
+            print num_in
             num_in = round(num_in, 2)
             num_in -= init_depth
             num_in *= conversion
