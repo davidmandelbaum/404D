@@ -15,6 +15,17 @@ ADC.setup()
 
 print "post-setup"
 
+value = ADC.read("P9_40")
+print value
+value = ADC.read("P9_40")
+print value
+value = ADC.read("P9_40")
+print value
+value = ADC.read("P9_40")
+print value
+value = ADC.read("P9_40")
+print value
+
 try:
     time_limit = 10
     window_length = 5
