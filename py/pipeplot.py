@@ -3,7 +3,6 @@ import Adafruit_BBIO.ADC as ADC
 import sys
 import numpy as np
 import time as time
-from scipy import signal as sig
 from helpers import *
 from capno_helpers import *
 import csv as csv
