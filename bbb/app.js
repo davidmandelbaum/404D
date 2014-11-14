@@ -30,14 +30,15 @@ socket.on('connect', function() {
 
 var PythonShell = require('python-shell');
 
-var options = {
-  mode: 'json',
-  scriptPath: '../py/'
-};
 
 function run_script(inputs) {
   console.log('inputs: ' + inputs);
   var pyshell = new PythonShell('pipeplot.py', options);
+  var options = {
+    mode: 'json',
+    scriptPath: '../py/',
+    args: [inputs.time]
+  };
 
   console.log('starting pyshell');
 

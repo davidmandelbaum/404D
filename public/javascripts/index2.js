@@ -15,7 +15,7 @@ socket.on('data_point', function(data_point) {
 socket.on('data_points', function(data_points) {
   console.log("data points received");
   var i = 0;
-  points = JSON.parse(data_points.points);
+  points = JSON.parse(data_points);
   for (i = 0; i < points.length; i++){
     compressions.push({"time": parseFloat(points[i][0]), "depth": parseFloat(points[i][1])});
   }

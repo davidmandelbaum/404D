@@ -12,7 +12,7 @@ import urllib
 ADC.setup()
 
 try:
-    time_limit = 10
+    time_limit = int(sys.argv[1])
     window_length = 5
 
     # globals
@@ -22,7 +22,7 @@ try:
     comp_depths = []
     nums = np.arange(0, time_limit, 10)
     old_num = 0
-    conversion = 3.84 # calculated given length of potentiometer
+    conversion = 10 # calculated given length of potentiometer
     ylim = 7
     comp_status = 0
     depth_status = 0
