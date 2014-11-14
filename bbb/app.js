@@ -37,7 +37,7 @@ var options = {
 
 function run_script(inputs) {
   console.log('inputs: ' + inputs);
-  var pyshell = new PythonShell('test.py', options);
+  var pyshell = new PythonShell('pipeplot.py', options);
 
   console.log('starting pyshell');
 
