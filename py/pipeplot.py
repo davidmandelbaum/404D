@@ -88,9 +88,9 @@ try:
                                         "depth": comp_depth,
                                         "capno": score }})
 
-            values_out = json.dumps({ "data_points": second_values })
+            values_out = json.dumps({ "data_points": json.dumps(second_values) })
 
-            # sys.stdout.write(values_out + "\n")
+            sys.stdout.write(values_out + "\n")
             sys.stdout.write(status_out + "\n")
             sys.stdout.flush()
 
@@ -109,7 +109,6 @@ try:
             num_in = round(num_in, 2)
             num_in -= init_depth
             num_in *= conversion
-            num_in = round(num_in, 2)
             # TODO: deal with issue of numbers not being the same
             if old_num != num_in:
                 y_vals_window.append((now, num_in))
