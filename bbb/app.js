@@ -16,7 +16,6 @@ function checkButton(x) {
       bbb_run();
     }
     else {
-      console.log('waiting for button press');
     }
   }
 }
@@ -89,6 +88,8 @@ function bbb_run() {
     pyshell.end(function (err) {
       if (err) throw err;
       console.log('finished');
+      pressed = 0;
+      console.log('pressed = ' + pressed);
     });
   }
 
@@ -102,6 +103,4 @@ function bbb_run() {
     }, 2000);
 
   });
-  pressed = 0;
-  console.log('pressed = ' + pressed);
 }
