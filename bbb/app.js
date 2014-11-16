@@ -8,7 +8,7 @@ function check() {
   b.digitalRead('P8_12', checkButton);
 }
 
-function checkButton() {
+function checkButton(x) {
   if (!pressed){
     if (x.value == 1) {
       pressed = 1;
