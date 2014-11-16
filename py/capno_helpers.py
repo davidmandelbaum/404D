@@ -26,8 +26,9 @@ def min_alg(depth):
     else:
         return 1-depth
 
-def time_alg(current, last):
-    rate = (current - last)/100
+def time_alg(current, last, diff):
+    diff *= 100
+    rate = (current - last)/diff
     if 0.5 < rate and rate < 0.6:
         return 1
     elif 0.3 < rate and rate < 0.8:
