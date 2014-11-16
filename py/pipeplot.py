@@ -28,6 +28,7 @@ try:
     depth_status = 0
     second_values = []
     data = []
+    send_freq = .5
 
     # capno alg
     scores = []
@@ -37,6 +38,7 @@ try:
 
     start_time = time.time()
     last_calc = time.time() - start_time
+    last_send = time.time() - start_time
 
 
     init_depth = 0
@@ -51,6 +53,14 @@ try:
 
     while True:
         now = round(time.time() - start_time, 4)
+
+        if (now-last_send) > send_freq and now > 0 and len(y_vals_window) > 0:
+            last_send = now
+
+            values_out = json.dumps({ "data_points": json.dumps(second_values) })
+            sys.stdout.write(values_out + "\n")
+            sys.stdout.flush()
+            second_values = []
 
         if (now-last_calc) > 1 and now > 0 and len(y_vals_window) > 0:
             last_calc = now
@@ -90,13 +100,8 @@ try:
                                         "depth": comp_depth,
                                         "capno": score }})
 
-            values_out = json.dumps({ "data_points": json.dumps(second_values) })
-
-            sys.stdout.write(values_out + "\n")
             sys.stdout.write(status_out + "\n")
             sys.stdout.flush()
-
-            second_values = []
 
         if now > time_limit:
             break
