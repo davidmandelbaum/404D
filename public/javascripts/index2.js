@@ -30,7 +30,7 @@ socket.on('data_points', function(data_points) {
     height: 500,
     min_x: 0,
     // TODO: actual time of trial
-    max_x: 60,
+    max_x: 30,
     min_y: 6,
     max_y: 0,
     area: false,

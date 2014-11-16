@@ -33,19 +33,16 @@ try:
     scores = []
     maxes = []
     mins = []
-    score = 1250
+    score = int(sys.argv[2])
 
     start_time = time.time()
     last_calc = time.time() - start_time
 
-    # TODO: initial depth calibration
-
-    # calibrate to initial depth
-    # ser.write('?')
-    # init_depth = float(ser.readline()[0:4])
 
     init_depth = 0
     # init_depth = round(ADC.read("P9_40"), 3)
+
+    # TODO: initial depth calibration
 
     while True:
         now = round(time.time() - start_time, 4)
@@ -109,6 +106,7 @@ try:
             num_in -= init_depth
             num_in *= conversion
             num_in = round(num_in, 3)
+            time.sleep(.1)
             # TODO: deal with issue of numbers not being the same
             if old_num != num_in:
                 y_vals_window.append((now, num_in))

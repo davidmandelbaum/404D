@@ -36,7 +36,7 @@ function run_script(inputs) {
   var options = {
     mode: 'json',
     scriptPath: '../py/',
-    args: [inputs.time*60]
+    args: [inputs.time*60, inputs.capno],
   };
 
   var pyshell = new PythonShell('pipeplot.py', options);
