@@ -27,13 +27,16 @@ body {
 }
 
 #begin {
-  width: 100px;
-  height: 50px;
+  width: 160px;
+  height: 60px;
   font-size: 18px;
+  padding: 18px;
+  text-align: center;
   background-color: green;
   color: white;
-  margin-bottom: 50px;
-  margin-top: 100px;
+  position: absolute;
+  top: 50px;
+  left: 400px;
   display: none;
 }
 
