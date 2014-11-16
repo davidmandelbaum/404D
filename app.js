@@ -154,4 +154,9 @@ bbb.on('connection', function(socket) {
     io.emit('final_stats', final_stats);
     console.log('final_stats: ' + final_stats);
   });
+
+  socket.on('begin', function(begin) {
+    io.emit('begin', '');
+    console.log('begin');
+  });
 });
