@@ -146,7 +146,7 @@ try:
                 if len(maxes) > 2:
                     time_diff = maxes[-2][1] - maxes[-1][1]
                     score = score + (rise_rate * max_alg(data[-2][1])) \
-                                  + (rise_rate * time_alg(maxes[-1][0], maxes[-2][0]), time_diff)
+                                  + (rise_rate * time_alg(maxes[-1][0], maxes[-2][0], time_diff))
 
             if data[-3][1] > data[-2][1] and data[-1][1] > data[-2][1]:
                 mins.append((data[-2][1], data[-2][0]))
