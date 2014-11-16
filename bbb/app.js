@@ -4,6 +4,8 @@ var pressed = 0;
 b.pinMode('P8_12', b.INPUT);
 setInterval(check, 100);
 
+console.log('ready for input');
+
 function check() {
   b.digitalRead('P8_12', checkButton);
 }
