@@ -112,4 +112,5 @@ socket.on('final_stats', function(final_stats) {
   else {
     $("#depth").removeClass("bad");
   }
+  $("#ended").fadeIn().delay(2000).fadeOut();
 });

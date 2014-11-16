@@ -40,6 +40,20 @@ body {
   display: none;
 }
 
+#ended {
+  width: 160px;
+  height: 60px;
+  font-size: 18px;
+  padding: 18px;
+  text-align: center;
+  background-color: red;
+  color: white;
+  position: absolute;
+  top: 50px;
+  left: 400px;
+  display: none;
+}
+
 #status #time, #status #capno {
   border: 1px solid black;
   width: 100px;
