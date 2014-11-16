@@ -40,7 +40,7 @@ function run_script(inputs) {
 
     if ('begin' in message){
       socket.emit('begin', inputs.time*60);
-      console.log('begin; trial time = ' + time);
+      console.log('begin; trial time = ' + inputs.time*60);
     }
 
     if ('data_point' in message){
