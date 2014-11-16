@@ -54,6 +54,12 @@ body {
   display: none;
 }
 
+#capnography {
+  position: absolute;
+  top: 100px;
+  left: 350px;
+}
+
 #status #time, #status #capno {
   border: 1px solid black;
   width: 100px;
