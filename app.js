@@ -153,6 +153,7 @@ bbb.on('connection', function(socket) {
   socket.on('final_stats', function(final_stats) {
     io.emit('final_stats', final_stats);
     console.log('final_stats: ' + final_stats);
+    socket.emit('disconnect', '');
   });
 
   socket.on('begin', function(time) {
