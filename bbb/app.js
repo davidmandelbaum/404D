@@ -53,6 +53,11 @@ function run_script(inputs) {
   pyshell.on('message', function (message) {
     console.log(message);
 
+    if ('begin' in message){
+      socket.emit('begin', '');
+      console.log('begin');
+    }
+
     if ('data_point' in message){
       socket.emit('data_point', message.data_point);
       console.log('data_point: ' + message.data_point);

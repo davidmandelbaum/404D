@@ -44,6 +44,10 @@ try:
 
     # TODO: initial depth calibration
 
+    begin = json.dumps({"begin": "true"})
+
+    sys.stdout.write(begin + "\n")
+
     while True:
         now = round(time.time() - start_time, 4)
 

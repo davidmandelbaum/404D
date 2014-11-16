@@ -1,6 +1,11 @@
 var socket = io();
 var compressions = [];
 var capno = [];
+
+socket.on('begin', function(msg) {
+  $("#begin").fadeIn().delay(2000).fadeOut();
+});
+
 socket.on('data_point', function(data_point) {
   console.log(data_point);
   compressions.push({"time": parseInt(data_point[0][0]), "depth": parseInt(data_point.depth[0][1])});
