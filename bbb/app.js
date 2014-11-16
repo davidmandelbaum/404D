@@ -8,7 +8,7 @@ if (process.argv.length > 2 && process.argv[2] == '-l'){
 }
 
 if (process.argv.length > 2 && process.argv[2] == '-o'){
-  socket = require('socket.io-client')(progress.argv[3]);
+  socket = require('socket.io-client')(process.argv[3]);
   console.log('other: ' + progress.argv[3]);
 }
 
