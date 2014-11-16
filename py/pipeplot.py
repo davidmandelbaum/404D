@@ -160,11 +160,11 @@ try:
     # TODO: rewrite CSV writing on server side?
 
     # open output file
-    # file_out = open('csv/out.csv', 'wb')
-    # writer = csv.writer(file_out)
-    # writer.writerow(['Time (s)', 'Depth (cm)'])
-    # for y in y_vals:
-    #     writer.writerow([round(y[0], 4), round(y[1], 4)])
+    file_out = open('../csv/out.csv', 'wb')
+    writer = csv.writer(file_out)
+    writer.writerow(['Time (s)', 'Depth (cm)'])
+    for y in y_vals:
+        writer.writerow([round(y[0], 4), round(y[1], 4)])
 
 except:
     raise
