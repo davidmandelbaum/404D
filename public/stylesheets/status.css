@@ -56,8 +56,12 @@ body {
 
 #capnography {
   position: absolute;
-  top: 100px;
-  left: 350px;
+  top: 10px;
+  left: 500px;
+}
+
+#compressions {
+  margin-top: 100px;
 }
 
 #status #time, #status #capno {
