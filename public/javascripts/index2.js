@@ -6,6 +6,36 @@ var trial_time;
 socket.on('begin', function(time) {
   $("#begin").fadeIn().delay(2000).fadeOut();
   trial_time = time;
+  data_graphic({
+    title: "Compressions",
+    data: compressions,
+    target: "#compressions",
+    x_accessor: 'time',
+    y_accessor: 'depth',
+    width: 700,
+    height: 500,
+    min_x: 0,
+    max_x: trial_time,
+    min_y: 6,
+    max_y: 0,
+    area: false,
+    interpolate: "linear"
+  });
+  data_graphic({
+    title: "Capnography",
+    data: capnography,
+    target: "#capnography",
+    x_accessor: 'time',
+    y_accessor: 'capno',
+    width: 300,
+    height: 300,
+    min_x: 0,
+    max_x: trial_time,
+    min_y: 0,
+    max_y: 1250,
+    area: false,
+    interpolate: "linear"
+  });
 });
 
 socket.on('data_point', function(data_point) {
