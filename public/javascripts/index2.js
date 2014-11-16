@@ -18,6 +18,7 @@ socket.on('data_point', function(data_point) {
       y_accessor: 'depth'
   });
 });
+
 socket.on('data_points', function(data_points) {
   console.log("data points received");
   var i = 0;
@@ -68,7 +69,7 @@ socket.on('status_msg', function(status_msg) {
   }
   $("#depth").html(depth + " cm");
   $("#capno").html(capno);
-  capno.push( { "time": time, "capno": capno } )
+  capno.push( { "time": time, "capno": capno } );
   data_graphic({
     title: "Capnography",
     data: capnography,
