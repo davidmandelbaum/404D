@@ -38,7 +38,6 @@ socket.on('data_points', function(data_points) {
     width: 700,
     height: 500,
     min_x: 0,
-    // TODO: actual time of trial
     max_x: trial_time,
     min_y: 6,
     max_y: 0,
@@ -81,10 +80,9 @@ socket.on('status_msg', function(status_msg) {
     width: 700,
     height: 500,
     min_x: 0,
-    // TODO: actual time of trial
     max_x: trial_time,
-    min_y: 6,
-    max_y: 0,
+    min_y: 0,
+    max_y: 1250,
     area: false,
     interpolate: "linear"
   });

@@ -28,7 +28,7 @@ try:
     depth_status = 0
     second_values = []
     data = []
-    send_freq = .5
+    send_freq = .2
 
     # capno alg
     scores = []
