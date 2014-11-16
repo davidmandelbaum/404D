@@ -47,6 +47,7 @@ try:
     begin = json.dumps({"begin": "true"})
 
     sys.stdout.write(begin + "\n")
+    sys.stdout.flush()
 
     while True:
         now = round(time.time() - start_time, 4)
