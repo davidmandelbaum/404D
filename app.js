@@ -35,14 +35,13 @@ router.get('/', function(req, res) {
   res.render('index', { title: 'Welcome!' });
 });
 
-router.post('/trial_inputs', function(req, res) {
+router.post('/live', function(req, res) {
   console.log(req.body);
   bbb.emit('manikin_inputs', req.body);
-  res.redirect('/live');
+  res.render('live', { title: 'Live trial', time: req.body.time });
 });
 
 router.get('/live', function(req, res) {
-  res.render('live', { title: 'Live trial' });
 });
 
 router.post('/data_point', function(req, res) {

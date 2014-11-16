@@ -1,5 +1,6 @@
 var socket = io();
 var compressions = [];
+var capno = [];
 socket.on('data_point', function(data_point) {
   console.log(data_point);
   compressions.push({"time": parseInt(data_point[0][0]), "depth": parseInt(data_point.depth[0][1])});
@@ -26,11 +27,11 @@ socket.on('data_points', function(data_points) {
     target: "#compressions",
     x_accessor: 'time',
     y_accessor: 'depth',
-    width: 500,
+    width: 700,
     height: 500,
     min_x: 0,
     // TODO: actual time of trial
-    max_x: 30,
+    max_x: "#{time}",
     min_y: 6,
     max_y: 0,
     area: false,
@@ -54,14 +55,31 @@ socket.on('status_msg', function(status_msg) {
   else {
     $("#rate").removeClass("bad");
   }
-if (depth < 4 || depth > 6){
-  $("#depth").addClass("bad");
-}
-else {
-  $("#depth").removeClass("bad");
-}
-$("#depth").html(depth + " cm");
-$("#capno").html(capno);
+  if (depth < 4 || depth > 6){
+    $("#depth").addClass("bad");
+  }
+  else {
+    $("#depth").removeClass("bad");
+  }
+  $("#depth").html(depth + " cm");
+  $("#capno").html(capno);
+  capno.push( { "time": time, "capno": capno } )
+  data_graphic({
+    title: "Capnography",
+    data: capnography,
+    target: "#capnography",
+    x_accessor: 'time',
+    y_accessor: 'capno',
+    width: 700,
+    height: 500,
+    min_x: 0,
+    // TODO: actual time of trial
+    max_x: "#{time}",
+    min_y: 6,
+    max_y: 0,
+    area: false,
+    interpolate: "linear"
+  });
 });
 
 socket.on('final_stats', function(final_stats) {
