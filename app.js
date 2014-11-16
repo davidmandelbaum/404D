@@ -155,8 +155,8 @@ bbb.on('connection', function(socket) {
     console.log('final_stats: ' + final_stats);
   });
 
-  socket.on('begin', function(begin) {
-    io.emit('begin', '');
-    console.log('begin');
+  socket.on('begin', function(time) {
+    io.emit('begin', time);
+    console.log('begin; trial time = ' + time);
   });
 });

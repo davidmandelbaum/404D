@@ -1,9 +1,11 @@
 var socket = io();
 var compressions = [];
 var capno = [];
+var time;
 
-socket.on('begin', function(msg) {
+socket.on('begin', function(time) {
   $("#begin").fadeIn().delay(2000).fadeOut();
+  time = time;
 });
 
 socket.on('data_point', function(data_point) {
@@ -37,7 +39,7 @@ socket.on('data_points', function(data_points) {
     height: 500,
     min_x: 0,
     // TODO: actual time of trial
-    max_x: "#{time}",
+    max_x: time,
     min_y: 6,
     max_y: 0,
     area: false,
@@ -80,7 +82,7 @@ socket.on('status_msg', function(status_msg) {
     height: 500,
     min_x: 0,
     // TODO: actual time of trial
-    max_x: "#{time}",
+    max_x: time,
     min_y: 6,
     max_y: 0,
     area: false,
@@ -104,10 +106,10 @@ socket.on('final_stats', function(final_stats) {
   else {
     $("#rate").removeClass("bad");
   }
-if (depth < 4 || depth > 6){
-  $("#depth").addClass("bad");
-}
-else {
-  $("#depth").removeClass("bad");
-}
+  if (depth < 4 || depth > 6){
+    $("#depth").addClass("bad");
+  }
+  else {
+    $("#depth").removeClass("bad");
+  }
 });

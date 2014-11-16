@@ -17,21 +17,6 @@ socket.on('connect', function() {
   socket.emit('init', '');
 });
 
-// b.pinMode('P8_19', b.INPUT);
-// setInterval(check, 100);
-//
-// function check() {
-//   b.digitalRead('P8_19', checkButton);
-// }
-//
-// function checkButton() {
-//   if (x.value == 1) {
-//     socket.emit('init', '');
-//     handle button down
-//   }
-//   else {
-//     handle anything?
-//   }
 
 var PythonShell = require('python-shell');
 
@@ -54,8 +39,8 @@ function run_script(inputs) {
     console.log(message);
 
     if ('begin' in message){
-      socket.emit('begin', '');
-      console.log('begin');
+      socket.emit('begin', inputs.time*60);
+      console.log('begin; trial time = ' + time);
     }
 
     if ('data_point' in message){
