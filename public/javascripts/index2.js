@@ -1,11 +1,11 @@
 var socket = io();
 var compressions = [];
-var capno = [];
-var time;
+var capnography = [];
+var trial_time;
 
 socket.on('begin', function(time) {
   $("#begin").fadeIn().delay(2000).fadeOut();
-  time = time;
+  trial_time = time;
 });
 
 socket.on('data_point', function(data_point) {
@@ -39,7 +39,7 @@ socket.on('data_points', function(data_points) {
     height: 500,
     min_x: 0,
     // TODO: actual time of trial
-    max_x: time,
+    max_x: trial_time,
     min_y: 6,
     max_y: 0,
     area: false,
@@ -71,7 +71,7 @@ socket.on('status_msg', function(status_msg) {
   }
   $("#depth").html(depth + " cm");
   $("#capno").html(capno);
-  capno.push( { "time": time, "capno": capno } );
+  capnography.push( { "time": time, "capno": capno } );
   data_graphic({
     title: "Capnography",
     data: capnography,
@@ -82,7 +82,7 @@ socket.on('status_msg', function(status_msg) {
     height: 500,
     min_x: 0,
     // TODO: actual time of trial
-    max_x: time,
+    max_x: trial_time,
     min_y: 6,
     max_y: 0,
     area: false,
