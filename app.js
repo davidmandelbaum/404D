@@ -147,9 +147,9 @@ bbb.on('connection', function(socket) {
     var i;
     points = JSON.parse(data_points);
     // TODO: CSV output
-    for (i = 0; i < points.length; i++) {
-      data_points.push( { "time": parseFloat(points[i][0]), "depth": parseFloat(points[i][1]) } );
-    }
+    // for (i = 0; i < points.length; i++) {
+      // data_points.push( { "time": parseFloat(points[i][0]), "depth": parseFloat(points[i][1]) } );
+    // }
     console.log('data_points: ' + data_points);
   });
 
