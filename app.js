@@ -20,7 +20,8 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
 app.use(favicon());
-app.use(logger('dev'));
+// TODO: figure out if app runs faster without logging
+// app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded());
 app.use(cookieParser());
@@ -106,8 +107,11 @@ var server = app.listen(app.get('port'), function() {
   console.log('Express server listening on port ' + server.address().port);
 });
 
-var io = require('socket.io')(server);
+var io = require('socket.io')(server),
+    monitorio = require('monitor.io');
 io.set('origins', '*:*');
+
+io.use(monitorio({ port: 8000 }));
 
 io.on('connection', function (socket) {
   console.log('[WEB] user connected');
