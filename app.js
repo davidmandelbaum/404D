@@ -141,6 +141,11 @@ bbb.on('connection', function(socket) {
     console.log('[BBB] init!');
   });
 
+  socket.on('depth', function(depth) {
+    io.emit('depth', depth);
+    console.log('depth: ' + depth);
+  });
+
   socket.on('data_point', function(data_point) {
     io.emit('data_point', data_point);
     console.log('data_point: ' + data_point);

@@ -38,6 +38,10 @@ socket.on('begin', function(time) {
   });
 });
 
+socket.on('depth', function(depth) {
+  console.log('depth: ' + depth);
+});
+
 socket.on('data_point', function(data_point) {
   console.log(data_point);
   compressions.push({"time": parseInt(data_point[0][0]), "depth": parseInt(data_point.depth[0][1])});
