@@ -1,8 +1,5 @@
 var b = require('bonescript');
 
-b.pinMode('P9_40', b.INPUT);
-setInterval(check, 100);
-
 console.log('ready for input');
 
 var socket = require('socket.io-client')('http://meng404d.herokuapp.com:80/bbb');
@@ -21,6 +18,8 @@ socket.on('connect', function() {
   console.log('connected to remote socket');
   socket.emit('init', '');
 });
+
+setInterval(check, 50);
 
 function check() {
   b.analogRead('P9_40', outputDepth);
