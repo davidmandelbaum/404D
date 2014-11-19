@@ -16,7 +16,7 @@ def max_alg(depth):
     depth = depth/10
     if mindepth < depth and depth < maxdepth:
         return depthscore
-    elif depth > max_acceptable_depth:
+    elif depth > maxdepth:
         return (depthscore-(10*(depth-maxdepth)))
     else:
         return (depthscore-(sqrt(mindepth)-(0.25*sqrt(depth))))
