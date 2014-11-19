@@ -118,7 +118,9 @@ router.get('/trial/:id', function(req, res) {
 
 router.get('/csv/:id', function(req, res) {
   Trial.findById(req.params.id, function(err, trial) {
-    res.csv(trial.points);
+    var points_csv = trial.points;
+    points_csv.unshift( { "time": "time", "depth": "depth" });
+    res.csv(points_csv);
   });
 });
 

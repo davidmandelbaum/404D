@@ -1,5 +1,7 @@
 var capnography = [];
 
+$("#download_link").html(link_text);
+
 var i = 0;
 for (i = 0; i < stats.length; i++) {
   capnography.push( {"time": stats[i].time, "capno": stats[i].capno });
@@ -38,9 +40,9 @@ data_graphic({
   interpolate: "linear"
 });
 
-var time = parseFloat(final_stats["time"]);
-var rate = parseFloat(final_stats["rate"]);
-var depth = parseFloat(final_stats["depth"]);
+var time = parseFloat(final_stats.time);
+var rate = parseFloat(final_stats.rate);
+var depth = parseFloat(final_stats.depth);
 var capno = parseFloat(stats[stats.length-1].capno);
 $("#title").html("Final Statistics");
 $("#time").html(time + "s");

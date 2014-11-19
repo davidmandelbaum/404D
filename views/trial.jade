@@ -13,6 +13,7 @@ block content
       var trial_time = !{JSON.stringify(trial.length)};
       var final_stats = !{JSON.stringify(trial.final_stats)};
       var stats = !{JSON.stringify(trial.stats)};
+      var link_text = "<a href='/csv/" + !{JSON.stringify(trial._id)} + "'>CSV</a>";
   div#status
     h1#title Status
     | Time: 
@@ -27,6 +28,7 @@ block content
     | Depth: 
     div#depth.good
     br
+  div#download_link
   div#compressions
   div#capnography
   div#container(style='min-width: 300px; height: 400px; margin: 0 auto')
