@@ -46,8 +46,8 @@ function bbb_run() {
     });
   });
 
+  // TODO: fix calling twice
   var PythonShell = require('python-shell');
-
 
   function run_script(inputs) {
     console.log('inputs: ' + inputs);

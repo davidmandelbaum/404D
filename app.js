@@ -19,7 +19,18 @@ mongoose.connect(uristring, function (err, res) {
 });
 
 var trialSchema = new mongoose.Schema({
+  username: String,
+  datetime: Date,
+  length: Number,
+  starting_capno: Number,
+  points: [],
+  stats: [],
+  finalStats: Object
 });
+
+var Trial = mongoose.model('Trial', trialSchema);
+
+var curr_trial = new Trial();
 
 var users = require('./routes/users');
 
@@ -54,6 +65,14 @@ router.get('/', function(req, res) {
 
 router.post('/live', function(req, res) {
   console.log(req.body);
+  curr_trial.username = "David";
+  curr_trial.datetime = Date.now();
+  curr_trial.starting_capno = req.body.capno;
+  curr_trial.length = req.body.time*60;
+  curr_trial.save(function(err, curr_trial) {
+    if (err) return console.error(err);
+    console.log(thor);
+  });
   bbb.emit('manikin_inputs', req.body);
   res.render('live', { title: 'Live trial', time: req.body.time });
 });
