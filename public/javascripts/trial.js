@@ -1,4 +1,8 @@
-var socket = io();
+var capnography = [];
+
+for (var stat in stats){
+  capnography.push( {"time": stat.time, "capno": stat.capno });
+}
 
 data_graphic({
   title: "Compressions",
@@ -16,7 +20,7 @@ data_graphic({
   area: false,
   interpolate: "linear"
 });
-/*
+
 data_graphic({
   title: "Capnography",
   data: capnography,
@@ -32,7 +36,7 @@ data_graphic({
   area: false,
   interpolate: "linear"
 });
-*/
+
 var time = parseFloat(final_stats["time"]);
 var rate = parseFloat(final_stats["rate"]);
 var depth = parseFloat(final_stats["depth"]);
