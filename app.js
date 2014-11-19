@@ -104,13 +104,13 @@ router.get('/depth', function(req, res) {
 router.get('/list', function(req, res) {
   Trial.find(function(err, trials) {
     if (err) return console.log(err);
-    res.render('list', { list: trials });
+    res.render('list', { list: trials, title: 'Trial list' });
   });
 });
 
 router.get('/trial/:id', function(req, res) {
   Trial.findById(req.params.id, function(err, trial) {
-    res.render('trial', { trial: trial });
+    res.render('trial', { trial: trial, title: 'Trial view' });
   });
 });
 
