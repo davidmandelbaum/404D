@@ -10,14 +10,13 @@ var opts = {
     color: '#000000' // Fill color
   },
   limitMax: 'false',   // If true, the pointer will not go past the end of the gauge
-  colorStart: '#6FADCF',   // Colors
-  colorStop: '#8FC0DA',    // just experiment with them
+  percentColors: [[0.0, "#FC0000"], [0.50, "#F0FC00"], [1.0, "#24D600"]],
   strokeColor: '#E0E0E0',   // to see which ones work best for you
   generateGradient: true
 };
 var target = document.getElementById('depth_gauge'); // your canvas element
 var gauge = new Gauge(target).setOptions(opts); // create sexy gauge!
-gauge.maxValue = 1; // set max gauge value
+gauge.maxValue = 6; // set max gauge value
 gauge.animationSpeed = 32; // set animation speed (32 is default value)
 
 socket.on('depth', function(depth) {

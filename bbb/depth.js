@@ -26,5 +26,6 @@ function check() {
 }
 
 function outputDepth(x) {
-  socket.emit('depth', x);
+  var out = x*34.5;
+  socket.emit('depth', out);
 }
