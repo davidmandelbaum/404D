@@ -12,7 +12,12 @@
 # Search for influence of airflow on ETCO2, translate rate/depth into airflow and then airflow into ETCO2?
 # Search for more papers to set better parameters
 
-# what should the max depth be? The min?
+# Min depth to 47, max to 62?
+
+# Add functionality for "switching off" between users?
+
+# Slow down the rate of decline, try to keep things realistic
+# And meanwhile, get long datasets from (for example) Pat and Katy
 
 # divide everything by 50?
 
@@ -49,8 +54,8 @@ clean <- function(data){
 
 # SET VARIABLES FOR CANOGRAPHY SCORING
 
-mindepth = 4.0
-maxdepth = 5.5
+mindepth = 4.7
+maxdepth = 6.2
 
 depthscore = 2.5
 
@@ -63,6 +68,9 @@ maxalg <- function(depth){
   if (depth > maxdepth){
     return(depthscore-(10*(depth-maxdepth))) 
     # serious penalty for too-deep compression, you could break something
+    
+    # limit penalty in case of random spikes
+    
   }
   else{
     return(depthscore-(sqrt(mindepth)-(0.25*sqrt(depth)))) 
@@ -111,6 +119,12 @@ capscore <- function(user, start){
   allmax = NULL
   allmin = NULL
   allscore = NULL
+  
+  fallrate = 0.9
+  
+  goodrise = 5.0
+  badrise = 3.0   # Should still allow for rescue below 10 mmHg if a Zoll does it 
+  
 
   score = start # try 20 mmHg to start with
 
@@ -123,14 +137,14 @@ capscore <- function(user, start){
   }
   
 for (i in 3:nrow(user)){
-  score = (score - 0.9) # set this constant to whatever
+  score = (score - fallrate) # set this constant to whatever
   
   if(score > 500){
-    riserate = 5   # recovery rate is faster when mmHg > 10
+    riserate = goodrise   # recovery rate is faster when mmHg > 10
   }
   
   if(score <= 500){
-    riserate = 3   # recovery rate is slower when mmHg < 10
+    riserate = badrise   # recovery rate is slower when mmHg < 10
   }
   
   if(depth(i-2) < depth(i-1) & depth(i) < depth(i-1)){
