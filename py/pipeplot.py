@@ -22,7 +22,7 @@ try:
     comp_depths = []
     nums = np.arange(0, time_limit, 10)
     old_num = 0
-    conversion = 10 # calculated given length of potentiometer
+    conversion = 50 # calculated given length of potentiometer
     ylim = 7
     comp_status = 0
     depth_status = 0
