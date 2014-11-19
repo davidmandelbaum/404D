@@ -1,7 +1,8 @@
 var capnography = [];
 
-for (var stat in stats){
-  capnography.push( {"time": stat.time, "capno": stat.capno });
+var i = 0;
+for (i = 0; i < stats.length; i++) {
+  capnography.push( {"time": stats[i].time, "capno": stats[i].capno });
 }
 
 data_graphic({
@@ -40,10 +41,12 @@ data_graphic({
 var time = parseFloat(final_stats["time"]);
 var rate = parseFloat(final_stats["rate"]);
 var depth = parseFloat(final_stats["depth"]);
+var capno = parseFloat(stats[stats.length-1].capno);
 $("#title").html("Final Statistics");
 $("#time").html(time + "s");
 $("#rate").html(rate + " /m");
 $("#depth").html(depth + " cm");
+$("#capno").html(capno);
 if (rate > 130 || rate < 100) {
   $("#rate").addClass("bad");
 }
