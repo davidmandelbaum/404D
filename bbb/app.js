@@ -24,6 +24,8 @@ function checkButton(x) {
 
 function bbb_run() {
 
+  console.log('bbb_run() called');
+
   var socket = require('socket.io-client')('http://meng404d.herokuapp.com:80/bbb');
 
   if (process.argv.length > 2 && process.argv[2] == '-l'){

@@ -5,6 +5,22 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
+var mongoose = require('mongoose');
+
+var uristring = process.env.MONGOLAB_URI || process.env.MONGOHQ_URL || 'mongodb://localhost/HelloMongoose';
+
+mongoose.connect(uristring, function (err, res) {
+  if (err) {
+    console.log('[DB] Error connecting');
+  }
+  else {
+    console.log('[DB] succeeded connecting');
+  }
+});
+
+var trialSchema = new mongoose.Schema({
+});
+
 var users = require('./routes/users');
 
 var app = express();
