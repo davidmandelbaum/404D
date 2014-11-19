@@ -23,7 +23,7 @@ data_graphic({
   target: "#compressions",
   x_accessor: 'time',
   y_accessor: 'depth',
-  width: width,
+  width: compressions_width,
   height: 300,
   min_x: 0,
   // max_x: 10,
