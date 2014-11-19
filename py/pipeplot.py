@@ -117,7 +117,7 @@ try:
                 num_in = 0
             num_in *= conversion
             num_in = round(num_in, 3)
-            # time.sleep(.05)
+            time.sleep(.10)
             # TODO: deal with issue of numbers not being the same
             if old_num != num_in:
                 y_vals_window.append((now, num_in))
