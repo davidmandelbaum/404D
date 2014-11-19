@@ -5,6 +5,8 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
+var csv = require('express-csv');
+
 var mongoose = require('mongoose');
 
 var uristring = process.env.MONGOLAB_URI || process.env.MONGOHQ_URL || 'mongodb://localhost/HelloMongoose';
@@ -111,6 +113,12 @@ router.get('/list', function(req, res) {
 router.get('/trial/:id', function(req, res) {
   Trial.findById(req.params.id, function(err, trial) {
     res.render('trial', { trial: trial, title: 'Trial view' });
+  });
+});
+
+router.get('/csv/:id', function(req, res) {
+  Trial.findById(req.params.id, function(err, trial) {
+    res.csv(trial.points);
   });
 });
 
