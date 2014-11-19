@@ -17,7 +17,7 @@ var opts = {
 var target = document.getElementById('depth_gauge'); // your canvas element
 var gauge = new Gauge(target).setOptions(opts); // create sexy gauge!
 gauge.maxValue = 6; // set max gauge value
-gauge.animationSpeed = 1; // set animation speed (32 is default value)
+gauge.animationSpeed = 4; // set animation speed (32 is default value)
 
 socket.on('depth', function(depth) {
   var val = depth.value;
