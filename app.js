@@ -79,7 +79,7 @@ router.get('/live', function(req, res) {
   res.render('live', { title: 'Live trial'}); 
 });
 
-router.get('live_nonmed', function(req, res) {
+router.get('/live_nonmed', function(req, res) {
   res.render('live_nonmed', { title: 'Live trial'});
 });
 

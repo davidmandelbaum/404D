@@ -7,7 +7,8 @@ for (i = 0; i < stats.length; i++) {
   capnography.push( {"time": stats[i].time, "capno": stats[i].capno });
 }
 
-var width = $("#compressions_stage").width();
+var compressions_width = $("#compressions_stage").width();
+var capno_width = $("#capno_stage").width();
 
 data_graphic({
   title: "Compressions",
@@ -26,7 +27,7 @@ data_graphic({
   interpolate: "linear",
   x_label: "Time (s)",
   y_label: "Depth (cm)",
-  top: 0
+  top: 10
 });
 
 data_graphic({
@@ -35,7 +36,7 @@ data_graphic({
   target: "#capnography",
   x_accessor: 'time',
   y_accessor: 'capno',
-  width: 300,
+  width: capno_width,
   height: 300,
   min_x: 0,
   max_x: trial_time,
@@ -45,7 +46,7 @@ data_graphic({
   interpolate: "linear",
   x_label: "ETCO2 (mmHg)",
   y_label: "Time (s)",
-  top: 0
+  top: 10
 });
 
 var time = parseFloat(final_stats.time);
