@@ -39,6 +39,9 @@ function bbb_run() {
   socket.on('connect', function() {
     console.log('connected to remote socket');
     socket.emit('init', '');
+    socket.on('disconnect', function() {
+      console.log('disconnected from remote socket');
+    });
   });
 
   var PythonShell = require('python-shell');
