@@ -32,7 +32,9 @@ socket.on('begin', function(time) {
     min_y: 6,
     max_y: 0,
     area: false,
-    interpolate: "linear"
+    interpolate: "linear",
+    x_label: "Time (s)",
+    y_label: "Depth (cm)"
   });
   data_graphic({
     title: "Capnography",
@@ -47,25 +49,14 @@ socket.on('begin', function(time) {
     min_y: 0,
     max_y: 1250,
     area: false,
-    interpolate: "linear"
+    interpolate: "linear",
+    x_label: "Time (s)",
+    y_label: "ETCO2 (mmHg)"
   });
 });
 
 socket.on('depth', function(depth) {
   console.log('depth: ' + depth);
-});
-
-socket.on('data_point', function(data_point) {
-  console.log(data_point);
-  compressions.push({"time": parseInt(data_point[0][0]), "depth": parseInt(data_point.depth[0][1])});
-  console.log(compressions);
-  data_graphic({
-    title: "Compressions",
-      data: compressions,
-      target: "#compressions",
-      x_accessor: 'time',
-      y_accessor: 'depth'
-  });
 });
 
 socket.on('data_points', function(data_points) {
@@ -91,7 +82,9 @@ socket.on('data_points', function(data_points) {
     min_y: 6,
     max_y: 0,
     area: false,
-    interpolate: "linear"
+    interpolate: "linear",
+    x_label: "Time (s)",
+    y_label: "Depth (cm)"
   });
 });
 
@@ -133,7 +126,9 @@ socket.on('status_msg', function(status_msg) {
     min_y: 0,
     max_y: 1250,
     area: false,
-    interpolate: "linear"
+    interpolate: "linear",
+    x_label: "Time (s)",
+    y_label: "ETCO2 (mmHg)"
   });
 });
 

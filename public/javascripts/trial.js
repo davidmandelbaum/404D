@@ -22,7 +22,8 @@ data_graphic({
   max_y: 0,
   area: false,
   interpolate: "linear",
-  linked: true
+  x_label: "Time (s)",
+  y_label: "Depth (cm)"
 });
 
 data_graphic({
@@ -39,7 +40,8 @@ data_graphic({
   max_y: 1250,
   area: false,
   interpolate: "linear",
-  linked: true
+  x_label: "ETCO2 (mmHg)",
+  y_label: "Time (s)"
 });
 
 var time = parseFloat(final_stats.time);
