@@ -91,11 +91,11 @@ socket.on('data_points', function(data_points) {
 socket.on('status_msg', function(status_msg) {
   console.log('status_msg!');
   console.log(status_msg);
-  console.log(status_msg['time']);
-  var time = parseFloat(status_msg["time"]);
-  var rate = parseFloat(status_msg["rate"]);
-  var depth = parseFloat(status_msg["depth"]).toFixed(2);
-  var capno = parseFloat(status_msg["capno"]).toFixed(2);
+  console.log(status_msg.time);
+  var time = parseFloat(status_msg.time);
+  var rate = parseFloat(status_msg.rate);
+  var depth = parseFloat(status_msg.depth).toFixed(2);
+  var capno = parseFloat(status_msg.capno).toFixed(2);
   $("#time").html(time + "s");
   $("#rate").html(rate + " /m");
   if (rate > 130 || rate < 100) {
@@ -135,9 +135,9 @@ socket.on('status_msg', function(status_msg) {
 socket.on('final_stats', function(final_stats) {
   console.log('final stats!');
   console.log(final_stats);
-  var time = parseFloat(final_stats["time"]);
-  var rate = parseFloat(final_stats["rate"]);
-  var depth = parseFloat(final_stats["depth"]);
+  var time = parseFloat(final_stats.time);
+  var rate = parseFloat(final_stats.rate);
+  var depth = parseFloat(final_stats.depth);
   $("#title").html("Final Statistics");
   $("#time").html(time + "s");
   $("#rate").html(rate + " /m");
