@@ -7,8 +7,15 @@ for (i = 0; i < stats.length; i++) {
   capnography.push( {"time": stats[i].time, "capno": stats[i].capno });
 }
 
-var compressions_width = $("#compressions_stage").width();
-var capno_width = $("#capno_stage").width();
+var compressions_width, capno_width;
+if ($("#compressions_stage").length > 0)
+  compressions_width = $("#compressions_stage").width();
+else
+  compressions_width = 700;
+if ($("#capno_stage").length > 0)
+  capno_width = $("#capno_stage").width();
+else
+  capno_width = 300;
 
 data_graphic({
   title: "Compressions",
