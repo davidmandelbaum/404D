@@ -1,0 +1,14 @@
+extends layout
+
+block content
+  script(src='/socket.io/socket.io.js')
+  script(src='//cdnjs.cloudflare.com/ajax/libs/d3/3.4.11/d3.min.js', charset='utf-8')
+  link(href='/stylesheets/status.css', rel='stylesheet')
+  link(href='/stylesheets/metricsgraphics.css', rel='stylesheet')
+  link(href='/stylesheets/highlightjs-default.css', rel='stylesheet')
+  div#depth(style='position: absolute; top: 300px; font-size: 24px;')
+  canvas#depth_gauge(style='margin-top: 50px;')
+  script(src='/javascripts/metricsgraphics.min.js')
+  script(src='/javascripts/lib/highlight.pack.js')
+  script(src='/javascripts/gauge.js', type='text/javascript')
+  script(src='/javascripts/depth.js')
