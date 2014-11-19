@@ -13,7 +13,7 @@ if ($("#compressions_stage").length > 0)
 else
   compressions_width = 700;
 if ($("#capno_stage").length > 0)
-  capno_width = $("#capno_stage").width();
+  capno_width = $("#capno_stage").width() - 20;
 else
   capno_width = 300;
 
@@ -44,7 +44,7 @@ data_graphic({
   x_accessor: 'time',
   y_accessor: 'capno',
   width: capno_width,
-  height: 300,
+  height: 280,
   min_x: 0,
   max_x: trial_time,
   min_y: 0,
