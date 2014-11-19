@@ -27,6 +27,7 @@ function check() {
  
 function outputDepth(x) {
   x.value *= 7.09;
+  console.log(x.value);
   console.log(x.value.toFixed(2));
   socket.emit('depth', x);
 }
