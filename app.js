@@ -71,7 +71,7 @@ router.post('/live', function(req, res) {
   curr_trial.length = req.body.time*60;
   curr_trial.save(function(err, curr_trial) {
     if (err) return console.error(err);
-    console.log(thor);
+    console.log(curr_trial);
   });
   bbb.emit('manikin_inputs', req.body);
   res.render('live', { title: 'Live trial', time: req.body.time });
