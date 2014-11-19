@@ -104,12 +104,16 @@ router.get('/depth', function(req, res) {
 router.get('/list', function(req, res) {
   Trial.find(function(err, trials) {
     if (err) return console.log(err);
+    console.log('trials:');
+    console.log(trials);
     res.render('list', { list: trials });
   });
 });
 
 router.get('/trial/:id', function(req, res) {
-  Trial.findOne({ id: req.params.id }, function(err, trial) {
+  Trial.findById(req.params.id, function(err, trial) {
+    console.log('found it!');
+    console.log(trial);
     res.render('trial', { trial: trial });
   });
 });
