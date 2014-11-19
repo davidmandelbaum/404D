@@ -101,6 +101,19 @@ router.get('/depth', function(req, res) {
   res.render('depth');
 });
 
+router.get('/list', function(req, res) {
+  Trial.find(function(err, trials) {
+    if (err) return console.log(err);
+    res.render('list', { list: trials });
+  });
+});
+
+router.get('/trial/:id', function(req, res) {
+  Trial.findOne({ id: req.params.id }, function(err, trial) {
+    res.render('trial', { trial: trial });
+  });
+});
+
 /// error handlers
 
 // development error handler
