@@ -43,6 +43,7 @@ router.post('/live', function(req, res) {
 });
 
 router.get('/live', function(req, res) {
+  res.render('live', { title: 'Live trial'}); 
 });
 
 router.post('/data_point', function(req, res) {
