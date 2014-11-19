@@ -119,3 +119,7 @@
   background-color: green;
   color: white;
 }
+
+.chart-title {
+  display: none;
+}
