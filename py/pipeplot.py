@@ -35,11 +35,13 @@ try:
     maxes = []
     mins = []
     score = int(sys.argv[2])
+    fallrate = 0.9
+    goodrise = 5.0
+    badrise = 3.0
 
     start_time = time.time()
     last_calc = time.time() - start_time
     last_send = time.time() - start_time
-
 
     init_depth = round(ADC.read("P9_40"), 3) - .01
 
@@ -134,14 +136,13 @@ try:
             print "ERR: num_in"
 
         # capno alg
-        # TODO: change so adjusted for amount of time since last calculation
         if len(data) > 3:
-            score = (score - 0.9)
+            score = (score - fallrate)
 
             if score > 500:
-                rise_rate = 5
+                rise_rate = goodrise
             elif score <= 500:
-                rise_rate = 3
+                rise_rate = badrise
             if data[-3][1] < data[-2][1] and data[-1][1] < data[-2][1]:
                 maxes.append((data[-2][1], data[-2][0]))
                 if len(maxes) > 2:
@@ -161,15 +162,11 @@ try:
             
             scores.append((data[-2][0], score))
 
-            # TODO: send capno score more often?
-
     stats = final_stats(y_vals, time_limit, data)
 
     stats_out = json.dumps({ "final_stats": stats }) 
     sys.stdout.write(stats_out + "\n")
     sys.stdout.flush()
-
-    # TODO: rewrite CSV writing on server side?
 
     # open output file
     file_out = open('../csv/out.csv', 'wb')

@@ -7,24 +7,26 @@ from math import *
 # --------------------------------------------
 
 # Depth
-min_acceptable_depth = 4
-max_acceptable_depth = 5
+mindepth = 4.7
+maxdepth = 6.2
+depthscore = 2.5
+recoilscore = 1
 
 def max_alg(depth):
     depth = depth/10
-    if min_acceptable_depth < depth and depth < max_acceptable_depth:
-        return 2.5
+    if mindepth < depth and depth < maxdepth:
+        return depthscore
     elif depth > max_acceptable_depth:
-        return (1-(10*depth-5))
+        return (depthscore-(10*(depth-maxdepth)))
     else:
-        return (2.5 - (2 - (0.25*sqrt(depth))))
+        return (depthscore-(sqrt(mindepth)-(0.25*sqrt(depth))))
 
 def min_alg(depth):
     depth = depth/10
     if depth == 0:
-        return 1
+        return recoilscore
     else:
-        return 1-depth
+        return recoilscore-depth
 
 def time_alg(current, last):
     current *= 100
