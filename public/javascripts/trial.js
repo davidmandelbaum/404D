@@ -34,7 +34,7 @@ data_graphic({
   interpolate: "linear",
   x_label: "Time (s)",
   y_label: "Depth (cm)",
-  top: 10
+  top: 20
 });
 
 data_graphic({
@@ -53,7 +53,7 @@ data_graphic({
   interpolate: "linear",
   x_label: "ETCO2 (mmHg)",
   y_label: "Time (s)",
-  top: 10
+  top: 20
 });
 
 var time = parseFloat(final_stats.time);
