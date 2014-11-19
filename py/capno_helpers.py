@@ -26,13 +26,13 @@ def min_alg(depth):
     else:
         return 1-depth
 
-def time_alg(current, last, diff):
-    # TODO: use diff to calculate accurate time interval
-    # diff *= 100
-    rate = (current - last)/100
-    if 0.5 < rate and rate < 0.6:
+def time_alg(current, last):
+    current *= 100
+    last *= 100
+    rate = (current - last)*60000
+    if 100 < rate and rate < 120:
         return 1
-    elif 0.3 < rate and rate < 0.8:
-        return (1 - (2*abs(0.55-rate)))
+    elif 60 < rate and rate < 160:
+        return (1 - (2 * abs(110 - rate)))
     else:
         return 0
