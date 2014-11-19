@@ -23,6 +23,7 @@ socket.on('depth', function(depth) {
   var val = depth.value;
   console.log(val);
   gauge.set(val); // set actual value
-  $("#depth").html(val);
+  var out = val.toFixed(2);
+  $("#depth").html(out);
 });
 
