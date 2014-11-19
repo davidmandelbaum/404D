@@ -79,6 +79,10 @@ router.get('/live', function(req, res) {
   res.render('live', { title: 'Live trial'}); 
 });
 
+router.get('live_nonmed', function(req, res) {
+  res.render('live_nonmed', { title: 'Live trial'});
+});
+
 router.post('/data_point', function(req, res) {
   io.emit("data_point", req.body);
   res.send('response');
@@ -116,9 +120,9 @@ router.get('/trial/:id', function(req, res) {
   });
 });
 
-router.get('/live_nonmed/:id', function(req, res) {
+router.get('/trial_nonmed/:id', function(req, res) {
   Trial.findById(req.params.id, function(err, trial) {
-    res.render('live_nonmed', { trial: trial, title: 'Trial view' });
+    res.render('trial_nonmed', { trial: trial, title: 'Trial view' });
   });
 });
 

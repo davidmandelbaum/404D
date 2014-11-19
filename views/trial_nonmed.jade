@@ -7,6 +7,12 @@ block content
   link(href='/stylesheets/metricsgraphics.css', rel='stylesheet')
   link(href='/stylesheets/highlightjs-default.css', rel='stylesheet')
   link(href='/stylesheets/keen-dashboards.css', rel='stylesheet')
+  script(type='text/javascript').
+      var compressions = !{JSON.stringify(trial.points)};
+      var trial_time = !{JSON.stringify(trial.length)};
+      var final_stats = !{JSON.stringify(trial.final_stats)};
+      var stats = !{JSON.stringify(trial.stats)};
+      var link_text = "<a href='/csv/" + !{JSON.stringify(trial._id)} + "'>CSV</a>";
   div.container-fluid
     div.row
       div.col-sm-8
@@ -46,9 +52,7 @@ block content
               div#depth.good
               br
           div.chart-notes
-  div#begin. BEGIN IN 3
-  div#ended. TRIAL ENDED
   script(src='/javascripts/keen.js', type='text/javascript')
-  script(src='/javascripts/index2.js')
   script(src='/javascripts/metricsgraphics.min.js')
   script(src='/javascripts/lib/highlight.pack.js')
+  script(src='/javascripts/trial.js')

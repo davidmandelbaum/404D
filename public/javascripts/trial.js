@@ -14,14 +14,15 @@ data_graphic({
   x_accessor: 'time',
   y_accessor: 'depth',
   width: 700,
-  height: 500,
+  height: 300,
   min_x: 0,
   // max_x: 10,
   max_x: trial_time,
   min_y: 6,
   max_y: 0,
   area: false,
-  interpolate: "linear"
+  interpolate: "linear",
+  linked: true
 });
 
 data_graphic({
@@ -31,13 +32,14 @@ data_graphic({
   x_accessor: 'time',
   y_accessor: 'capno',
   width: 300,
-  height: 200,
+  height: 300,
   min_x: 0,
   max_x: trial_time,
   min_y: 0,
   max_y: 1250,
   area: false,
-  interpolate: "linear"
+  interpolate: "linear",
+  linked: true
 });
 
 var time = parseFloat(final_stats.time);
@@ -61,4 +63,3 @@ if (depth < 4 || depth > 6){
 else {
   $("#depth").removeClass("bad");
 }
-$("#ended").fadeIn().delay(2000).fadeOut();
