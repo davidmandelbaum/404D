@@ -131,7 +131,7 @@ io.on('connection', function (socket) {
 
 var bbb = io.of('/bbb');
 
-var data_points = [];
+var dp_array = [];
 
 bbb.on('connection', function(socket) {
   console.log('[BBB] user connected');
@@ -161,9 +161,9 @@ bbb.on('connection', function(socket) {
     points = JSON.parse(data_points);
     // TODO: CSV output
     for (i = 0; i < points.length; i++) {
-      data_points.push( { "time": points[i][0], "depth": points[i][1] } );
+      dp_array.push( { "time": points[i][0], "depth": points[i][1] } );
     }
-    console.log('data_points: ' + data_points);
+    console.log('data_points: ' + dp_array);
   });
 
   socket.on('status_msg', function(status_msg) {
