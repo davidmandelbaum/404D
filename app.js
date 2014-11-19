@@ -65,6 +65,10 @@ router.post('/status', function(req, res) {
   res.send('response');
 });
 
+router.get('/depth', function(req, res) {
+  res.render('depth');
+});
+
 /// error handlers
 
 // development error handler
@@ -143,7 +147,7 @@ bbb.on('connection', function(socket) {
 
   socket.on('depth', function(depth) {
     io.emit('depth', depth);
-    console.log('depth: ' + depth);
+    console.log(depth);
   });
 
   socket.on('data_point', function(data_point) {
