@@ -4,7 +4,19 @@ var capnography = [];
 var trial_time;
 
 socket.on('begin', function(time) {
-  $("#begin").fadeIn().delay(2000).fadeOut();
+  $("#begin").fadeIn();
+  setTimeout( function() {
+    $("#begin").html("BEGIN IN 2");
+  }, 1000);
+  setTimeout( function() {
+    $("#begin").html("BEGIN IN 1");
+  }, 2000);
+  setTimeout( function() {
+    $("#begin").html("BEGIN");
+  }, 3000);
+  setTimeout( function() {
+    $("#begin").fadeOut();
+  }, 4000);
   trial_time = time;
   data_graphic({
     title: "Compressions",
@@ -15,7 +27,7 @@ socket.on('begin', function(time) {
     width: 700,
     height: 500,
     min_x: 0,
-    max_x: trial_time,
+    max_x: 10,
     min_y: 6,
     max_y: 0,
     area: false,
@@ -71,8 +83,8 @@ socket.on('data_points', function(data_points) {
     y_accessor: 'depth',
     width: 700,
     height: 500,
-    min_x: 0,
-    max_x: trial_time,
+    min_x: compressions[compressions.length-1].time - 5,
+    max_x: compressions[compressions.length-1].time + 5,
     min_y: 6,
     max_y: 0,
     area: false,
