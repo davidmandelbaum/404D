@@ -39,10 +39,6 @@ try:
     goodrise = 5.0
     badrise = 3.0
 
-    start_time = time.time()
-    last_calc = time.time() - start_time
-    last_send = time.time() - start_time
-
     init_depth = round(ADC.read("P9_40"), 3) - .01
 
     begin = json.dumps({"begin": "true"})
@@ -51,6 +47,10 @@ try:
     sys.stdout.flush()
 
     time.sleep(3)
+
+    start_time = time.time()
+    last_calc = time.time() - start_time
+    last_send = time.time() - start_time
 
     while True:
         now = round(time.time() - start_time, 4)
