@@ -134,3 +134,7 @@ body {
   background-color: green;
   color: white;
 }
+
+.chart_title {
+  display: none;
+}
