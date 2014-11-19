@@ -1,2 +1,11 @@
-each trial in list
-    #{trial}
+div#links
+
+script(type='text/javascript').
+    var list = !{JSON.stringify(list)}
+
+    for (var trial in list){
+        var html = "<a href='/trial/" + trial._id + "'>" + trial.username + ": " + trial.datetime + "</a><br />";
+        $("#links").append(html);
+    }
+
+
