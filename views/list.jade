@@ -5,9 +5,10 @@ block content
  
   script(type='text/javascript').
       var list = !{JSON.stringify(list)}
+      var i = 0;
  
-      for (var trial in list){
-          var html = "<a href='/trial/" + trial._id + "'>" + trial.username + ": " + trial.datetime + "</a><br />";
+      for (i = 0; i < list.length; i++){
+          var html = "<a href='/trial/" + list[i]._id + "'>" + list[i].username + ": " + list[i].datetime + "</a><br />";
           $("#links").append(html);
       }
 
