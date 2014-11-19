@@ -19,7 +19,7 @@ socket.on('connect', function() {
   socket.emit('init', '');
 });
 
-setInterval(check, 100);
+setInterval(check, 200);
 
 function check() {
   b.analogRead('P9_40', outputDepth);
