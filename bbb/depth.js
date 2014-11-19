@@ -24,7 +24,7 @@ setInterval(check, 50);
 function check() {
   b.analogRead('P9_40', outputDepth);
 }
-
+ 
 function outputDepth(x) {
   x.value *= 34.6;
   console.log(x.value.toFixed(2));
