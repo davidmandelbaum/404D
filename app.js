@@ -25,7 +25,7 @@ var trialSchema = new mongoose.Schema({
   starting_capno: Number,
   points: [],
   stats: [],
-  finalStats: Object
+  final_stats: Object
 });
 
 var Trial = mongoose.model('Trial', trialSchema);
@@ -65,14 +65,10 @@ router.get('/', function(req, res) {
 
 router.post('/live', function(req, res) {
   console.log(req.body);
-  curr_trial.username = "David";
+  curr_trial.username = req.body.username;
   curr_trial.datetime = Date.now();
   curr_trial.starting_capno = req.body.capno;
   curr_trial.length = req.body.time*60;
-  curr_trial.save(function(err, curr_trial) {
-    if (err) return console.error(err);
-    console.log(curr_trial);
-  });
   bbb.emit('manikin_inputs', req.body);
   res.render('live', { title: 'Live trial', time: req.body.time });
 });
@@ -204,12 +200,19 @@ bbb.on('connection', function(socket) {
 
   socket.on('status_msg', function(status_msg) {
     io.emit('status_msg', status_msg);
+    curr_trial.stats.push(status_msg);
     console.log('status: ' + status_msg);
   });
 
   socket.on('final_stats', function(final_stats) {
     io.emit('final_stats', final_stats);
     console.log('final_stats: ' + final_stats);
+    curr_trial.points = dp_array;
+    curr_trial.final_stats = final_stats;
+    curr_trial.save(function(err, curr_trial) {
+      if (err) return console.error(err);
+      console.log(curr_trial);
+    });
     socket.disconnect();
   });
 

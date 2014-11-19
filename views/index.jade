@@ -16,7 +16,11 @@ block content
     div#overlay
     form(action='live', method='post', role='form', class='form-horizontal')
       div.form-group
-        label.col-sm-3.control-label(for='time',). Session length 
+        label.col-sm-3.control-label(for='username'). Username
+        div#username-content.col-sm-9
+          input#username.form-control.input-lg(type='text', name='username', disabled)
+      div.form-group
+        label.col-sm-3.control-label(for='time'). Session length 
         div#time-content.col-sm-9
           div#time-slider(disabled='disabled')
           br
