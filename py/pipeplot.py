@@ -22,13 +22,13 @@ try:
     comp_depths = []
     nums = np.arange(0, time_limit, 10)
     old_num = 0
-    conversion = 50 # calculated given length of potentiometer
+    conversion = 34.6
     ylim = 7
     comp_status = 0
     depth_status = 0
     second_values = []
     data = []
-    send_freq = .2
+    send_freq = .1
 
     # capno alg
     scores = []
@@ -41,10 +41,7 @@ try:
     last_send = time.time() - start_time
 
 
-    init_depth = 0
-    # init_depth = round(ADC.read("P9_40"), 3)
-
-    # TODO: initial depth calibration
+    init_depth = round(ADC.read("P9_40"), 3) - .01
 
     begin = json.dumps({"begin": "true"})
 
@@ -114,6 +111,8 @@ try:
 
         try:
             num_in -= init_depth
+            if (num_in < 0):
+                num_in = 0
             num_in *= conversion
             num_in = round(num_in, 3)
             time.sleep(.05)
