@@ -19,7 +19,7 @@ socket.on('connect', function() {
   socket.emit('init', '');
 });
 
-setInterval(check, 80);
+setInterval(check, 100);
 
 function check() {
   b.analogRead('P9_40', outputDepth);
@@ -27,6 +27,6 @@ function check() {
 
 function outputDepth(x) {
   x.value *= 34.6;
-  console.log(x);
+  console.log(x.toFixed(2));
   socket.emit('depth', x);
 }
