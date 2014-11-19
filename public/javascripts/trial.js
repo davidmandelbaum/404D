@@ -46,7 +46,7 @@ $("#title").html("Final Statistics");
 $("#time").html(time + "s");
 $("#rate").html(rate + " /m");
 $("#depth").html(depth + " cm");
-$("#capno").html(capno);
+$("#capno").html(capno.toFixed(2));
 if (rate > 130 || rate < 100) {
   $("#rate").addClass("bad");
 }
