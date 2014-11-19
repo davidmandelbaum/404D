@@ -21,8 +21,8 @@ gauge.animationSpeed = 32; // set animation speed (32 is default value)
 
 socket.on('depth', function(depth) {
   var val = depth.value;
-  console.log(val*5);
-  gauge.set(val*5); // set actual value
-  $("#depth").html(val*5);
+  console.log(val);
+  gauge.set(val); // set actual value
+  $("#depth").html(val);
 });
 
