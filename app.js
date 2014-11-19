@@ -116,6 +116,13 @@ router.get('/trial/:id', function(req, res) {
   });
 });
 
+router.get('/live_nonmed/:id', function(req, res) {
+  Trial.findById(req.params.id, function(err, trial) {
+    res.render('live_nonmed', { trial: trial, title: 'Trial view' });
+  });
+});
+
+
 router.get('/csv/:id', function(req, res) {
   Trial.findById(req.params.id, function(err, trial) {
     var points_csv = trial.points;
