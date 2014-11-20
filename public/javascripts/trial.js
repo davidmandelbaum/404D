@@ -28,8 +28,8 @@ data_graphic({
   min_x: 0,
   // max_x: 10,
   max_x: trial_time,
-  min_y: 6,
-  max_y: 0,
+  min_y: 0,
+  max_y: 5,
   area: false,
   interpolate: "linear",
   x_label: "Time (s)",
@@ -77,3 +77,6 @@ if (depth < 4 || depth > 6){
 else {
   $("#depth").removeClass("bad");
 }
+
+$("#capnography > svg > .x-axis > .label").attr("y", 275);
+$("#capnography > svg > .y-axis > .label").attr("y", 10);
