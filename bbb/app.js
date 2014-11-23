@@ -22,6 +22,9 @@ function checkButton(x) {
   }
 }
 
+// if button not connected, uncomment
+bbb_run();
+
 function bbb_run() {
 
   console.log('bbb_run() called');
