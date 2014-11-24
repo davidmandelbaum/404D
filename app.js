@@ -32,8 +32,6 @@ var trialSchema = new mongoose.Schema({
 
 var Trial = mongoose.model('Trial', trialSchema);
 
-var curr_trial = new Trial();
-
 var users = require('./routes/users');
 
 var app = express();
@@ -67,6 +65,7 @@ router.get('/', function(req, res) {
 
 router.post('/live', function(req, res) {
   console.log(req.body);
+  curr_trial = new Trial();
   curr_trial.username = req.body.username;
   curr_trial.datetime = Date.now();
   curr_trial.starting_capno = req.body.capno;
