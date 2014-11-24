@@ -72,7 +72,7 @@ router.post('/live', function(req, res) {
   curr_trial.starting_capno = req.body.capno;
   curr_trial.length = req.body.time*60;
   bbb.emit('manikin_inputs', req.body);
-  res.render('live', { title: 'Live trial', time: req.body.time });
+  res.render('live_nonmed', { title: 'Live trial', time: req.body.time });
 });
 
 router.get('/live', function(req, res) {
@@ -80,7 +80,7 @@ router.get('/live', function(req, res) {
 });
 
 router.get('/live_nonmed', function(req, res) {
-  res.render('live_nonmed', { title: 'Live trial'});
+  res.render('live_nonmed', { title: 'Live trial', time: req.body.time });
 });
 
 router.post('/data_point', function(req, res) {
