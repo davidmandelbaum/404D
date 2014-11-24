@@ -32,8 +32,6 @@ var trialSchema = new mongoose.Schema({
 
 var Trial = mongoose.model('Trial', trialSchema);
 
-var users = require('./routes/users');
-
 var app = express();
 
 app.use(function(req, res, next) {
@@ -53,8 +51,6 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded());
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-
-app.use('/users', users);
 
 var router = express.Router();
 
