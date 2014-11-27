@@ -20,39 +20,35 @@ block content
       form(action='live', method='post', role='form', class='form-horizontal')
         div.form-group
           label.col-sm-3.control-label(for='username'). Username
-        div#username-content.col-sm-9
-          input#username.form-control.input-lg(type='text', name='username', disabled)
-      div.form-group
-        label.col-sm-3.control-label(for='time'). Session length 
-        div#time-content.col-sm-9
-          div#time-slider(disabled='disabled')
-            br
-          input#time-input.form-control.input-lg(type='text', name='time', disabled)
-          &nbsp;mins
-      div.form-group
-        label.col-sm-3.control-label(for='capno'). Starting capno score
-        div#capno-content.col-sm-9
-          input#capno-input.form-control.input-lg(type='text', name='capno', disabled)
-      input.btn.btn-default(type='submit', value='Start trial', disabled)
+          div#username-content.col-sm-9
+            input#username.form-control.input-lg(type='text', name='username')
+        div.form-group
+          label.col-sm-3.control-label(for='time'). Session length 
+          div#time-content.col-sm-9
+            input#time-input.form-control.input-lg(type='text', name='time')
+            | &nbsp;mins
+        div.form-group
+          label.col-sm-3.control-label(for='capno'). Starting capno score
+          div#capno-content.col-sm-9
+            input#capno-input.form-control.input-lg(type='text', name='capno')
+        input.btn.btn-default(type='submit', value='Start trial')
 
     div#prof_input_form.center-block
       form(action='live', method='post', role='form', class='form-horizontal')
         div.form-group
           label.col-sm-3.control-label(for='username'). Username
-        div#username-content.col-sm-9
-          input#username.form-control.input-lg(type='text', name='username', disabled)
-      div.form-group
-        label.col-sm-3.control-label(for='time'). Session length 
-        div#time-content.col-sm-9
-          div#time-slider(disabled='disabled')
-            br
-          input#time-input.form-control.input-lg(type='text', name='time', disabled)
-          | &nbsp;mins
-      div.form-group
-        label.col-sm-3.control-label(for='capno'). Starting capno score
-        div#capno-content.col-sm-9
-          input#capno-input.form-control.input-lg(type='text', name='capno', disabled)
-      input.btn.btn-default(type='submit', value='Start trial', disabled)
+          div#username-content.col-sm-9
+            input#username.form-control.input-lg(type='text', name='username')
+        div.form-group
+          label.col-sm-3.control-label(for='time'). Session length 
+          div#time-content.col-sm-9
+            input#time-input.form-control.input-lg(type='text', name='time')
+            | &nbsp;mins
+        div.form-group
+          label.col-sm-3.control-label(for='capno'). Starting capno score
+          div#capno-content.col-sm-9
+            input#capno-input.form-control.input-lg(type='text', name='capno')
+        input.btn.btn-default(type='submit', value='Start trial')
 
   script(type='text/javascript').
     var socket = io();
@@ -62,20 +58,26 @@ block content
       $("#manikin-info").html("Manikin connected");
       $("#manikin-info").addClass("connected");
       window.setTimeout( function() {
-        $("#trial_type_form").fadeIn();
-      });
+        $("#trial_type_form").slideDown();
+      }, 500);
     });
 
     $("#prof_button").on('click', function() {
-      $(this).addClass("selected");
-      $("#non_prof_input_form").fadeOut();
-      $("#prof_input_form").fadeIn();
+      if ($("#non_prof_button").hasClass("selected")) { 
+        $("#non_prof_button").toggleClass("selected");
+      }
+      $(this).toggleClass("selected");
+      $("#non_prof_input_form").hide();
+      $("#prof_input_form").show();
     });
 
     $("#non_prof_button").on('click', function() {
-      $(this).addClass("selected");
-      $("#prof_input_form").fadeOut();
-      $("#non_prof_input_form").fadeIn();
+      if ($("#prof_button").hasClass("selected")) { 
+        $("#prof_button").toggleClass("selected");
+      }
+      $(this).toggleClass("selected");
+      $("#prof_input_form").hide();
+      $("#non_prof_input_form").show();
     });
 
     $("#time-slider").noUiSlider({
