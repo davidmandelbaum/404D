@@ -245,7 +245,6 @@ bbb.on('connection', function(socket) {
 
   socket.on('depth', function(depth) {
     io.emit('depth', depth);
-    console.log(depth);
   });
 
   socket.on('data_point', function(data_point) {
