@@ -27,10 +27,10 @@ socket.on('begin', function(time) {
     width: 700,
     height: 500,
     min_x: 0,
-    // max_x: 10,
-    max_x: trial_time,
-    min_y: 0,
-    max_y: 5,
+    max_x: 10,
+    // max_x: trial_time,
+    min_y: -6,
+    max_y: 0,
     area: false,
     interpolate: "linear",
     x_label: "Time (s)",
@@ -55,18 +55,14 @@ socket.on('begin', function(time) {
   });
 });
 
-socket.on('depth', function(depth) {
-  console.log('depth: ' + depth);
-});
-
 socket.on('data_points', function(data_points) {
-  console.log("data points received");
+  // console.log("data points received");
   var i = 0;
   points = JSON.parse(data_points);
   for (i = 0; i < points.length; i++){
-    compressions.push({"time": parseFloat(points[i][0]), "depth": parseFloat(points[i][1])});
+    compressions.push({"time": parseFloat(points[i][0]), "depth": -1*parseFloat(points[i][1])});
   }
-  console.log(compressions);
+  // console.log(compressions);
   data_graphic({
     title: "Compressions",
     data: compressions,
@@ -75,12 +71,12 @@ socket.on('data_points', function(data_points) {
     y_accessor: 'depth',
     width: 700,
     height: 500,
-    min_x: 0,
-    max_x: trial_time,
-    // min_x: compressions[compressions.length-1].time - 5,
-    // max_x: compressions[compressions.length-1].time + 5,
-    min_y: 0,
-    max_y: 5,
+    //min_x: 0,
+    // max_x: trial_time,
+    min_x: compressions[compressions.length-1].time - 5,
+    max_x: compressions[compressions.length-1].time + 5,
+    min_y: -6,
+    max_y: 0,
     area: false,
     interpolate: "linear",
     x_label: "Time (s)",
@@ -155,4 +151,23 @@ socket.on('final_stats', function(final_stats) {
     $("#depth").removeClass("bad");
   }
   $("#ended").fadeIn().delay(2000).fadeOut();
+  data_graphic({
+    title: "Compressions",
+    data: compressions,
+    target: "#compressions",
+    x_accessor: 'time',
+    y_accessor: 'depth',
+    width: 700,
+    height: 500,
+    min_x: 0,
+    max_x: trial_time,
+    // min_x: compressions[compressions.length-1].time - 5,
+    // max_x: compressions[compressions.length-1].time + 5,
+    min_y: -6,
+    max_y: 0,
+    area: false,
+    interpolate: "linear",
+    x_label: "Time (s)",
+    y_label: "Depth (cm)"
+  });
 });

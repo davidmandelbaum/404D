@@ -82,7 +82,20 @@ router.post('/live', function(req, res) {
   curr_trial.type = req.body.type;
   curr_trial.datetime = Date.now();
   curr_trial.starting_capno = req.body.capno;
-  var time = parseInt(req.body.mins)*60 + parseInt(req.body.secs);
+  var mins, secs;
+  if (req.body.mins !== "") {
+    mins = parseInt(req.body.mins);
+  }
+  else {
+    mins = 0;
+  }
+  if (req.body.secs !== "") {
+    secs = parseInt(req.body.secs);
+  }
+  else {
+    secs = 0;
+  }
+  var time = mins+secs;
   curr_trial.length = time;
   bbb.emit('manikin_inputs', req.body);
   if (req.body.type == 'non_prof') {
@@ -256,9 +269,8 @@ bbb.on('connection', function(socket) {
     io.emit('data_points', data_points);
     var i;
     points = JSON.parse(data_points);
-    // TODO: CSV output
     for (i = 0; i < points.length; i++) {
-      dp_array.push( { "time": points[i][0], "depth": points[i][1] } );
+      dp_array.push( { "time": points[i][0], "depth": -1*points[i][1] } );
     }
     console.log('data_points: ' + dp_array);
   });

@@ -10,7 +10,7 @@ var opts = {
     color: '#000000' // Fill color
   },
   limitMax: 'false',   // If true, the pointer will not go past the end of the gauge
-  percentColors: [[0.0, "#FC0000"], [0.50, "#F0FC00"], [1.0, "#24D600"]],
+  percentColors: [[0.0, "#FC0000"], [0.50, "#F0FC00"], [0.80, "#F0FC00"], [1.0, "#24D600"]],
   strokeColor: '#E0E0E0',   // to see which ones work best for you
   generateGradient: true
 };
@@ -21,7 +21,7 @@ gauge.animationSpeed = 4; // set animation speed (32 is default value)
 
 socket.on('depth', function(depth) {
   var val = depth.value;
-  console.log(val);
+  // console.log(val);
   gauge.set(val); // set actual value
   var out = val.toFixed(2);
   $("#curr_depth").html(out + "cm");
