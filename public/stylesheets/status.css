@@ -112,6 +112,10 @@ body {
   font-size: 15px;
 }
 
+#group_controls {
+  display: none;
+}
+
 #trial_type_form {
   max-width: 500px;
   transition: opacity .5s;

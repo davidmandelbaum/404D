@@ -26,10 +26,11 @@ var trialSchema = new mongoose.Schema({
   type: String,
   length: Number,
   starting_capno: Number,
+  difference: Number,
   points: [],
   stats: [],
   final_stats: Object,
-  group: { type: mongoose.Schema.Types.ObjectId, ref: 'Group' }
+  group_id: Number
 });
 
 var Trial = mongoose.model('Trial', trialSchema);
@@ -74,8 +75,11 @@ router.get('/', function(req, res) {
 router.post('/live', function(req, res) {
   console.log(req.body);
   curr_trial = new Trial();
-  curr_trial.type = req.body.type;
   curr_trial.username = req.body.username;
+  if (req.body.add_to_group == "yes") {
+    curr_trial.group_id = req.body.group_name;
+  }
+  curr_trial.type = req.body.type;
   curr_trial.datetime = Date.now();
   curr_trial.starting_capno = req.body.capno;
   curr_trial.length = req.body.mins*60 + req.body.secs;
