@@ -82,9 +82,15 @@ router.post('/live', function(req, res) {
   curr_trial.type = req.body.type;
   curr_trial.datetime = Date.now();
   curr_trial.starting_capno = req.body.capno;
-  curr_trial.length = req.body.mins*60 + req.body.secs;
+  var time = req.body.mins*60 + req.body.secs;
+  curr_trial.length = time;
   bbb.emit('manikin_inputs', req.body);
-  res.render('live_nonmed', { title: 'Live trial', time: req.body.time });
+  if (req.body.type == 'non_med') {
+    res.render('live_nonmed', { title: 'Live trial', time: time });
+  }
+  if (req.body.type == 'med') {
+    res.render('live_med', { title: 'Live trial', time: time });
+  }
 });
 
 router.get('/live', function(req, res) {
