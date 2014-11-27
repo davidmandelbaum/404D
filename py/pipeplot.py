@@ -9,6 +9,8 @@ import csv as csv
 import json
 import urllib
 
+# TODO: ignore compressions of insignificant value
+
 ADC.setup()
 
 try:

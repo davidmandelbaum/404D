@@ -1,26 +1,19 @@
 extends layout
 
 block content
+  script(type='text/javascript').
+    var trials = !{JSON.stringify(trials)}
+    var groups = !{JSON.stringify(groups)}
+
   h1. Groups
   div#groups
+    each group in groups
+      | #{group.name}
+      br
   br
   h1. Trials
-  div#links
- 
-  script(type='text/javascript').
-      var list = !{JSON.stringify(trials)}
-      var i = 0;
- 
-      for (i = 0; i < list.length; i++){
-          var html = list[i].username + ": " + list[i].datetime + ": <a href='/trial_nonmed/" + list[i]._id + "'>View Non-med</a><br />";
-          $("#links").append(html);
-      }
-
-      var groups = !{JSON.stringify(groups)}
-      var i = 0;
- 
-      for (i = 0; i < groups.length; i++){
-          var html = groups[i].name + "<br />";
-          $("#groups").append(html);
-      }
-
+  div#trials
+    each trial in trials
+      | #{trial.username} on #{trial.datetime}: 
+      a(href='/trial_nonmed/#{trial._id}'). View Non-med
+      br

@@ -1,125 +1,45 @@
-#status {
-  padding: 10px;
-  font-family: "Helvetica", "Arial", sans-serif;
-  height: 300px;
-  font-size: 20px;
-  line-height: 2.1;
-  margin-left: auto;
-  margin-right: auto;
+body {
+  background-color: black;
 }
 
-#status div {
-  width: 100px;
-  height: 38px; 
-  display: inline-block;
-  padding-left: 10px;
-  padding-right: 10px;
-  padding-top: 3px;
-  padding-bottom: 12px;
-  line-height: 1.7;
+#mp50 {
+  position: relative;
+  margin: auto;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  text-align: center;
+  margin-top: 50px;
+}
+
+#mp50 img {
+  width: 60%;
+}
+
+#capno_container {
+  font-size: 70px; 
+  color: #FF0;
   position: absolute;
-  left: 137px;
+  bottom: 30%;
+  right: 28.5%;
+  background-color: #000;
+  width: 80px;
+  height: 80px;
+}
+
+#mmhg {
+  font-size: 12px;
+}
+
+#capno {
+
 }
 
 #begin {
-  width: 160px;
-  height: 60px;
-  font-size: 18px;
-  padding: 18px;
-  text-align: center;
-  background-color: green;
-  color: white;
-  position: absolute;
-  top: 50px;
-  left: 400px;
   display: none;
 }
 
 #ended {
-  width: 160px;
-  height: 60px;
-  font-size: 18px;
-  padding: 18px;
-  text-align: center;
-  background-color: red;
-  color: white;
-  position: absolute;
-  top: 50px;
-  left: 400px;
-  display: none;
-}
-
-#status #time, #status #capno {
-  border: 1px solid black;
-  width: 100px;
-}
-
-#time-input {
-  text-align: right;
-  width: 80%;
-}
-
-#capno_input {
-
-}
-
-.good {
-  background-color: green;
-  color: black;
-}
-
-.bad {
-  background-color: red;
-  color: white;
-}
-
-#input_form {
-  width: 500px;
-  transition: opacity .5s;
-  position: relative;
-}
-
-.input_disabled {
-  opacity: .5;
-}
-
-.input_connected {
-  background-color: white;
-  opacity: 1;
-}
-
-#overlay {
-  position: absolute;
-  top: -15px;
-  bottom: -15px;
-  right: -15px;
-  left: -15px;
-  background-color: gray;
-  opacity: .3;
-  border-radius: 4px;
-}
-
-#manikin-info {
-  margin-top: 70px;
-  width: 300px;
-  height: 100px;
-  padding-top: 35px;
-  font-size: 18px;
-  text-align: center;
-  transition: background-color 1s;
-  transition: color 1s;
-  border-radius: 3px;
-}
-
-.waiting {
-  background-color: #eee;
-}
-
-.connected {
-  background-color: green;
-  color: white;
-}
-
-.chart_title {
   display: none;
 }

@@ -114,6 +114,10 @@ router.get('/live_nonmed', function(req, res) {
   res.render('live_nonmed', { title: 'Live trial', time: req.body.time });
 });
 
+router.get('/live_med', function(req, res) {
+  res.render('live_med', { title: 'Live trial', time: req.body.time });
+});
+
 router.post('/data_point', function(req, res) {
   io.emit("data_point", req.body);
   res.send('response');
