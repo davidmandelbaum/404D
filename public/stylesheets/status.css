@@ -79,7 +79,6 @@ body {
 
 #time-input {
   text-align: right;
-  width: 80%;
 }
 
 #capno_input {
@@ -97,8 +96,7 @@ body {
 }
 
 .input_form {
-  width: 50%;
-  min-width: 500px;
+  width: 500px;
   position: relative;
   display: none;
 }
@@ -107,6 +105,11 @@ body {
 }
 
 #non_prof_input_form {
+}
+
+.form-horizontal .control-label {
+  margin-bottom: 6px;
+  font-size: 15px;
 }
 
 #trial_type_form {
