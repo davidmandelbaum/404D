@@ -30,7 +30,7 @@ var trialSchema = new mongoose.Schema({
   points: [],
   stats: [],
   final_stats: Object,
-  group_id: Number
+  group_id: String
 });
 
 var Trial = mongoose.model('Trial', trialSchema);
@@ -82,13 +82,13 @@ router.post('/live', function(req, res) {
   curr_trial.type = req.body.type;
   curr_trial.datetime = Date.now();
   curr_trial.starting_capno = req.body.capno;
-  var time = req.body.mins*60 + req.body.secs;
+  var time = parseInt(req.body.mins)*60 + parseInt(req.body.secs);
   curr_trial.length = time;
   bbb.emit('manikin_inputs', req.body);
-  if (req.body.type == 'non_med') {
+  if (req.body.type == 'non_prof') {
     res.render('live_nonmed', { title: 'Live trial', time: time });
   }
-  if (req.body.type == 'med') {
+  if (req.body.type == 'prof') {
     res.render('live_med', { title: 'Live trial', time: time });
   }
 });

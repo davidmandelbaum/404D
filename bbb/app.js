@@ -53,11 +53,16 @@ function bbb_run() {
   var PythonShell = require('python-shell');
 
   function run_script(inputs) {
+    var time = parseInt(inputs.mins)*60 + parseInt(inputs.secs);
+
+    console.log("time");
+    console.log(time);
+
     console.log('inputs: ' + inputs);
     var options = {
       mode: 'json',
       scriptPath: '../py/',
-      args: [inputs.time*60, inputs.capno],
+      args: [time, inputs.capno],
     };
 
     var pyshell = new PythonShell('pipeplot.py', options);
