@@ -3,3 +3,4 @@ xml/*
 out.csv
 *.pyc
 node_modules
+npm-debug.log
