@@ -96,30 +96,33 @@ body {
   color: white;
 }
 
-#prof_input_form {
+.input_form {
   width: 50%;
   min-width: 500px;
-  transition: opacity .5s;
   position: relative;
   display: none;
+}
+
+#prof_input_form {
 }
 
 #non_prof_input_form {
-  width: 500px;
-  transition: opacity .5s;
-  position: relative;
-  display: none;
 }
 
 #trial_type_form {
-  width: 50%;
+  max-width: 500px;
   transition: opacity .5s;
   position: relative;
   display: none;
   margin-bottom: 30px;
 }
 
-.btn-default {
+.trial_input_btn {
+  font-family: 'Lato', sans-serif;
+  font-size: 16px;
+  letter-spacing: .25px;
+  transition: background-color .5s;
+  transition: color .5s;
   background-color: #c6c6c6;
 }
 
@@ -127,6 +130,20 @@ body {
   background-color: #939393;
   color: white;
   outline: none;
+}
+
+#prof_button {
+}
+
+#non_prof_button {
+}
+
+.trial_input_btn:hover {
+  background-color: #b8b8b8;
+}
+
+.selected:hover {
+  background-color: #939393;
 }
 
 .center {

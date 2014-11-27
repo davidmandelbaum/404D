@@ -12,11 +12,11 @@ block content
   div#index_content
     div#trial_type_form.center-block
       div.row
-        div.col-md-6.center
-          button#prof_button(type='button', class='btn btn-default btn-lg') MEDICAL PROFESSIONAL
-        div.col-md-6.center
-          button#non_prof_button(type='button', class='btn btn-default btn-lg') NON MEDICAL PROFESSIONAL
-    div#non_prof_input_form.center-block
+        div.col-md-6.col-sm-6.col-xs-6.center
+          button#prof_button.btn.btn-default.btn-lg.trial_input_btn(type='button') MEDICAL PROFESSIONAL
+        div.col-md-6.col-sm-6.col-xs-6.center
+          button#non_prof_button.btn.btn-default.btn-lg.trial_input_btn(type='button') NON MEDICAL PROFESSIONAL
+    div#non_prof_input_form.center-block.input_form
       form(action='live', method='post', role='form', class='form-horizontal')
         div.form-group
           label.col-sm-3.control-label(for='username'). Username
@@ -33,7 +33,7 @@ block content
             input#capno-input.form-control.input-lg(type='text', name='capno')
         input.btn.btn-default(type='submit', value='Start trial')
 
-    div#prof_input_form.center-block
+    div#prof_input_form.center-block.input_form
       form(action='live', method='post', role='form', class='form-horizontal')
         div.form-group
           label.col-sm-3.control-label(for='username'). Username
