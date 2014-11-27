@@ -141,12 +141,14 @@ router.get('/csv/:id', function(req, res) {
 });
 
 router.get('/new_group/:name', function (req, res) {
+  console.log('[DEBUG] new_group called');
   new_group = new Group();
   new_group.name = req.params.name;
-  new_group.created_at = Time.now();
+  new_group.created_at = Date.now();
   new_group.save(function(err, new_group) {
     if (err) return console.error(err);
     console.log(new_group);
+    res.send('group created');
   });
 });
 
