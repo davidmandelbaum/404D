@@ -16,6 +16,7 @@ block content
           button#non_prof_button.btn.btn-default.btn-lg.trial_input_btn(type='button') NON MEDICAL PROFESSIONAL
     div#non_prof_input_form.center-block.input_form
       form(action='live', method='post', role='form', class='form-horizontal')
+        input(type='hidden', name='type', value='non_prof')
         div.form-group
           label.control-label(for='username'). Username
           div#username-content
@@ -36,18 +37,22 @@ block content
 
     div#prof_input_form.center-block.input_form
       form(action='live', method='post', role='form', class='form-horizontal')
+        input(type='hidden', name='type', value='prof')
         div.form-group
-          label.col-sm-3.control-label(for='username'). Username
-          div#username-content.col-sm-9
+          label.control-label(for='username'). Username
+          div#username-content
             input#username.form-control.input-lg(type='text', name='username')
+        div.row.form-group
+          div.col-md-6(style='padding-left: 0px;')
+            label.control-label(for='mins'). Session length 
+            div#time-content.input-group
+              input#time-input.form-control.input-lg(type='text', name='mins')
+              div.input-group-addon. mins
+              input#time-input.form-control.input-lg(type='text', name='secs')
+              div.input-group-addon. secs
         div.form-group
-          label.col-sm-3.control-label(for='time'). Session length 
-          div#time-content.col-sm-9
-            input#time-input.form-control.input-lg(type='text', name='time')
-            | &nbsp;mins
-        div.form-group
-          label.col-sm-3.control-label(for='capno'). Starting capno score
-          div#capno-content.col-sm-9
+          label.control-label(for='capno'). Starting capno score
+          div#capno-content
             input#capno-input.form-control.input-lg(type='text', name='capno')
         input.btn.btn-default(type='submit', value='Start trial')
 

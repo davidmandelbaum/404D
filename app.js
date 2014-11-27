@@ -65,16 +65,20 @@ var router = express.Router();
 
 /* GET home page. */
 router.get('/', function(req, res) {
-  res.render('index', { title: 'Welcome!' });
+  Group.find(function(err, groups) {
+    if (err) return console.log(err);
+    res.render('index', { title: 'Welcome!', groups: groups });
+  });
 });
 
 router.post('/live', function(req, res) {
   console.log(req.body);
   curr_trial = new Trial();
+  curr_trial.type = req.body.type;
   curr_trial.username = req.body.username;
   curr_trial.datetime = Date.now();
   curr_trial.starting_capno = req.body.capno;
-  curr_trial.length = req.body.time*60;
+  curr_trial.length = req.body.mins*60 + req.body.secs;
   bbb.emit('manikin_inputs', req.body);
   res.render('live_nonmed', { title: 'Live trial', time: req.body.time });
 });
@@ -115,6 +119,7 @@ router.get('/list', function(req, res) {
   Trial.find(function(err, trials) {
     if (err) return console.log(err);
     Group.find(function(err, groups) {
+      if (err) return console.log(err);
       res.render('list', { trials: trials, groups: groups, title: 'Trial list' });
     });
   });
