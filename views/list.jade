@@ -1,10 +1,14 @@
 extends layout
 
 block content
+  h1. Groups
+  div#groups
+  br
+  h1. Trials
   div#links
  
   script(type='text/javascript').
-      var list = !{JSON.stringify(list)}
+      var list = !{JSON.stringify(trials)}
       var i = 0;
  
       for (i = 0; i < list.length; i++){
@@ -12,4 +16,11 @@ block content
           $("#links").append(html);
       }
 
+      var groups = !{JSON.stringify(groups)}
+      var i = 0;
+ 
+      for (i = 0; i < groups.length; i++){
+          var html = groups[i].name<br />";
+          $("#groups").append(html);
+      }
 

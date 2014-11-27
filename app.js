@@ -23,14 +23,23 @@ mongoose.connect(uristring, function (err, res) {
 var trialSchema = new mongoose.Schema({
   username: String,
   datetime: Date,
+  type: String,
   length: Number,
   starting_capno: Number,
   points: [],
   stats: [],
-  final_stats: Object
+  final_stats: Object,
+  group: { type: Schema.Types.ObjectId, ref: 'Group' }
 });
 
 var Trial = mongoose.model('Trial', trialSchema);
+
+var groupSchema = new mongoose.Schema({
+  name: String,
+  created_at: Date
+});
+
+var Group = mongoose.model('Group', groupSchema);
 
 var app = express();
 
@@ -105,7 +114,9 @@ router.get('/depth', function(req, res) {
 router.get('/list', function(req, res) {
   Trial.find(function(err, trials) {
     if (err) return console.log(err);
-    res.render('list', { list: trials, title: 'Trial list' });
+    Group.find(function(err, groups) {
+      res.render('list', { trials: trials, groups: groups, title: 'Trial list' });
+    });
   });
 });
 
@@ -121,12 +132,21 @@ router.get('/trial_nonmed/:id', function(req, res) {
   });
 });
 
-
 router.get('/csv/:id', function(req, res) {
   Trial.findById(req.params.id, function(err, trial) {
     var points_csv = trial.points;
     points_csv.unshift( { "depth": "depth", "time": "time" });
     res.csv(points_csv);
+  });
+});
+
+router.get('/new_group/:name', function (req, res) {
+  new_group = new Group();
+  new_group.name = req.params.name;
+  new_group.created_at = Time.now();
+  new_group.save(function(err, new_group) {
+    if (err) return console.error(err);
+    console.log(new_group);
   });
 });
 
