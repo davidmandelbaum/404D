@@ -88,15 +88,6 @@ try:
 
             # TODO: LCD screen output
 
-            # LED screen output
-            # if comp_status == 1 and depth_status == 1:
-            #     # if compressions are good, turn red light off and green light on
-            #     ser.write('r')
-            #     ser.write('G')
-            # else:
-            #     ser.write('g')
-            #     ser.write('R')
-
             status_out = json.dumps({ "status_msg": { 
                                         "time": now,
                                         "rate": comp_rate,
@@ -120,7 +111,7 @@ try:
             if (num_in < 0):
                 num_in = 0
             num_in *= conversion
-            num_in = round(num_in, 3)
+            num_in = round(num_in, 2)
             time.sleep(.10)
             # TODO: deal with issue of numbers not being the same
             if old_num != num_in:
