@@ -115,8 +115,6 @@ try:
             num_in = round(num_in, 2)
             time.sleep(.05)
 
-            # TODO: deal with issue of numbers not being the same
-
             if abs(old_num - num_in) > 0.03:
                 y_vals_window.append((now, num_in))
                 y_vals.append((now, num_in))
