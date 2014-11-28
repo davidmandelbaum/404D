@@ -1,5 +1,5 @@
 body {
-  padding-top: 0px;
+  padding-top: 10px;
   font-family: 'Source Sans Pro', 'Helvetica', sans-serif;
   background-color: #DBDBDB;
   padding-left: 0px;
@@ -36,7 +36,7 @@ body {
 
 #overlay {
   width: 100%;
-  height: 115%;
+  height: 117%;
   font-size: 18px;
   text-align: center;
   background-color: #000;
@@ -63,7 +63,9 @@ body {
   width: 550px;
   height: 130px;
   color: white;
-  transition: background-color 1s;
+  transition: background-color .5s;
+  border-radius: 3px;
+  text-shadow: 0px 0px 3px #444;
 }
 
 #begin_text {
@@ -75,16 +77,8 @@ body {
   background-color: gray;
 }
 
-.ended_box { 
-  display: none;
-}
-
-#ended_text {
-  position: relative;
-  top: 40%;
-  transform: translateY(-50%);
-  -webkit-transform: translateY(-50%);
-  -ms-transform: translateY(-50%);
+.ended {
+  background-color: red;
 }
 
 #capnography {

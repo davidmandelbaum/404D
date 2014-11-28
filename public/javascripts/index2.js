@@ -131,6 +131,14 @@ socket.on('status_msg', function(status_msg) {
 });
 
 socket.on('final_stats', function(final_stats) {
+  $(".begin_box").addClass("ended");
+  $("#begin_text").html("TRIAL ENDED");
+  window.setTimeout(function() {
+    $(".begin_box").fadeIn();
+  }, 500);
+  window.setTimeout(function() {
+    $(".begin_box").fadeOut();
+  }, 2000);
   console.log('final stats!');
   console.log(final_stats);
   var time = parseFloat(final_stats.time);

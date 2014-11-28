@@ -8,19 +8,7 @@ block content
     img(src='/images/mp50.png')
     div#capno_container
       span#capno. 30
-  div#begin. BEGIN IN 3
-  div#ended. TRIAL ENDED
-  script(type='text/javascript').
-    var socket = io();
-
-    socket.on('status_msg', function(status_msg){
-      var capno = parseFloat(status_msg.capno);
-      $("#capno").html(capno);
-    });
-
-    $(window).on('resize', function() {
-      var width = $("#mp50 img").width();
-      console.log(width);
-      // TODO: handle dynamic resizing
-      $("#capno_container").css('font-size', width/12 + "px");
-    });
+  div#overlay
+  div.begin_box.waiting_manikin
+    span#begin_text. WAITING FOR MANIKIN
+  script(src='/javascripts/live_med.js', type='text/javascript')

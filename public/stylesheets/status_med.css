@@ -43,3 +43,50 @@ body {
 #ended {
   display: none;
 }
+
+#overlay {
+  width: 100%;
+  height: 117%;
+  font-size: 18px;
+  text-align: center;
+  background-color: #000;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  display: block;
+  opacity: .7;
+}
+
+.begin_box {
+  position: absolute;
+  margin: auto;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: green;
+  text-align: center;
+  font-size: 39px;
+  font-family: 'Lato', sans-serif;
+  letter-spacing: 1px;
+  font-weight: 600;
+  width: 550px;
+  height: 130px;
+  color: white;
+  transition: background-color .5s;
+  border-radius: 3px;
+  text-shadow: 0px 0px 3px #444;
+}
+
+#begin_text {
+  position: relative;
+  top: 28%;
+}
+
+.waiting_manikin {
+  background-color: gray;
+}
+
+.ended {
+  background-color: red;
+}
