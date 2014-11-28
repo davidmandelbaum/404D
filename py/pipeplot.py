@@ -156,6 +156,7 @@ try:
             scores.append((data[-2][0], score))
 
     stats = final_stats(y_vals, time_limit, data)
+    stats["capno"] = score
 
     stats_out = json.dumps({ "final_stats": stats }) 
     sys.stdout.write(stats_out + "\n")

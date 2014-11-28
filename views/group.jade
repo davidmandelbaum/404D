@@ -9,4 +9,6 @@ block content
   div#trials
     ol
       each trial in trials
-        li. #{trial.username}: #{trial.datetime}: #{trial.difference}
+        li
+          | #{trial.username}: #{trial.datetime}: #{trial.difference}: 
+          a(href='/trials_nonmed/#{trial._id}'). View Non-med
