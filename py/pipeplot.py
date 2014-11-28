@@ -31,6 +31,7 @@ try:
     second_values = []
     data = []
     send_freq = .1
+    last_diff_val = 0
 
     # capno alg
     scores = []
@@ -113,16 +114,22 @@ try:
             num_in *= conversion
             num_in = round(num_in, 2)
             time.sleep(.10)
+
             # TODO: deal with issue of numbers not being the same
+
             if abs(old_num - num_in) > 0.05:
                 y_vals_window.append((now, num_in))
                 y_vals.append((now, num_in))
                 second_values.append((now, num_in))
                 data.append((now, num_in))
+                last_diff_val = now
+            elif (now - last_diff_val) > 1:
+                y_vals_window.append((now, old_num))
+                y_vals.append((now, old_num))
+                second_values.append((now, old_num))
+                data.append((now, old_num))
+                last_diff_val = now
 
-                # TODO: test if socket can handle sending each point
-                # point_out = json.dumps({ "data_point": (now, num_in) })
-                # sys.stdout.write(point_out)
             old_num = num_in
 
         except:
