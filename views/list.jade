@@ -8,7 +8,7 @@ block content
   h1. Groups
   div#groups
     each group in groups
-      | #{group.name}
+      a(href='/group/#{group.id}'). #{group.name}
       br
   br
   h1. Trials

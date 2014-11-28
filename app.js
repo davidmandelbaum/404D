@@ -4,12 +4,13 @@ var favicon = require('static-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var _ = require('underscore');
 
 var csv = require('express-csv');
 
 var mongoose = require('mongoose');
 
-var uristring = process.env.MONGOLAB_URI || process.env.MONGOHQ_URL || 'mongodb://localhost/HelloMongoose';
+var uristring = process.env.MONGOLAB_URI || process.env.MONGOHQ_URL;
 
 mongoose.connect(uristring, function (err, res) {
   if (err) {
@@ -175,6 +176,17 @@ router.get('/csv/:id', function(req, res) {
     var points_csv = trial.points;
     points_csv.unshift( { "depth": "depth", "time": "time" });
     res.csv(points_csv);
+  });
+});
+
+router.get('/group/:id', function (req, res) {
+  Trial.find( { "group_id": req.params.id }, function(err, trials) {
+    if (err) return console.error(err);
+    Group.findById(req.params.id, function (err, group) {
+      if (err) return console.error(err);
+      trials = _.sortBy(trials, "difference");
+      res.render('group', { trials: trials, title: 'Group view', group: group });
+    });
   });
 });
 
