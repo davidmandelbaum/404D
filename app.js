@@ -175,7 +175,7 @@ router.get('/groups/:id', function (req, res) {
     if (err) return console.error(err);
     Group.findById(req.params.id, function (err, group) {
       if (err) return console.error(err);
-      trials = _.sortBy(trials, "difference");
+      trials = _.sortBy(trials, "difference").reverse();
       res.render('group', { trials: trials, title: 'Group view', group: group });
     });
   });
