@@ -1,7 +1,8 @@
 var socket = io();
 var compressions = [];
 var capnography = [];
-var trial_time;
+var trial_time, starting_time;
+
 
 socket.on('begin', function(time) {
   $(".begin_box").removeClass("waiting_manikin");
@@ -14,6 +15,7 @@ socket.on('begin', function(time) {
   }, 2000);
   setTimeout( function() {
     $("#begin_text").html("BEGIN");
+    starting_time = new Date();
   }, 3000);
   setTimeout( function() {
     $("#overlay").fadeOut();
@@ -58,6 +60,20 @@ socket.on('begin', function(time) {
 });
 
 socket.on('data_points', function(data_points) {
+  var elapsed = (new Date() - starting_time)/1000;
+  var min_x, max_x;
+  if (elapsed < 10) {
+    min_x = 0;
+  }
+  else {
+    min_x = elapsed - 10;
+  }
+  if (elapsed < 10) {
+    max_x = 10;
+  }
+  else {
+    max_x = elapsed;
+  }
   // console.log("data points received");
   var i = 0;
   points = JSON.parse(data_points);
@@ -75,8 +91,8 @@ socket.on('data_points', function(data_points) {
     height: 500,
     //min_x: 0,
     // max_x: trial_time,
-    min_x: compressions[compressions.length-1].time - 10,
-    max_x: compressions[compressions.length-1].time,
+    min_x: min_x,
+    max_x: max_x,
     min_y: -6,
     max_y: 0,
     area: false,
