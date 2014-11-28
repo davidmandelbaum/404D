@@ -313,6 +313,8 @@ bbb.on('connection', function(socket) {
     // console.log('final_stats: ' + final_stats);
     curr_trial.points = dp_array;
     curr_trial.final_stats = final_stats;
+    curr_trial.difference = curr.trial.starting_capno - final_stats.capno;
+    console.log('curr_trial.difference = ' + curr_trial.difference);
     curr_trial.save(function(err, curr_trial) {
       if (err) return console.error(err);
       console.log(curr_trial);
