@@ -1,0 +1,12 @@
+extends layout
+
+block content
+  script(type='text/javascript').
+    var trials = !{JSON.stringify(trials)}
+    var group = !{JSON.stringify(group)}
+
+  h1. Leaderboard for #{group.name}
+  div#trials
+    ol
+      each trial in trials
+        li. #{trial.username}: #{trial.datetime}: #{trial.difference}
