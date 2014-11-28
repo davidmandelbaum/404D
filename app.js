@@ -312,7 +312,8 @@ bbb.on('connection', function(socket) {
     curr_trial.points = dp_array;
     curr_trial.final_stats = final_stats;
     var curr_capno = parseInt(final_stats.capno);
-    curr_trial.difference = curr_trial.starting_capno - curr_capno;
+    // difference is capno difference divided by trial length
+    curr_trial.difference = (curr_trial.starting_capno - curr_capno)/curr_trial.length;
     console.log('curr_trial.difference = ' + curr_trial.difference);
     curr_trial.save(function(err, curr_trial) {
       if (err) return console.error(err);
