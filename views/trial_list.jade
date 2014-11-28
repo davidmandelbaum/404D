@@ -3,17 +3,11 @@ extends layout
 block content
   script(type='text/javascript').
     var trials = !{JSON.stringify(trials)}
-    var groups = !{JSON.stringify(groups)}
 
-  h1. Groups
-  div#groups
-    each group in groups
-      a(href='/group/#{group.id}'). #{group.name}
-      br
-  br
   h1. Trials
   div#trials
     each trial in trials
       | #{trial.username} on #{trial.datetime}: 
-      a(href='/trial_nonmed/#{trial._id}'). View Non-med
+      a(href='/trials_nonmed/#{trial._id}'). View Non-med/
+      a(href='/trials_med/#{trial._id}'). View Med
       br

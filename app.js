@@ -143,34 +143,6 @@ router.get('/depth', function(req, res) {
   res.render('depth');
 });
 
-router.get('/list', function(req, res) {
-  Trial.find(function(err, trials) {
-    if (err) return console.log(err);
-    Group.find(function(err, groups) {
-      if (err) return console.log(err);
-      res.render('list', { trials: trials, groups: groups, title: 'Trial list' });
-    });
-  });
-});
-
-router.get('/trial/:id', function(req, res) {
-  Trial.findById(req.params.id, function(err, trial) {
-    res.render('trial', { trial: trial, title: 'Trial view' });
-  });
-});
-
-router.get('/trial_nonmed/:id', function(req, res) {
-  Trial.findById(req.params.id, function(err, trial) {
-    res.render('trial_nonmed', { trial: trial, title: 'Trial view' });
-  });
-});
-
-router.get('/trial_med/:id', function(req, res) {
-  Trial.findById(req.params.id, function(err, trial) {
-    res.render('trial_med', { trial: trial, title: 'Trial view' });
-  });
-});
-
 router.get('/csv/:id', function(req, res) {
   Trial.findById(req.params.id, function(err, trial) {
     var points_csv = trial.points;
@@ -179,7 +151,26 @@ router.get('/csv/:id', function(req, res) {
   });
 });
 
-router.get('/group/:id', function (req, res) {
+router.get('/groups/', function (req, res) {
+  Group.find(function(err, groups) {
+    if (err) return console.log(err);
+    res.render('group_list', { groups: groups, title: 'Trial list' });
+  });
+});
+
+router.post('/groups/:name', function (req, res) {
+  console.log('[DEBUG] new_group called');
+  new_group = new Group();
+  new_group.name = req.params.name;
+  new_group.created_at = Date.now();
+  new_group.save(function(err, new_group) {
+    if (err) return console.error(err);
+    console.log(new_group);
+    res.send('group created');
+  });
+});
+
+router.get('/groups/:id', function (req, res) {
   Trial.find( { "group_id": req.params.id }, function(err, trials) {
     if (err) return console.error(err);
     Group.findById(req.params.id, function (err, group) {
@@ -190,15 +181,22 @@ router.get('/group/:id', function (req, res) {
   });
 });
 
-router.get('/new_group/:name', function (req, res) {
-  console.log('[DEBUG] new_group called');
-  new_group = new Group();
-  new_group.name = req.params.name;
-  new_group.created_at = Date.now();
-  new_group.save(function(err, new_group) {
-    if (err) return console.error(err);
-    console.log(new_group);
-    res.send('group created');
+router.get('/trials/', function (req, res) {
+  Trial.find(function(err, trials) {
+    if (err) return console.log(err);
+    res.render('trial_list', { trials: trials, title: 'Trial list' });
+  });
+});
+
+router.get('/trials_nonmed/:id', function(req, res) {
+  Trial.findById(req.params.id, function(err, trial) {
+    res.render('trial_nonmed', { trial: trial, title: 'Trial view' });
+  });
+});
+
+router.get('/trials_med/:id', function(req, res) {
+  Trial.findById(req.params.id, function(err, trial) {
+    res.render('trial_med', { trial: trial, title: 'Trial view' });
   });
 });
 
