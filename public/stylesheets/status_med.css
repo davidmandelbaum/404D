@@ -1,0 +1,45 @@
+body {
+  background-color: black;
+}
+
+#mp50 {
+  position: relative;
+  margin: auto;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  text-align: center;
+  margin-top: 50px;
+}
+
+#mp50 img {
+  width: 60%;
+}
+
+#capno_container {
+  font-size: 70px; 
+  color: #FF0;
+  position: absolute;
+  bottom: 30%;
+  right: 28.5%;
+  background-color: #000;
+  width: 80px;
+  height: 80px;
+}
+
+#mmhg {
+  font-size: 12px;
+}
+
+#capno {
+
+}
+
+#begin {
+  display: none;
+}
+
+#ended {
+  display: none;
+}
