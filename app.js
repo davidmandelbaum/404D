@@ -85,7 +85,7 @@ router.post('/live', function(req, res) {
   curr_trial.starting_capno = req.body.capno;
   var mins, secs;
   if (req.body.mins !== "") {
-    mins = parseInt(req.body.mins);
+    mins = parseInt(req.body.mins)*60;
   }
   else {
     mins = 0;
