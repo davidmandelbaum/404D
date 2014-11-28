@@ -114,7 +114,7 @@ try:
             num_in = round(num_in, 2)
             time.sleep(.10)
             # TODO: deal with issue of numbers not being the same
-            if old_num != num_in:
+            if abs(old_num - num_in) > 0.01:
                 y_vals_window.append((now, num_in))
                 y_vals.append((now, num_in))
                 second_values.append((now, num_in))
