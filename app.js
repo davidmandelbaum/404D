@@ -282,7 +282,7 @@ bbb.on('connection', function(socket) {
 
   socket.on('data_point', function(data_point) {
     io.emit('data_point', data_point);
-    console.log('data_point: ' + data_point);
+    // console.log('data_point: ' + data_point);
   });
 
   socket.on('data_points', function(data_points) {
@@ -290,20 +290,21 @@ bbb.on('connection', function(socket) {
     var i;
     points = JSON.parse(data_points);
     for (i = 0; i < points.length; i++) {
+      // convert all points to negative for proper display
       dp_array.push( { "time": points[i][0], "depth": -1*points[i][1] } );
     }
-    console.log('data_points: ' + dp_array);
+    // console.log('data_points: ' + dp_array);
   });
 
   socket.on('status_msg', function(status_msg) {
     io.emit('status_msg', status_msg);
     curr_trial.stats.push(status_msg);
-    console.log('status: ' + status_msg);
+    // console.log('status: ' + status_msg);
   });
 
   socket.on('final_stats', function(final_stats) {
     io.emit('final_stats', final_stats);
-    console.log('final_stats: ' + final_stats);
+    // console.log('final_stats: ' + final_stats);
     curr_trial.points = dp_array;
     curr_trial.final_stats = final_stats;
     curr_trial.save(function(err, curr_trial) {
@@ -315,6 +316,6 @@ bbb.on('connection', function(socket) {
 
   socket.on('begin', function(time) {
     io.emit('begin', time);
-    console.log('begin; trial time = ' + time);
+    // console.log('begin; trial time = ' + time);
   });
 });

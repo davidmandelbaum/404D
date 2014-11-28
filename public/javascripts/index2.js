@@ -4,18 +4,20 @@ var capnography = [];
 var trial_time;
 
 socket.on('begin', function(time) {
-  $("#begin").fadeIn();
+  $(".begin_box").removeClass("waiting_manikin");
+  $("#begin_text").html("BEGIN IN 3");
   setTimeout( function() {
-    $("#begin").html("BEGIN IN 2");
+    $("#begin_text").html("BEGIN IN 2");
   }, 1000);
   setTimeout( function() {
-    $("#begin").html("BEGIN IN 1");
+    $("#begin_text").html("BEGIN IN 1");
   }, 2000);
   setTimeout( function() {
-    $("#begin").html("BEGIN");
+    $("#begin_text").html("BEGIN");
   }, 3000);
   setTimeout( function() {
-    $("#begin").fadeOut();
+    $("#overlay").fadeOut();
+    $(".begin_box").fadeOut();
   }, 4000);
   trial_time = time;
   data_graphic({
