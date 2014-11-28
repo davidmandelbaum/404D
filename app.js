@@ -284,6 +284,7 @@ bbb.on('connection', function(socket) {
   socket.on('init', function() {
     io.emit('bbb_connect', 'connected');
     console.log('[BBB] init!');
+    dp_array = [];
   });
 
   socket.on('data_point', function(data_point) {
@@ -309,6 +310,7 @@ bbb.on('connection', function(socket) {
   });
 
   socket.on('final_stats', function(final_stats) {
+    console.log('data_points: ' + dp_array);
     io.emit('final_stats', final_stats);
     // console.log('final_stats: ' + final_stats);
     curr_trial.points = dp_array;
