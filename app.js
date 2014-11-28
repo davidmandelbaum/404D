@@ -260,6 +260,16 @@ io.on('connection', function (socket) {
   });
 });
 
+var depth = io.of('/depth');
+
+depth.on('connection', function(socket) {
+
+  socket.on('depth', function(depth){
+    io.emit('depth', depth);
+  });
+
+});
+
 var bbb = io.of('/bbb');
 
 var dp_array = [];
@@ -274,10 +284,6 @@ bbb.on('connection', function(socket) {
   socket.on('init', function() {
     io.emit('bbb_connect', 'connected');
     console.log('[BBB] init!');
-  });
-
-  socket.on('depth', function(depth) {
-    io.emit('depth', depth);
   });
 
   socket.on('data_point', function(data_point) {
