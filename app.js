@@ -5,6 +5,7 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var _ = require('underscore');
+var moment = require('moment');
 
 var csv = require('express-csv');
 
@@ -172,6 +173,10 @@ router.get('/groups/:id', function (req, res) {
     Group.findById(req.params.id, function (err, group) {
       if (err) return console.error(err);
       trials = _.sortBy(trials, "difference").reverse();
+      var i = 0;
+      for (i = 0; i < trials.length; i++){
+        trials[i].dt = moment(trials[i].datetime).format('MMMM Do YYYY, h:mm:ss a');
+      }
       res.render('group', { trials: trials, title: 'Group view', group: group });
     });
   });
@@ -180,6 +185,10 @@ router.get('/groups/:id', function (req, res) {
 router.get('/trials/', function (req, res) {
   Trial.find(function(err, trials) {
     if (err) return console.log(err);
+    var i = 0;
+    for (i = 0; i < trials.length; i++){
+      trials[i].dt = moment(trials[i].datetime).format('MMMM Do YYYY, h:mm:ss a');
+    }
     res.render('trial_list', { trials: trials, title: 'Trial list' });
   });
 });
