@@ -44,6 +44,15 @@ var groupSchema = new mongoose.Schema({
 
 var Group = mongoose.model('Group', groupSchema);
 
+// add formatted datetime to each object as "dt" attribute
+function dateHelper(trials){
+  var i = 0;
+  for (i = 0; i < trials.length; i++){
+    trials[i].dt = moment(trials[i].datetime).format('MMM Do YYYY, h:mma');
+  }
+  return trials;
+}
+
 var app = express();
 
 app.use(function(req, res, next) {
@@ -173,10 +182,7 @@ router.get('/groups/:id', function (req, res) {
     Group.findById(req.params.id, function (err, group) {
       if (err) return console.error(err);
       trials = _.sortBy(trials, "difference").reverse();
-      var i = 0;
-      for (i = 0; i < trials.length; i++){
-        trials[i].dt = moment(trials[i].datetime).format('MMMM Do YYYY, h:mm:ss a');
-      }
+      trials = dateHelper(trials);
       res.render('group', { trials: trials, title: 'Group view', group: group });
     });
   });
@@ -185,10 +191,7 @@ router.get('/groups/:id', function (req, res) {
 router.get('/trials/', function (req, res) {
   Trial.find(function(err, trials) {
     if (err) return console.log(err);
-    var i = 0;
-    for (i = 0; i < trials.length; i++){
-      trials[i].dt = moment(trials[i].datetime).format('MMMM Do YYYY, h:mm:ss a');
-    }
+    trials = dateHelper(trials);
     res.render('trial_list', { trials: trials, title: 'Trial list' });
   });
 });
