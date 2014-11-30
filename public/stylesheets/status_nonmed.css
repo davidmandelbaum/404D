@@ -11,10 +11,21 @@ body {
   height: 100%;
 }
 
+.chart-wrapper {
+  background-color: #DBDBDB;
+  border: 2px solid #ABABAB;
+}
+
+.chart-wrapper .chart-title {
+  font-size: 20px;
+  font-family: 'Lato';
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
 #status {
   padding: 10px;
-  font-family: "Helvetica", "Arial", sans-serif;
-  height: 300px;
+  font-family: 'Lato', "Helvetica", "Arial", sans-serif;
   font-size: 20px;
   line-height: 2.1;
   margin-left: auto;

@@ -3,10 +3,10 @@ extends layout
 block content
   script(src='/socket.io/socket.io.js')
   script(src='//cdnjs.cloudflare.com/ajax/libs/d3/3.4.11/d3.min.js', charset='utf-8')
-  link(href='/stylesheets/status_nonmed.css', rel='stylesheet')
   link(href='/stylesheets/metricsgraphics.css', rel='stylesheet')
   link(href='/stylesheets/highlightjs-default.css', rel='stylesheet')
   link(href='/stylesheets/keen-dashboards.css', rel='stylesheet')
+  link(href='/stylesheets/status_nonmed.css', rel='stylesheet')
   script(type='text/javascript').
       var compressions = !{JSON.stringify(trial.points)};
       var trial_time = !{JSON.stringify(trial.length)};
@@ -33,7 +33,6 @@ block content
               | Depth: 
               div#depth.good
               br
-          div.chart-notes
     div.row
       div.col-sm-8
         div.chart-wrapper

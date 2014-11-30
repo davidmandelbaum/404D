@@ -9,8 +9,6 @@ import csv as csv
 import json
 import urllib
 
-# TODO: ignore compressions of insignificant value
-
 ADC.setup()
 
 try:
@@ -31,6 +29,7 @@ try:
     second_values = []
     data = []
     send_freq = .1
+    calc_freq = .9
     last_diff_val = 0
 
     # capno alg
@@ -66,9 +65,8 @@ try:
             sys.stdout.flush()
             second_values = []
 
-        if (now-last_calc) > 1 and now > 0 and len(y_vals_window) > 0:
+        if (now-last_calc) > calc_freq and now > 0 and len(y_vals_window) > 0:
             last_calc = now
-            # every 1 second, make necessary calculations
 
             window_vals = [x[1] for x in y_vals_window]
 

@@ -1,3 +1,3 @@
-- download all online dependencies
+- links to group and trial list
 - hide overlay and begin_box if manikin already connected (when separately
   loading live_nonmed or live_med)?
