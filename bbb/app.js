@@ -1,31 +1,33 @@
-// var b = require('bonescript');
-// var pressed = 0;
-// 
-// b.pinMode('P8_12', b.INPUT);
-// setInterval(check, 100);
-// 
-// console.log('ready for input');
-// 
-// function check() {
-//   b.digitalRead('P8_12', checkButton);
-// }
-// 
-// function checkButton(x) {
-//   if (!pressed){
-//     if (x.value == 1) {
-//       pressed = 1;
-//       console.log('pressed = ' + pressed);
-//       bbb_run();
-//     }
-//     else {
-//     }
-//   }
-// }
+var b = require('bonescript');
+var pressed = 0;
+
+b.pinMode('P8_15', b.INPUT);
+setInterval(check, 100);
+
+console.log('ready for input');
+
+function check() {
+  b.digitalRead('P8_15', checkButton);
+}
+
+function checkButton(x) {
+  if (!pressed){
+    if (x.value == 1) {
+      pressed = 1;
+      console.log('pressed = ' + pressed);
+      bbb_run();
+    }
+    else {
+    }
+  }
+}
 
 // if button not connected, uncomment
-bbb_run();
+// bbb_run();
 
 function bbb_run() {
+
+  b.digitalWrite('P8_13', b.HIGH);
 
   console.log('bbb_run() called');
 
@@ -105,6 +107,7 @@ function bbb_run() {
       console.log('finished');
       pressed = 0;
       console.log('pressed = ' + pressed);
+      b.digitalWrite('P8_13', b.LOW);
     });
   }
 

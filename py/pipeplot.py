@@ -18,7 +18,7 @@ try:
     # globals
     y_vals = []
     y_vals_window = [(0, 0)]
-    comp_rates = []
+    cemp_rates = []
     comp_depths = []
     nums = np.arange(0, time_limit, 10)
     old_num = 0
@@ -41,7 +41,7 @@ try:
     goodrise = 5.0
     badrise = 3.0
 
-    init_depth = round(ADC.read("P9_40"), 3) - .01
+    init_depth = round(ADC.read("P9_36"), 3) - .01
 
     begin = json.dumps({"begin": "true"})
 
@@ -103,7 +103,7 @@ try:
             if y[0] < (now-window_length):
                 y_vals_window.remove(y)
 
-        num_in = ADC.read("P9_40")
+        num_in = ADC.read("P9_36")
 
         try:
             num_in -= init_depth
