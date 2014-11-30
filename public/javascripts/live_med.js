@@ -23,6 +23,20 @@ socket.on('begin', function(time) {
     $("#capno").html(capno.toFixed());
   });
 
+  socket.on('final_stats', function(final_stats) {
+    $(".begin_box").addClass("ended");
+    $("#begin_text").html("TRIAL ENDED");
+    window.setTimeout(function() {
+      $(".begin_box").fadeIn();
+    }, 500);
+    window.setTimeout(function() {
+      $(".begin_box").fadeOut();
+    }, 2000);
+    console.log('final stats!');
+  });
+
+
+
   $(window).on('resize', function() {
     var width = $("#mp50 img").width();
     console.log(width);
