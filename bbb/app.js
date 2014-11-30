@@ -2,6 +2,7 @@ var b = require('bonescript');
 var pressed = 0;
 
 b.pinMode('P8_15', b.INPUT);
+b.pinMode('P8_13', b.OUTPUT);
 setInterval(check, 100);
 
 console.log('ready for input');
