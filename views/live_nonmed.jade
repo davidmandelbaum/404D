@@ -9,7 +9,7 @@ block content
   link(href='/stylesheets/status_nonmed.css', rel='stylesheet')
   div.container-fluid
     div.row
-      div.col-sm-6.col-md-4
+      div.col-sm-6.col-md-3
         div.chart-wrapper
           div.chart-title
             | Stats
@@ -21,26 +21,28 @@ block content
               | SCORE:
               div#capno
               br
-              | RATE:
-              div#rate.good
-              br
-              | DEPTH:
-              div#depth.good
-              br
-      div.col-sm-6.col-md-4
+      div.col-sm-6.col-md-5
         div.chart-wrapper
           div.chart-title
             | Depth
-          div.chart-stage
+          div.chart-stage#depth-stage
             div#depth_gauge_window
               canvas#depth_gauge
-            div#curr_depth
+            div#depth
+            div#harder
+              | PUSH
+              | HARDER
+            div#softer
+              | PUSH
+              | SOFTER
       div.col-sm-6.col-md-4
         div.chart-wrapper
           div.chart-title
             | Compressions
           div.chart-stage
-            | compressions here
+            div#faster. PUSH FASTER
+            div#rate
+            div#slower. PUSH SLOWER
     div.row
       div.col-sm-8
         div.chart-wrapper
@@ -58,8 +60,8 @@ block content
   div.begin_box.waiting_manikin
     span#begin_text. WAITING FOR MANIKIN
   script(src='/javascripts/keen.js', type='text/javascript')
+  script(src='/javascripts/gauge.js', type='text/javascript')
   script(src='/javascripts/index2.js')
   script(src='/javascripts/metricsgraphics.min.js')
   script(src='/javascripts/lib/highlight.pack.js')
-  script(src='/javascripts/gauge.js', type='text/javascript')
-  script(src='/javascripts/depth.js')
+  //script(src='/javascripts/depth.js')
