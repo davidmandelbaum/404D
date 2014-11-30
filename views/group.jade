@@ -21,4 +21,4 @@ block content
               a(href='/trials_nonmed/#{trial._id}'). View Non-med
             div.difference
               span.score_label. POINTS LOST
-              = trial.difference
+              = trial.difference.toFixed(2)
