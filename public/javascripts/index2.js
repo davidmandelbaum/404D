@@ -3,25 +3,25 @@ var compressions = [];
 var capnography = [];
 var trial_time, starting_time;
 
-var opts = {
-  lines: 12, // The number of lines to draw
-  angle: 0.15, // The length of each line
-  lineWidth: 0.44, // The line thickness
-  pointer: {
-    length: 0.9, // The radius of the inner circle
-    strokeWidth: 0.035, // The rotation offset
-    color: '#000000' // Fill color
-  },
-  limitMax: 'false',   // If true, the pointer will not go past the end of the gauge
-  percentColors: [[0.0, "#FC0000"], [0.50, "#F0FC00"], [0.80, "#F0FC00"], [1.0, "#24D600"]],
-  strokeColor: '#E0E0E0',   // to see which ones work best for you
-  generateGradient: true
-};
-
-var target = document.getElementById('depth_gauge'); // your canvas element
-var gauge = new Gauge(target).setOptions(opts); // create sexy gauge!
-gauge.maxValue = 6; // set max gauge value
-gauge.animationSpeed = 4; // set animation speed (32 is default value)
+// var opts = {
+//   lines: 12, // The number of lines to draw
+//   angle: 0.15, // The length of each line
+//   lineWidth: 0.44, // The line thickness
+//   pointer: {
+//     length: 0.9, // The radius of the inner circle
+//     strokeWidth: 0.035, // The rotation offset
+//     color: '#000000' // Fill color
+//   },
+//   limitMax: 'false',   // If true, the pointer will not go past the end of the gauge
+//   percentColors: [[0.0, "#FC0000"], [0.50, "#F0FC00"], [0.80, "#F0FC00"], [1.0, "#24D600"]],
+//   strokeColor: '#E0E0E0',   // to see which ones work best for you
+//   generateGradient: true
+// };
+// 
+// var target = document.getElementById('depth_gauge'); // your canvas element
+// var gauge = new Gauge(target).setOptions(opts); // create sexy gauge!
+// gauge.maxValue = 6; // set max gauge value
+// gauge.animationSpeed = 4; // set animation speed (32 is default value)
 
 socket.on('begin', function(time) {
   $(".begin_box").removeClass("waiting_manikin");
@@ -128,7 +128,7 @@ socket.on('status_msg', function(status_msg) {
   var time = parseFloat(status_msg.time);
   var rate = parseFloat(status_msg.rate);
   var depth = parseFloat(status_msg.depth).toFixed(2);
-  gauge.set(depth);
+  // gauge.set(depth);
   $("#curr_depth").html(depth + "cm");
   var capno = parseFloat(status_msg.capno).toFixed(2);
   $("#time").html(time + "s");
@@ -145,6 +145,8 @@ socket.on('status_msg', function(status_msg) {
     }
   }
   else {
+    $("#slower").fadeTo("fast", "0");
+    $("#faster").fadeTo("fast", "0");
     $("#rate").removeClass("bad");
   }
   if (depth < 4 || depth > 6){
@@ -159,6 +161,8 @@ socket.on('status_msg', function(status_msg) {
     }
   }
   else {
+    $("#harder").fadeTo("fast", "0");
+    $("#softer").fadeTo("fast", "0");
     $("#depth").removeClass("bad");
   }
   $("#depth").html(depth + " cm");
