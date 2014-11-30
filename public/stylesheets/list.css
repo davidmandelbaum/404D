@@ -62,22 +62,21 @@ ul li {
   display: inline-block;
   height: 51px;
   vertical-align: middle;
-  text-align: right;
+  text-align: center;
   font-size: 29px;
   color: white;
   background-color: #a6a6a6;
   position: absolute;
   right: 0px;
   width: 85px;
-  padding-top: 13px;
-  padding-right: 3px;
+  padding-top: 11px;
 }
 
 .score_label {
   position: absolute;
   top: 2px;
-  left: 4px;
-  font-size: 13px;
+  left: 8px;
+  font-size: 11px;
   color: #e8e8e8;
   font-family: 'Lato';
 }
