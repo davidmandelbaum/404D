@@ -36,7 +36,7 @@ socket.on('begin', function(time) {
     min_y: -6,
     max_y: 0,
     area: false,
-    interpolate: "linear",
+    interpolate: "monotone",
     x_label: "Time (s)",
     y_label: "Depth (cm)"
   });
