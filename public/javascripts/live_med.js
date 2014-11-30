@@ -20,7 +20,7 @@ socket.on('begin', function(time) {
 
   socket.on('status_msg', function(status_msg){
     var capno = parseFloat(status_msg.capno);
-    $("#capno").html(capno);
+    $("#capno").html(capno.toFixed());
   });
 
   $(window).on('resize', function() {

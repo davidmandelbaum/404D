@@ -5,7 +5,7 @@ block content
   h1. Trials
   div#trials
     each trial in trials
-      | #{trial.username} on #{trial.datetime}: 
+      | #{trial.username} on #{trial.dt}: 
       a(href='/trials_nonmed/#{trial._id}'). View Non-med/
       a(href='/trials_med/#{trial._id}'). View Med
       br

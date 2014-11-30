@@ -56,6 +56,14 @@ block content
           label.control-label(for='username'). Username
           div#username-content
             input#username.form-control.input-lg(type='text', name='username')
+          br
+          input#add_to_group(type='hidden', name='add_to_group', value='no')
+          button.btn.btn-md.btn-default#group_button(type='button')
+            | ADD TO GROUP
+        div.form-group#group_controls
+          select.selectpicker#group_name(name='group_name')
+            each group in groups
+              option(value='#{group.id}')= group.name
         div.row.form-group
           div.col-md-6(style='padding-left: 0px;')
             label.control-label(for='mins'). Session length 

@@ -13,6 +13,8 @@ var mongoose = require('mongoose');
 
 var uristring = process.env.MONGOLAB_URI || process.env.MONGOHQ_URL;
 
+var offline = 1;
+
 mongoose.connect(uristring, function (err, res) {
   if (err) {
     console.log('[DB] Error connecting');
@@ -77,10 +79,14 @@ var router = express.Router();
 
 /* GET home page. */
 router.get('/', function(req, res) {
-  Group.find(function(err, groups) {
-    if (err) return console.log(err);
-    res.render('index', { title: 'Welcome!', groups: groups });
-  });
+  if (!offline) {
+    Group.find(function(err, groups) {
+      if (err) return console.log(err);
+      res.render('index', { title: 'Welcome!', groups: groups });
+    });
+  }
+  var groups = {};
+  res.render('index', { title: 'Welcome!', groups: groups });
 });
 
 router.post('/live', function(req, res) {
