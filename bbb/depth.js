@@ -22,7 +22,7 @@ socket.on('connect', function() {
 setInterval(check, 100);
 
 function check() {
-  b.analogRead('P9_40', outputDepth);
+  b.analogRead('P9_36', outputDepth);
 }
  
 function outputDepth(x) {
