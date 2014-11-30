@@ -19,11 +19,11 @@ var gauge = new Gauge(target).setOptions(opts); // create sexy gauge!
 gauge.maxValue = 6; // set max gauge value
 gauge.animationSpeed = 4; // set animation speed (32 is default value)
 
-// socket.on('depth', function(depth) {
-//   var val = depth.value;
-//   // console.log(val);
-//   gauge.set(val); // set actual value
-//   var out = val.toFixed(2);
-//   $("#curr_depth").html(out + "cm");
-// });
+socket.on('depth', function(depth) {
+  var val = depth.value;
+  // console.log(val);
+  gauge.set(val); // set actual value
+  var out = val.toFixed(2);
+  $("#curr_depth").html(out + "cm");
+});
 
