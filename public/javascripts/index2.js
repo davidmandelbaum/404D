@@ -66,13 +66,13 @@ socket.on('data_points', function(data_points) {
     min_x = 0;
   }
   else {
-    min_x = elapsed - 8;
+    min_x = elapsed - 5;
   }
   if (elapsed < 10) {
     max_x = 10;
   }
   else {
-    max_x = elapsed + 2;
+    max_x = elapsed + 5;
   }
   // console.log("data points received");
   var i = 0;
