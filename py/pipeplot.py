@@ -18,7 +18,7 @@ try:
     # globals
     y_vals = []
     y_vals_window = [(0, 0)]
-    cemp_rates = []
+    comp_rates = []
     comp_depths = []
     nums = np.arange(0, time_limit, 10)
     old_num = 0
