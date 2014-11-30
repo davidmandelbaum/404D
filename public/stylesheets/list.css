@@ -1,0 +1,94 @@
+body {
+  padding-top: 0px;
+  font-family: 'Source Sans Pro', 'Helvetica', sans-serif;
+  background-color: #DBDBDB;
+  padding-left: 0px;
+}
+
+#index_content {
+  padding-top: 130px;
+  width: 600px;
+  height: 100%;
+}
+
+#header {
+  position: fixed;
+  z-index: 100;
+  width: 100%;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  height: 100px;
+  padding-top: 29px;
+  font-size: 26px;
+  text-align: center;
+  font-family: 'Lato', sans-serif;
+  font-weight: 600;
+  transition: background-color 1s;
+  transition: color 1s;
+  text-shadow: 0px 0px 2px rgba(159, 159, 159, 0.76);
+  color: #868686;
+  background-color: #c9c9c9;
+}
+
+ul {
+  list-style-type: none;
+  font-size: 16px;
+}
+
+ul li {
+}
+
+.trial_div {
+  background-color: #eee;
+  margin-bottom: 10px;
+  vertical-align: middle;
+  height: 50px;
+  position: relative;
+}
+
+.rank {
+  display: inline-block;
+  font-size: 35px;
+  color: #eaeaea;
+  width: 50px;
+  height: 51px;
+  vertical-align: middle;
+  text-align: center;
+  background-color: #797c9c;
+  margin-right: 5px;
+}
+
+.difference {
+  display: inline-block;
+  height: 51px;
+  vertical-align: middle;
+  text-align: right;
+  font-size: 29px;
+  color: white;
+  background-color: #a6a6a6;
+  position: absolute;
+  right: 0px;
+  width: 85px;
+  padding-top: 13px;
+  padding-right: 3px;
+}
+
+.score_label {
+  position: absolute;
+  top: 2px;
+  left: 4px;
+  font-size: 13px;
+  color: #e8e8e8;
+  font-family: 'Lato';
+}
+
+.trial_info {
+  display: inline-block;
+}
+
+ol {
+}
+
+#leaderboard_text {
+  color: #5e5e5e;
+}
