@@ -89,10 +89,10 @@ socket.on('data_points', function(data_points) {
     y_accessor: 'depth',
     width: 700,
     height: 500,
-    //min_x: 0,
-    // max_x: trial_time,
-    min_x: min_x,
-    max_x: max_x,
+    min_x: 0,
+    max_x: trial_time,
+    // min_x: min_x,
+    // max_x: max_x,
     min_y: -6,
     max_y: 0,
     area: false,
@@ -109,6 +109,8 @@ socket.on('status_msg', function(status_msg) {
   var time = parseFloat(status_msg.time);
   var rate = parseFloat(status_msg.rate);
   var depth = parseFloat(status_msg.depth).toFixed(2);
+  gauge.set(depth.toFixed(2));
+  $("#curr_depth").html(out + "cm");
   var capno = parseFloat(status_msg.capno).toFixed(2);
   $("#time").html(time + "s");
   $("#rate").html(rate + " /m");
@@ -195,3 +197,22 @@ socket.on('final_stats', function(final_stats) {
     y_label: "Depth (cm)"
   });
 });
+
+var opts = {
+  lines: 12, // The number of lines to draw
+  angle: 0.15, // The length of each line
+  lineWidth: 0.44, // The line thickness
+  pointer: {
+    length: 0.9, // The radius of the inner circle
+    strokeWidth: 0.035, // The rotation offset
+    color: '#000000' // Fill color
+  },
+  limitMax: 'false',   // If true, the pointer will not go past the end of the gauge
+  percentColors: [[0.0, "#FC0000"], [0.50, "#F0FC00"], [0.80, "#F0FC00"], [1.0, "#24D600"]],
+  strokeColor: '#E0E0E0',   // to see which ones work best for you
+  generateGradient: true
+};
+var target = document.getElementById('depth_gauge'); // your canvas element
+var gauge = new Gauge(target).setOptions(opts); // create sexy gauge!
+gauge.maxValue = 6; // set max gauge value
+gauge.animationSpeed = 4; // set animation speed (32 is default value)

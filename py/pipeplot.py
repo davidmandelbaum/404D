@@ -29,7 +29,7 @@ try:
     second_values = []
     data = []
     send_freq = .1
-    calc_freq = .9
+    calc_freq = .87
     last_diff_val = 0
 
     # capno alg
