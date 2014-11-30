@@ -7,13 +7,13 @@ var bodyParser = require('body-parser');
 var _ = require('underscore');
 var moment = require('moment');
 
+var schedule = require('node-schedule');
+
 var csv = require('express-csv');
 
 var mongoose = require('mongoose');
 
 var uristring = process.env.MONGOLAB_URI || process.env.MONGOHQ_URL;
-
-var offline = 1;
 
 mongoose.connect(uristring, function (err, res) {
   if (err) {
@@ -41,7 +41,8 @@ var Trial = mongoose.model('Trial', trialSchema);
 
 var groupSchema = new mongoose.Schema({
   name: String,
-  created_at: Date
+  created_at: Date,
+  num_trials: Number
 });
 
 var Group = mongoose.model('Group', groupSchema);
@@ -54,6 +55,22 @@ function dateHelper(trials){
   }
   return trials;
 }
+
+// recalculate trials object for each group every minute
+var rule = new schedule.RecurrenceRule();
+rule.minute = new schedule.Range(0, 60, 1);
+
+var job = schedule.scheduleJob(rule, function() {
+  console.log('job ran!');
+  Group.find(function(err, groups) {
+    _.each(groups, function(g) {
+      Trial.find( { "group_id": g._id }, function(err, trials) {
+        g.num_trials = trials.length;
+        g.save();
+      });
+    });
+  });
+});
 
 var app = express();
 
@@ -79,14 +96,10 @@ var router = express.Router();
 
 /* GET home page. */
 router.get('/', function(req, res) {
-  if (!offline) {
-    Group.find(function(err, groups) {
-      if (err) return console.log(err);
-      res.render('index', { title: 'Welcome!', groups: groups });
-    });
-  }
-  var groups = {};
-  res.render('index', { title: 'Welcome!', groups: groups });
+  Group.find(function(err, groups) {
+    if (err) return console.log(err);
+    res.render('index', { title: 'Welcome!', groups: groups });
+  });
 });
 
 router.post('/live', function(req, res) {

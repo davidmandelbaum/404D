@@ -1,11 +1,24 @@
 extends layout
 
 block content
+  link(href='/stylesheets/list.css', rel='stylesheet')
+  script(src='/javascripts/bootstrap.js', type='text/javascript')
+  script(src='/javascripts/bootstrap-select.js', type='text/javascript')
+  link(href='/stylesheets/bootstrap-select.css', rel='stylesheet')
 
-  h1. Leaderboard for #{group.name}
-  div#trials
-    ol
-      each trial in trials
+  div#header.center-block 
+    span#leaderboard_text. LEADERBOARD: 
+    | #{group.name}
+
+  div#index_content.center-block
+    ul
+      each trial, index in trials
         li
-          | #{trial.username}: #{trial.dt}: #{trial.difference}: 
-          a(href='/trials_nonmed/#{trial._id}'). View Non-med
+          div.trial_div
+            div.rank= index+1
+            div.trial_info
+              | #{trial.username}: #{trial.dt}: 
+              a(href='/trials_nonmed/#{trial._id}'). View Non-med
+            div.difference
+              span.score_label. SCORE:
+              = trial.difference

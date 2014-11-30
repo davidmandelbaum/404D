@@ -18,6 +18,7 @@
     "mongoose": "^3.8.19",
     "monitor.io": "^0.1.0",
     "morgan": "~1.0.0",
+    "node-schedule": "^0.1.13",
     "socket.io": "^1.2.0",
     "static-favicon": "~1.0.0",
     "underscore": "^1.7.0"

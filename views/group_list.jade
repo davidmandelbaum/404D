@@ -1,10 +1,17 @@
 extends layout
 
 block content
+  link(href='/stylesheets/list.css', rel='stylesheet')
+  script(src='/javascripts/bootstrap.js', type='text/javascript')
+  script(src='/javascripts/bootstrap-select.js', type='text/javascript')
+  link(href='/stylesheets/bootstrap-select.css', rel='stylesheet')
 
-  h1. Groups
-  div#groups
-    each group in groups
-      a(href='/groups/#{group.id}'). #{group.name}
-      br
-  br
+  div#header.center-block
+    | Group List
+
+  div#index_content.center-block
+    ul#groups_list
+      each group in groups
+        li
+          a(href='/groups/#{group.id}'). #{group.name} (#{group.num_trials} trials)
+    br
