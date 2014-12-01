@@ -172,7 +172,7 @@ router.get('/csv/:id', function(req, res) {
   Trial.findById(req.params.id, function(err, trial) {
     var points_csv = [];
     for (var point in trial.points) {
-      points_csv.push( { "time": point.time, "depth": point.depth } );
+      points_csv.push( { "time": point.time, "depth": (-1*point.depth) } );
     }
     points_csv.unshift( { "depth": "depth", "time": "time" });
     res.csv(points_csv);
