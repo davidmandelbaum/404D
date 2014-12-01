@@ -168,6 +168,11 @@ router.get('/depth', function(req, res) {
   res.render('depth');
 });
 
+router.post('/addr', function(req, res) {
+  console.log(req.body.addr);
+  res.send('response');
+});
+
 router.get('/csv/:id', function(req, res) {
   Trial.findById(req.params.id, function(err, trial) {
     console.log(trial);
