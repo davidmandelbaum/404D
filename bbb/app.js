@@ -42,9 +42,9 @@ function bbb_run() {
   console.log('bbb_run() called');
 
   if (socket)
-    socket.reconnect();
+    socket.io.connect();
   else
-    socket = io.connect('http://meng404d.herokuapp.com:80/bbb');
+    socket = io.connect('http://meng404d.herokuapp.com:80/bbb', { 'forceNew': true });
 
   if (process.argv.length > 2 && process.argv[2] == '-l'){
     socket = io.connect('http://localhost:3000/bbb');
