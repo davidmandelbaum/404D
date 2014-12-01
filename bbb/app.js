@@ -163,5 +163,4 @@ function bbb_run() {
 
   });
 
-  return;
 }
