@@ -6,14 +6,14 @@ var socket;
 
 var pressed = 0;
 
-b.pinMode('P8_15', b.INPUT);
-b.pinMode('P8_13', b.OUTPUT);
+b.pinMode('P8_16', b.INPUT);
+b.pinMode('P8_14', b.OUTPUT);
 setInterval(check, 100);
 
 console.log('ready for input');
 
 function check() {
-  b.digitalRead('P8_15', checkButton);
+  b.digitalRead('P8_16', checkButton);
 }
 
 function checkButton(x) {
@@ -33,7 +33,7 @@ function checkButton(x) {
 
 function bbb_run() {
 
-  b.digitalWrite('P8_13', b.HIGH);
+  b.digitalWrite('P8_14', b.HIGH);
 
   console.log('bbb_run() called');
 
@@ -122,7 +122,7 @@ function bbb_run() {
       console.log('finished');
       pressed = 0;
       console.log('pressed = ' + pressed);
-      b.digitalWrite('P8_13', b.LOW);
+      b.digitalWrite('P8_14', b.LOW);
     });
   }
 
