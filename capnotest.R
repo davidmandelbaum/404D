@@ -11,6 +11,8 @@ data <- read.csv("string30.csv")
 # matrix <- as.matrix(data)
 
 
+
+
 data <- data[complete.cases(data),]
 # data <- data[complete.cases(data[,250:500]),]
 # cuts all rows with any NAs in the columns between 250 and 500
@@ -49,3 +51,46 @@ write.csv(data, file = "string30.csv",row.names=FALSE)
 # strings <- c("foo", 14)
 # 
 # suppressWarnings(!is.na(as.numeric(strings)))
+
+
+
+
+
+
+
+
+
+
+
+
+
+# GET SEPARATE MAX TABLES
+
+findmaxes <- function(data){
+  
+  maxes = NULL
+  
+  alldepth <- as.zoo(data[2])
+  maxpos <- rollapply(alldepth, 3, function(x) which.max(x)==2)
+  indexmaxes <- (index(maxpos)[coredata(maxpos)])
+  
+  for (i in (1:length(indexmaxes))){
+    maxes[i] <- data[i,2]
+  }
+  return(maxes)
+}
+
+
+findmins <- function(data){
+  
+  mins = NULL
+  
+  alldepth <- as.zoo(data[2])
+  minpos <- rollapply(alldepth, 7, function(x) which.min(x)==3)
+  indexmins <- (index(minpos)[coredata(minpos)])
+  
+  for (i in (1:length(indexmins))){
+    mins[i] <- data[i,2]
+  }
+  return(mins)
+}
