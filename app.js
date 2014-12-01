@@ -170,6 +170,7 @@ router.get('/depth', function(req, res) {
 
 router.get('/csv/:id', function(req, res) {
   Trial.findById(req.params.id, function(err, trial) {
+    console.log(trial);
     var points_csv = [];
     for (var point in trial.points) {
       console.log(point);
