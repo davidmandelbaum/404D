@@ -13,14 +13,15 @@ b.pinMode('P8_14', b.OUTPUT);
 setInterval(check, 100);
 
 b.digitalWrite('P8_14', b.LOW);
+b.digitalWrite('P8_13', b.HIGH);
 
 console.log('ready for input');
 
-function check() {
-  b.digitalRead('P8_16', checkButton);
+function checkGreen() {
+  b.digitalRead('P8_16', checkGreenButton);
 }
 
-function checkButton(x) {
+function checkGreenButton(x) {
   if (!pressed){
     if (x.value == 1) {
       pressed = 1;
@@ -30,6 +31,17 @@ function checkButton(x) {
     else {
     }
   }
+}
+
+function checkBlue() {
+  b.digitalRead('P8_15', checkBlueButton);
+}
+
+function checkGreenButton(x) {
+  exec('poweroff', function(err, stdout) {
+    console.log('shutting off');
+    process.exit();  
+  }); 
 }
 
 // if button not connected, uncomment
@@ -142,7 +154,6 @@ function bbb_run() {
       if ('final_stats' in message){
         socket.emit('final_stats', message.final_stats);
         console.log('final_stats: ', message.final_stats);
-        socket.io.disconnect();
       }
     });
 
