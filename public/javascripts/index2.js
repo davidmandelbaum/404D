@@ -151,10 +151,10 @@ socket.on('status_msg', function(status_msg) {
     $("#rate").addClass("good");
     $("#rate").removeClass("bad");
   }
-  if (depth < 4 || depth > 6){
+  if (depth < 4.7 || depth > 6.2){
     $("#depth").addClass("bad");
     $("#depth").removeClass("good");
-    if (depth < 4){
+    if (depth < 4.7){
       $("#harder").fadeTo("fast", "1");
       $("#softer").fadeTo("fast", "0");
     }

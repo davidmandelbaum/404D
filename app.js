@@ -169,6 +169,7 @@ router.get('/depth', function(req, res) {
 });
 
 router.post('/addr', function(req, res) {
+  console.log(req.body);
   console.log("ADDR: " + req.body.addr);
   io.emit('address', req.body.addr);
   res.send('response');
