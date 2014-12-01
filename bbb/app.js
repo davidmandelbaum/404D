@@ -10,7 +10,8 @@ var pressed = 0;
 
 b.pinMode('P8_16', b.INPUT);
 b.pinMode('P8_14', b.OUTPUT);
-setInterval(check, 100);
+setInterval(checkGreen, 100);
+setInterval(checkBlue, 100);
 
 b.digitalWrite('P8_14', b.LOW);
 b.digitalWrite('P8_13', b.HIGH);
