@@ -124,6 +124,7 @@ function bbb_run() {
       if ('final_stats' in message){
         socket.emit('final_stats', message.final_stats);
         console.log('final_stats: ', message.final_stats);
+        socket.io.disconnect();
       }
     });
 
