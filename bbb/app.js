@@ -6,6 +6,8 @@ var io = require('socket.io-client');
 
 var socket;
 
+var count = 0;
+
 var pressed = 0;
 
 b.pinMode('P8_16', b.INPUT); // blue button
@@ -51,6 +53,7 @@ function checkBlueButton(x) {
 }
 
 function bbb_run() {
+  count++;
 
   b.digitalWrite('P8_14', b.HIGH);
 
@@ -74,23 +77,21 @@ function bbb_run() {
     console.log('other: ' + process.argv[3]);
   }
 
-  socket.on('connect', function() {
-    console.log('connected to remote socket');
+  // only register this listener once
+  if (count == 1){
+    socket.on('connect', function() {
+      console.log('connected to remote socket');
 
-    var output = exec('ifconfig | grep \'inet addr\' | head -1', function(err, stdout) {
-      console.log(stdout);
-      request.post(
-        'http://meng404d.herokuapp.com/addr',
-        { form : { addr: stdout } });
+      var output = exec('ifconfig | grep \'inet addr\' | head -1', function(err, stdout) {
+        console.log(stdout);
+        request.post(
+          'http://meng404d.herokuapp.com/addr',
+          { form : { addr: stdout } });
+      });
+       
+      socket.emit('init', '');
     });
-     
-    socket.emit('init', '');
-
-    // socket.on('disconnect', function() {
-    //   socket.io.disconnect();
-    //   console.log('disconnected from remote socket');
-    // });
-  });
+  }
 
   var PythonShell = require('python-shell');
 
@@ -152,15 +153,17 @@ function bbb_run() {
     });
   }
 
-  socket.on('manikin_inputs', function(msg) {
-    console.log('manikin inputs:');
-    console.log(msg);
+  if (count == 1){
+    socket.on('manikin_inputs', function(msg) {
+      console.log('manikin inputs:');
+      console.log(msg);
 
-    setTimeout(function() {
-      console.log('starting script');
-      run_script(msg);
-    }, 2000);
+      setTimeout(function() {
+        console.log('starting script');
+        run_script(msg);
+      }, 2000);
 
-  });
+    });
+  }
 
 }
