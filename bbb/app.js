@@ -1,4 +1,9 @@
 var b = require('bonescript');
+var exec = require('child_process').exec;
+var request = require('request');
+
+var socket;
+
 var pressed = 0;
 
 b.pinMode('P8_15', b.INPUT);
@@ -32,7 +37,7 @@ function bbb_run() {
 
   console.log('bbb_run() called');
 
-  var socket = require('socket.io-client')('http://meng404d.herokuapp.com:80/bbb');
+  socket = require('socket.io-client')('http://meng404d.herokuapp.com:80/bbb');
 
   if (process.argv.length > 2 && process.argv[2] == '-l'){
     socket = require('socket.io-client')('http://localhost:3000/bbb');
@@ -46,13 +51,22 @@ function bbb_run() {
 
   socket.on('connect', function() {
     console.log('connected to remote socket');
+
+    var output = exec('ifconfig | grep \'inet addr\' | head -1', function(err, stdout) {
+      console.log(stdout);
+      request.post(
+        'http://meng404d.herokuapp.com/addr',
+        { form : { addr: stdout } });
+    });
+     
     socket.emit('init', '');
+
     socket.on('disconnect', function() {
       console.log('disconnected from remote socket');
+      socket = null;
     });
   });
 
-  // TODO: fix calling twice
   var PythonShell = require('python-shell');
 
   function run_script(inputs) {
