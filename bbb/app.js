@@ -42,7 +42,7 @@ function bbb_run() {
   console.log('bbb_run() called');
 
   if (socket)
-    socket.socket.reconnect();
+    socket.reconnect();
   else
     socket = io.connect('http://meng404d.herokuapp.com:80/bbb');
 
