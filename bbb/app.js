@@ -57,7 +57,7 @@ function bbb_run() {
 
   b.digitalWrite('P8_14', b.HIGH);
 
-  console.log('bbb_run() called');
+  console.log('bbb_run() called for the ' + count.to_s + 'time');
 
   if (socket) {
     console.log('calling connect again');
