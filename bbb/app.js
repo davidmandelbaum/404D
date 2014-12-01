@@ -66,6 +66,9 @@ function bbb_run() {
     socket.on('disconnect', function() {
       socket.io.disconnect();
       console.log('disconnected from remote socket');
+      console.log(socket);
+      socket = null;
+      console.log(socket);
     });
   });
 
