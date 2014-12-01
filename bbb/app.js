@@ -89,23 +89,23 @@ function bbb_run() {
     });
   });
 
-  socket.on('reconnect', function() {
-    console.log('connected to remote socket');
+  // socket.on('reconnect', function() {
+  //   console.log('connected to remote socket');
 
-    var output = exec('ifconfig | grep \'inet addr\' | head -1', function(err, stdout) {
-      console.log(stdout);
-      request.post(
-        'http://meng404d.herokuapp.com/addr',
-        { form : { addr: stdout } });
-    });
-     
-    socket.emit('init', '');
+  //   var output = exec('ifconfig | grep \'inet addr\' | head -1', function(err, stdout) {
+  //     console.log(stdout);
+  //     request.post(
+  //       'http://meng404d.herokuapp.com/addr',
+  //       { form : { addr: stdout } });
+  //   });
+  //    
+  //   socket.emit('init', '');
 
-    socket.on('disconnect', function() {
-      socket.io.disconnect();
-      console.log('disconnected from remote socket');
-    });
-  });
+  //   socket.on('disconnect', function() {
+  //     socket.io.disconnect();
+  //     console.log('disconnected from remote socket');
+  //   });
+  // });
 
   var PythonShell = require('python-shell');
 
@@ -154,6 +154,7 @@ function bbb_run() {
       if ('final_stats' in message){
         socket.emit('final_stats', message.final_stats);
         console.log('final_stats: ', message.final_stats);
+        socket.io.disconnect();
       }
     });
 
