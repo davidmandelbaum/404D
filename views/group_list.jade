@@ -7,6 +7,8 @@ block content
   link(href='/stylesheets/bootstrap-select.css', rel='stylesheet')
 
   div#header.center-block
+    div#left_link
+      a(href='/'). &#10094; HOME
     | Group List
 
   div#index_content.center-block
@@ -15,3 +17,10 @@ block content
         li
           a(href='/groups/#{group.id}'). #{group.name} (#{group.num_trials} trials)
     br
+
+    form#add_group(action='/groups/', method='post', role='form')
+      div.input-group.input-group-lg
+        span.input-group-addon. NAME: 
+        input#name.form-control(type='text', name="name")
+        span.input-group-btn
+          button.btn.btn-default(type='submit'). ADD GROUP

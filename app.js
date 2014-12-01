@@ -179,19 +179,24 @@ router.get('/csv/:id', function(req, res) {
 router.get('/groups/', function (req, res) {
   Group.find(function(err, groups) {
     if (err) return console.log(err);
+    groups = _.sortBy(groups, "num_trials").reverse();
     res.render('group_list', { groups: groups, title: 'Trial list' });
   });
 });
 
-router.post('/groups/:name', function (req, res) {
-  console.log('[DEBUG] new_group called');
+router.post('/groups/', function (req, res) {
   new_group = new Group();
-  new_group.name = req.params.name;
+  new_group.name = req.body.name;
   new_group.created_at = Date.now();
+  new_group.num_trials = 0;
   new_group.save(function(err, new_group) {
     if (err) return console.error(err);
     console.log(new_group);
-    res.send('group created');
+    Group.find(function(err, groups) {
+      if (err) return console.error(err);
+      groups = _.sortBy(groups, "num_trials").reverse();
+      res.render('group_list', { groups: groups, title: 'Trial list' });
+    });
   });
 });
 

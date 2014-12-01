@@ -216,3 +216,14 @@ body {
 .chart_title {
   display: none;
 }
+
+#left_link {
+  position: absolute;
+  left: 30px;
+  color: #414ABA;
+  text-decoration: underline;
+}
+
+#left_link a {
+  color: #363c8a;
+}
