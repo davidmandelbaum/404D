@@ -160,13 +160,12 @@ function bbb_run() {
       if ('final_stats' in message){
         socket.emit('final_stats', message.final_stats);
         console.log('final_stats: ', message.final_stats);
-        socket.io.disconnect();
       }
     });
 
     pyshell.end(function (err) {
       if (err) throw err;
-      console.log('finished');
+      console.log('end of trial');
       pressed = 0;
       console.log('pressed = ' + pressed);
       b.digitalWrite('P8_14', b.LOW);
