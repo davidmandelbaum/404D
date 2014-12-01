@@ -4,13 +4,15 @@ var request = require('request');
 
 var io = require('socket.io-client');
 
-var socket;
+var socket = io();
 
 var pressed = 0;
 
 b.pinMode('P8_16', b.INPUT);
 b.pinMode('P8_14', b.OUTPUT);
 setInterval(check, 100);
+
+b.digitalWrite('P8_14', b.LOW);
 
 console.log('ready for input');
 
@@ -39,7 +41,7 @@ function bbb_run() {
 
   console.log('bbb_run() called');
 
-  socket = io.connect('http://meng404d.herokuapp.com:80/bbb');
+  socket.io.connect('http://meng404d.herokuapp.com:80/bbb');
 
   if (process.argv.length > 2 && process.argv[2] == '-l'){
     socket = io.connect('http://localhost:3000/bbb');
@@ -66,9 +68,6 @@ function bbb_run() {
     socket.on('disconnect', function() {
       socket.io.disconnect();
       console.log('disconnected from remote socket');
-      console.log(socket);
-      socket = null;
-      console.log(socket);
     });
   });
 
