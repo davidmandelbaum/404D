@@ -172,11 +172,10 @@ router.get('/csv/:id', function(req, res) {
   Trial.findById(req.params.id, function(err, trial) {
     console.log(trial);
     var points_csv = [];
-    for (var point in trial.points) {
-      console.log(point);
-      points_csv.push( { "time": point.time, "depth": (-1*point.depth) } );
+    var i = 0;
+    for (i = 0; i < trial.points.length; i++) {
+      points_csv.push( { "time": trial.points[i].time, "depth": (-1*trial.points[i].depth) } );
     }
-    console.log(points_csv);
     points_csv.unshift( { "depth": "depth", "time": "time" });
     res.csv(points_csv);
   });
