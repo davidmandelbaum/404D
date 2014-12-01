@@ -42,10 +42,12 @@ function checkBlue() {
 }
 
 function checkBlueButton(x) {
-  exec('poweroff', function(err, stdout) {
-    console.log('shutting off');
-    process.exit();  
-  }); 
+  if (x.value == 1){
+    exec('poweroff', function(err, stdout) {
+      console.log('shutting off');
+      process.exit();  
+    }); 
+  }
 }
 
 // if button not connected, uncomment
