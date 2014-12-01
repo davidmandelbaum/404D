@@ -176,7 +176,7 @@ router.get('/csv/:id', function(req, res) {
     for (i = 0; i < trial.points.length; i++) {
       points_csv.push( { "time": trial.points[i].time, "depth": (-1*trial.points[i].depth) } );
     }
-    points_csv.unshift( { "depth": "depth", "time": "time" });
+    points_csv.unshift( { "time": "time", "depth": "depth" });
     res.csv(points_csv);
   });
 });
