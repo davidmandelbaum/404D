@@ -24,7 +24,7 @@ data_graphic({
   x_accessor: 'time',
   y_accessor: 'depth',
   width: compressions_width,
-  height: 300,
+  height: 500,
   min_x: 0,
   max_x: time,
   min_y: -6,
@@ -32,8 +32,7 @@ data_graphic({
   area: false,
   interpolate: "linear",
   x_label: "Time (s)",
-  y_label: "Depth (cm)",
-  top: 20
+  y_label: "Depth (cm)"
 });
 
 data_graphic({

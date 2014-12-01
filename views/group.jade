@@ -14,11 +14,13 @@ block content
     ul
       each trial, index in trials
         li
-          div.trial_div
-            div.rank= index+1
-            div.trial_info
-              | #{trial.username}: #{trial.dt}: 
-              a(href='/trials_nonmed/#{trial._id}'). View Non-med
-            div.difference
-              span.score_label. POINTS LOST
-s             = trial.difference.toFixed(0)
+          a(href='/trials_nonmed/#{trial._id}')
+            div.trial_div
+              div.rank= index+1
+              div.trial_info
+                span.username= trial.username 
+                | &nbsp;
+                span.datetime. (#{trial.dt})
+              div.difference
+                span.score_label. POINTS LOST
+                = trial.difference.toFixed(0)

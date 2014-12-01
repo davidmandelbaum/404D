@@ -53,6 +53,7 @@ ul {
   vertical-align: middle;
   height: 50px;
   position: relative;
+  color: #002B77;
 }
 
 .rank {
@@ -65,6 +66,9 @@ ul {
   text-align: center;
   background-color: #797c9c;
   margin-right: 15px;
+  border-top-left-radius: 2px;
+  border-bottom-left-radius: 2px;
+  text-shadow: 0px 0px 2px rgba(129, 129, 129, 1);
 }
 
 .difference {
@@ -77,14 +81,16 @@ ul {
   background-color: #a6a6a6;
   position: absolute;
   right: 0px;
-  width: 85px;
+  width: 100px;
   padding-top: 11px;
+  border-top-right-radius: 2px;
+  border-bottom-right-radius: 2px;
 }
 
 .score_label {
   position: absolute;
   top: 2px;
-  left: 8px;
+  left: 16px;
   font-size: 11px;
   color: #e8e8e8;
   font-family: 'Lato';
@@ -92,6 +98,7 @@ ul {
 
 .trial_info {
   display: inline-block;
+  line-height: 0.4;
 }
 
 ol {
@@ -99,4 +106,17 @@ ol {
 
 #leaderboard_text {
   color: #5e5e5e;
+}
+
+.username {
+  font-size: 20px;
+}
+
+.datetime {
+  font-size: 14px;
+  font-style: italic;
+}
+
+.name_and_date {
+  margin-top: 3px;
 }

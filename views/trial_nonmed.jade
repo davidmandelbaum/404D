@@ -15,41 +15,53 @@ block content
       var link_text = "<a href='/csv/" + !{JSON.stringify(trial._id)} + "'>Download CSV</a>";
   div.container-fluid
     div.row
-      div.col-sm-6.col-md-4
+      div.col-sm-6.col-md-3.top_row
         div.chart-wrapper
           div.chart-title
             | Stats
           div.chart-stage
             div#status
-              | Time: 
+              | TIME:
               div#time
               br
-              | Capno:
+              | SCORE:
               div#capno
               br
-              | Rate: 
-              div#rate.good
-              br
-              | Depth: 
-              div#depth.good
-              br
+      div.col-sm-6.col-md-5.top_row
+        div.chart-wrapper
+          div.chart-title
+            | Depth
+          div.chart-stage#depth-stage
+            div#depth_gauge_window
+              canvas#depth_gauge
+            div#depth.rate_and_depth
+            div#harder
+              | PUSH
+              | HARDER
+            div#softer
+              | PUSH
+              | SOFTER
+      div.col-sm-6.col-md-4.top_row
+        div.chart-wrapper
+          div.chart-title
+            | Compressions
+          div.chart-stage
+            div#faster. PUSH FASTER
+            div#rate.rate_and_depth
+            div#slower. PUSH SLOWER
     div.row
       div.col-sm-8
         div.chart-wrapper
           div.chart-title
-            | Compressions
+            | Compressions graph
           div.chart-stage#compressions_stage
             div#compressions
-          div.chart-notes
-            div#download_link
       div.col-sm-4
         div.chart-wrapper
           div.chart-title
-            | Capno
+            | Score
           div.chart-stage#capno_stage
             div#capnography
-          div.chart-notes
-            | Chart notes
   script(src='/javascripts/keen.js', type='text/javascript')
   script(src='/javascripts/metricsgraphics.min.js')
   script(src='/javascripts/lib/highlight.pack.js')

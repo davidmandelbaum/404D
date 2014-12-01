@@ -93,7 +93,11 @@ body {
 }
 
 #compressions {
-  margin-top: 100px;
+  /* margin-top: 100px; */
+}
+
+#compressions_stage {
+  height: 500px;
 }
 
 #status #time, #status #capno {
@@ -107,16 +111,6 @@ body {
 
 #capno_input {
 
-}
-
-.good {
-  background-color: green;
-  color: black;
-}
-
-.bad {
-  background-color: red;
-  color: white;
 }
 
 .input_form {
@@ -245,12 +239,13 @@ body {
   top: 70px;
   background-color: red;
   font-family: 'Lato';
+  font-weight: 600;
   color: #FFF;
   height: 100px;
-  left: 16px;
-  padding: 10px;
-  font-size: 18px;
-  width: 110px;
+  right: 27px;
+  font-size: 22px;
+  padding-top: 18px;
+  width: 140px;
   text-align: center;
   opacity: 0;
 }
@@ -260,18 +255,20 @@ body {
   top: 70px;
   background-color: red;
   font-family: 'Lato';
+  font-weight: 600;
   color: #FFF;
   height: 100px;
-  right: 16px;
-  padding: 10px;
-  font-size: 18px;
-  width: 110px;
+  left: 27px;
+  padding-top: 18px;
+  font-size: 22px;
+  width: 140px;
   text-align: center;
   opacity: 0;
 }
 
 .rate_and_depth {
   background-color: gray;
+  border-radius: 2px;
 }
 
 #rate {
@@ -284,6 +281,7 @@ body {
   text-align: center;
   height: 50px;
   margin-bottom: 5px;
+  border-radius: 2px;
 }
 
 #depth-stage {
@@ -296,14 +294,31 @@ body {
   width: 50%;
   height: 50px;
   font-family: 'Lato';
+  font-size: 30px;
   color: #FFF;
   margin: 0 auto;
   padding-top: 2px;
   text-align: center;
   position: relative;
   top: 5px;
+  border-radius: 2px;
 }
 
 .col-md-4 .chart-stage {
   height: 200px;
 }
+
+.top_row .chart-wrapper {
+  height: 259px;
+}
+
+.good {
+  background-color: green;
+  color: black;
+}
+
+.bad {
+  background-color: red;
+  color: white;
+}
+

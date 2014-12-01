@@ -55,7 +55,7 @@ socket.on('begin', function(time) {
     min_y: -6,
     max_y: 0,
     area: false,
-    interpolate: "monotone",
+    interpolate: "linear",
     x_label: "Time (s)",
     y_label: "Depth (cm)"
   });
@@ -135,6 +135,7 @@ socket.on('status_msg', function(status_msg) {
   $("#rate").html(rate + " /m");
   if (rate >= 120 || rate <= 100) {
     $("#rate").addClass("bad");
+    $("#rate").removeClass("good");
     if (rate >= 120) { 
       $("#slower").fadeTo("fast", "1");
       $("#faster").fadeTo("fast", "0");
@@ -147,10 +148,12 @@ socket.on('status_msg', function(status_msg) {
   else {
     $("#slower").fadeTo("fast", "0");
     $("#faster").fadeTo("fast", "0");
+    $("#rate").addClass("good");
     $("#rate").removeClass("bad");
   }
   if (depth < 4 || depth > 6){
     $("#depth").addClass("bad");
+    $("#depth").removeClass("good");
     if (depth < 4){
       $("#harder").fadeTo("fast", "1");
       $("#softer").fadeTo("fast", "0");
@@ -163,6 +166,7 @@ socket.on('status_msg', function(status_msg) {
   else {
     $("#harder").fadeTo("fast", "0");
     $("#softer").fadeTo("fast", "0");
+    $("#depth").addClass("good");
     $("#depth").removeClass("bad");
   }
   $("#depth").html(depth + " cm");
