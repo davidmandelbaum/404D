@@ -38,7 +38,7 @@ function checkBlue() {
   b.digitalRead('P8_15', checkBlueButton);
 }
 
-function checkGreenButton(x) {
+function checkBlueButton(x) {
   exec('poweroff', function(err, stdout) {
     console.log('shutting off');
     process.exit();  
