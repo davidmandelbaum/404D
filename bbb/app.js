@@ -13,14 +13,15 @@ b.pinMode('P8_14', b.OUTPUT);
 setInterval(check, 100);
 
 b.digitalWrite('P8_14', b.LOW);
+b.digitalWrite('P8_13', b.HIGH);
 
 console.log('ready for input');
 
-function check() {
-  b.digitalRead('P8_16', checkButton);
+function checkGreen() {
+  b.digitalRead('P8_16', checkGreenButton);
 }
 
-function checkButton(x) {
+function checkGreenButton(x) {
   if (!pressed){
     if (x.value == 1) {
       pressed = 1;
@@ -30,6 +31,17 @@ function checkButton(x) {
     else {
     }
   }
+}
+
+function checkBlue() {
+  b.digitalRead('P8_15', checkBlueButton);
+}
+
+function checkGreenButton(x) {
+  exec('poweroff', function(err, stdout) {
+    console.log('shutting off');
+    process.exit();  
+  }); 
 }
 
 // if button not connected, uncomment
@@ -77,23 +89,23 @@ function bbb_run() {
     });
   });
 
-  socket.on('reconnect', function() {
-    console.log('connected to remote socket');
+  // socket.on('reconnect', function() {
+  //   console.log('connected to remote socket');
 
-    var output = exec('ifconfig | grep \'inet addr\' | head -1', function(err, stdout) {
-      console.log(stdout);
-      request.post(
-        'http://meng404d.herokuapp.com/addr',
-        { form : { addr: stdout } });
-    });
-     
-    socket.emit('init', '');
+  //   var output = exec('ifconfig | grep \'inet addr\' | head -1', function(err, stdout) {
+  //     console.log(stdout);
+  //     request.post(
+  //       'http://meng404d.herokuapp.com/addr',
+  //       { form : { addr: stdout } });
+  //   });
+  //    
+  //   socket.emit('init', '');
 
-    socket.on('disconnect', function() {
-      socket.io.disconnect();
-      console.log('disconnected from remote socket');
-    });
-  });
+  //   socket.on('disconnect', function() {
+  //     socket.io.disconnect();
+  //     console.log('disconnected from remote socket');
+  //   });
+  // });
 
   var PythonShell = require('python-shell');
 
