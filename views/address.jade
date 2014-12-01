@@ -1,0 +1,10 @@
+extends layout
+
+block content
+  div#address
+  script(type='text/javascript').
+    var socket = io();
+
+    socket.on('address', function(msg) {
+      $("#address").html(msg);
+    });
