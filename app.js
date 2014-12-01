@@ -169,8 +169,13 @@ router.get('/depth', function(req, res) {
 });
 
 router.post('/addr', function(req, res) {
-  console.log(req.body.addr);
+  console.log("ADDR: " + req.body.addr);
+  io.emit('address', req.body.addr);
   res.send('response');
+});
+
+router.get('/address', function(req, res) {
+  res.render('address');
 });
 
 router.get('/csv/:id', function(req, res) {
