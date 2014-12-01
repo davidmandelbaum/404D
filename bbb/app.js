@@ -4,7 +4,7 @@ var request = require('request');
 
 var io = require('socket.io-client');
 
-var socket = io();
+var socket;
 
 var pressed = 0;
 
@@ -41,7 +41,10 @@ function bbb_run() {
 
   console.log('bbb_run() called');
 
-  socket.io.connect('http://meng404d.herokuapp.com:80/bbb');
+  if (socket)
+    socket.socket.reconnect();
+  else
+    socket = io.connect('http://meng404d.herokuapp.com:80/bbb');
 
   if (process.argv.length > 2 && process.argv[2] == '-l'){
     socket = io.connect('http://localhost:3000/bbb');
