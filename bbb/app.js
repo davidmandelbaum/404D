@@ -8,8 +8,11 @@ var socket;
 
 var pressed = 0;
 
-b.pinMode('P8_16', b.INPUT);
-b.pinMode('P8_14', b.OUTPUT);
+b.pinMode('P8_16', b.INPUT); // blue button
+b.pinMode('P8_15', b.INPUT); // green button
+b.pinMode('P8_14', b.OUTPUT); // green button light
+b.pinMode('P8_13', b.OUTPUT); // blue button light
+
 setInterval(checkGreen, 100);
 setInterval(checkBlue, 100);
 
