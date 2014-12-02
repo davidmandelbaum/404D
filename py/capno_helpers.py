@@ -9,32 +9,49 @@ from math import *
 # Depth
 mindepth = 4.7
 maxdepth = 6.2
-depthscore = 2.5
-recoilscore = 1
+
+speed_ceiling = 140 # above this, rate is very poor
+speed_floor = 80 # below this, rate is very poor
+
+depthscore = 50
+recoilscore = depthscore
+ratescore = 1
+
+slowpunish = 15 # how much we punish each slow compression
+fastpunish = 5 # how much we punish each fast compression
+depth_penalty = 250 # how much we punish for overly deep compressions
+shallow_penalty = 170 # how much we punish for overly shallow compressions
 
 def max_alg(depth):
-    depth = depth/10
     if mindepth < depth and depth < maxdepth:
         return depthscore
     elif depth > maxdepth:
-        return (depthscore-(10*(depth-maxdepth)))
+        return (depthscore-(depth_penalty * (depth-maxdepth)))
     else:
-        return (depthscore-(sqrt(mindepth)-(0.25*sqrt(depth))))
+        return (depthscore-(shallow_penalty * (mindepth-depth)))
 
 def min_alg(depth):
-    depth = depth/10
     if depth == 0:
         return recoilscore
     else:
         return recoilscore-depth
 
 def time_alg(current, last):
-    current *= 100
-    last *= 100
-    rate = (current - last)*60000
-    if 100 < rate and rate < 120:
-        return 1
-    elif 60 < rate and rate < 160:
-        return (1 - (2 * abs(110 - rate)))
-    else:
-        return 0
+    if current == last:
+        last = 1 # prevents first rate from reading as infinity
+
+    rate = 60/(current-last)
+    too_fast = 0
+    too_slow = 0
+
+    if rate > speed_ceiling:
+        too_fast = 1
+
+    if rate < speed_floor:
+        too_slow = 1
+
+    x = (ratescore * (110-exp((abs(110-rate)), 1.06)
+        - (too_fast*fastpunish)
+        - (too_slow*slowpunish)))
+
+    return x

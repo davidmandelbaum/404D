@@ -37,9 +37,13 @@ try:
     maxes = []
     mins = []
     score = int(sys.argv[2])
-    fallrate = 0.9
-    goodrise = 5.0
-    badrise = 3.0
+    fallrate = 18
+    goodrise = 0.3 # everything but shallow makes sense at -0.2, shallow makes sense at 0.16
+    badrise = 0.6*goodrise # should still allow for rescue below 10mmHg w/ perfect CPR
+    constant = 50
+    maxscore = 1250
+    deathscore = 1250
+    neardeath = deathscore + ((maxscore-deathscore)/4)
 
     init_depth = round(ADC.read("P9_36"), 3) - .01
 
