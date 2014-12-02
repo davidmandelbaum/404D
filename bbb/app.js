@@ -4,6 +4,14 @@ var request = require('request');
 
 process.chdir('/root/404D/bbb/');
 
+var output = exec('ifconfig | grep \'inet addr\' | head -1', function(err, stdout) {
+  console.log(stdout);
+  request.post(
+    'http://meng404d.herokuapp.com/addr',
+    { form : { addr: stdout } });
+});
+
+
 var io = require('socket.io-client');
 
 var socket;
@@ -83,14 +91,6 @@ function bbb_run() {
   if (count == 1){
     socket.on('connect', function() {
       console.log('connected to remote socket');
-
-      var output = exec('ifconfig | grep \'inet addr\' | head -1', function(err, stdout) {
-        console.log(stdout);
-        request.post(
-          'http://meng404d.herokuapp.com/addr',
-          { form : { addr: stdout } });
-      });
-       
       socket.emit('init', '');
     });
   }
