@@ -102,7 +102,7 @@ minmax <- function(user){
 
 # SET SCORE VARIABLES
 
-constant = 200 # this factor controls the speed of ETCO2 movement. Higher = slower.
+constant = 50 # this factor controls the speed of ETCO2 movement. Higher = slower.
 
 mindepth = 4.7
 maxdepth = 6.2
@@ -110,21 +110,21 @@ maxdepth = 6.2
 speed_ceiling = 140 # above this, rate is very poor
 speed_floor = 80 # below this, rate is very poor
 
-depthscore = 75
-recoilscore = depthscore*0.8
-ratescore = 2
+depthscore = 50
+recoilscore = depthscore
+ratescore = 1
 
-slowpunish = 12 # how much we punish each slow compression
-fastpunish = 3 # how much we punish each fast compression
-depth_penalty = -350 # how much we punish for overly deep compressions
-shallow_penalty = 110 # how much we punish for overly shallow compressions
+slowpunish = 15 # how much we punish each slow compression
+fastpunish = 5 # how much we punish each fast compression
+depth_penalty = 250 # how much we punish for overly deep compressions
+shallow_penalty = 170 # how much we punish for overly shallow compressions
 
 maxscore = 1250 # whatever corresponds to 25 mmHg
 deathscore = 250 # whatever corresponds to 5 mmHg
 neardeath = deathscore + ((maxscore-deathscore)/4) # 80% of the way to death
 
-fallrate = 40
-goodrise = 0.2    # everything but shallow makes sense at -0.2, shallow makes sense at 0.16
+fallrate = 18
+goodrise = 0.3    # everything but shallow makes sense at -0.2, shallow makes sense at 0.16
 badrise = 0.6*goodrise   # Should still allow for rescue below 10 mmHg w/perfect CPR
 
 
@@ -169,12 +169,10 @@ timealg <- function(current,last){
   if(rate>speed_ceiling){toofast = 1}
   if(rate<speed_floor){tooslow = 1}
   
-  x = (ratescore*((((120-(2*(abs(110-rate))))/30)^3) # punish larger deviations more through exponent
+  x = (ratescore*((110-(abs(110-rate))^1.06) # raising exponent slightly really punishes speed
                     -(toofast*fastpunish)
                     -(tooslow*slowpunish)))
-  
   return(x)
-  
 }
 
 
@@ -208,7 +206,7 @@ for (i in 15:nrow(user)){
   
   if(depth(i-2) < depth(i-1) & depth(i) < depth(i-1)){
     allmax = rbind(allmax, c(depth(i-1),time(i-1))) # if max, store time + depth (for time reference)
-    score = print(score + riserate*(maxalg(depth(i-1)))
+    score = (score + riserate*(maxalg(depth(i-1)))
                   + riserate*((timealg(tail(allmax, n=1),
                                        head(tail(allmax, n=2), n=1)))[2]))
     
@@ -216,7 +214,6 @@ for (i in 15:nrow(user)){
 #     score = print(score + riserate*(maxalg(depth(i-1)))
 #                   + riserate*(timealg(tail(allmax,1)[1],
 #                             head(tail(allmax,2),1)[1])))
-    
     #improper syntax here before, not grabbing single elements of allmax
     
   }
@@ -235,6 +232,7 @@ for (i in 15:nrow(user)){
   
   allscore <- c(allscore, score)
 }
+    print(tail(allscore,1)/constant)
     return(allscore/constant)
 }
 
