@@ -37,31 +37,13 @@ row3 <- extractrow(data, 3)
 
 # https://stackoverflow.com/questions/5237557/extracting-every-nth-element-of-a-vector
 
-
-
-
-
 # Write CSV in R
 write.csv(data, file = "string30.csv",row.names=FALSE)
-
-
-
 
 
 # strings <- c("foo", 14)
 # 
 # suppressWarnings(!is.na(as.numeric(strings)))
-
-
-
-
-
-
-
-
-
-
-
 
 
 # GET SEPARATE MAX TABLES
@@ -94,3 +76,21 @@ findmins <- function(data){
   }
   return(mins)
 }
+
+
+
+# FOR SOME BIZARRE REASON, THIS OLD TIMEALG FELL APART
+
+  rate = 60/(current - last) 
+
+   if (min(goodrates) < rate & rate < max(goodrates)){
+     return(ratescore)
+   }
+     
+   if (min(badrates) < rate & rate < max(badrates)){
+     return(ratescore-(abs(mean(badrates)-rate))/30) 
+      # the further from 110 bpm, the lower the score
+   }
+   
+   if (min(badrates) > rate){return(slowpunish)} 
+   if (max(badrates) < rate){return(fastpunish)}

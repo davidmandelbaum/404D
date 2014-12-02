@@ -1,15 +1,20 @@
 # TO DO
 
 # How important is recoil, relative to depth?
+  # importance should be roughly equivalent, missing X depth = missing X recoil
+  # Look for outcome studies based on people leaning during CPR
 
-# continue tweaking algorithm numbers
-# add ventilations
 
-# Add functionality for "switching off" between users?
+
+# Fix timealg, which is not actually activating anymore
+# I don't think it was ever activating
+
 
 # Slow down the rate of decline, try to keep things realistic
 
-# divide everything by 50?
+# state in correct units
+# BB values in cm and seconds, so build for that
+
 
 
 # Make all the rates much higher? These tiny time intervals
@@ -17,45 +22,35 @@
 
 
 
-
-# DEBUGGING, 11/30
-
-# subscript out of bounds = never generating a max?
-# Nope, turns out I'd just done something funky to the files and not refreshed,
-# because the refresh function doesn't save variables OUTSIDE the function (of course)
-
-
-
-
-# IMPORT THE CSV FILES
-
 setwd("C:/Users/Aaron/Dropbox/code")
 
 setwd('404/csv')
 
-library(zoo)
 
-data_list <- list.files()
+# Import and assign variables to all CSVs 
 
-  baxter = read.csv("baxter.csv")
-  angie = read.csv("angie.csv")
-  charlie = read.csv("charlie.csv")
-  chocolate = read.csv("chocolate.csv")
-  david = read.csv("david.csv")
-  david2 = read.csv("david2.csv")
-  david3 = read.csv("david3.csv")
-  david4 = read.csv("david4.csv")
-  daniel = read.csv("daniel.csv")
-  farfell = read.csv("farfell.csv")
+file_list = list.files()
 
+for (i in 1:length(file_list)){  
+  assign(strsplit(file_list[i],".csv")[[1]],
+         read.csv(file_list[i]))
+}
+
+# READ THE CSVs INDIVIDUALLY (no longer necessary)
+# 
+# fast = read.csv("fast.csv")
+# slow = read.csv("slow.csv")
+# shallow = read.csv("shallow.csv")
+# deep = read.csv("deep.csv")
 
 
 # SMOOTH OUT DATASETS WITH DIFFERENT POINTS OF REFERENCE
 
+depth_intent = 40 # average depth you'd like to smooth for
+
 smooth <- function(data){
-  sdepth <- data[2]*25/colMeans(data[2])
+  sdepth <- data[2]*depth_intent/colMeans(data[2])
   data <- data.frame(data[1],sdepth)
-#   return(data[2]*25/colMeans(data[2]))
 }
 
 # SHRINK DATASETS FOR TESTING
@@ -64,15 +59,19 @@ test <- function(data){
   data <- head(data, n = 100) 
 }
 
-# CLEAN OUTLIERS FROM THE DATASET
+# CLEAN OUTLIERS FROM THE DATASET 
+
+# note: this will not work on Laerdal data unless it is divided by 10
+
+toodeep = 7
+tooshallow = 0
 
 clean <- function(data){
   time <- data[1]
   depth <- data[2]
-  depth <- depth[ depth > 0 & depth < 80]
-  time <- head(time, n = length(depth))
+  time <- time[depth > tooshallow & depth < toodeep]
+  depth <- depth[depth > tooshallow & depth < toodeep]
   data <- data.frame(time, depth) 
-#   data <- as.matrix(data.frame(time,depth))
 }
 
 
@@ -88,6 +87,8 @@ swap <- function(user){
 # first, check if data frame contains negative number
 
 # if so, add 1 to all numbers, then repeat
+# turn those numbers into zero?
+# if most of the number s are negative, multiply everything by -1
 
 
 
@@ -95,7 +96,7 @@ swap <- function(user){
 
 minmax <- function(user){
   
-  #   user = clean(user) # Watch out for this one
+  #   user = clean(user) # Watch out for this andthe below
   #   user = smooth(user)
   allmax = NULL
   allmin = NULL
@@ -114,6 +115,7 @@ minmax <- function(user){
   return(c(colMeans(allmin)[1],colMeans(allmax)[1]))
 }
 
+
 # SET SCORE VARIABLES
 
 mindepth = 4.7
@@ -121,20 +123,27 @@ maxdepth = 6.2
 
 depthscore = 2.5
 recoilscore = 1.2
+ratescore = 1 # never activating now
+
+goodrates = c(100, 120)
+badrates = c(60, 160)
+
+slowpunish = -1 # how much we punish each slow compression
+fastpunish = -1 # how much we punish each fast compression
 
 maxscore = 1250 # whatever corresponds to 25 mmHg
 deathscore = 250 # whatever corresponds to 5 mmHg
 neardeath = deathscore + ((maxscore-deathscore)/4)
 
-fallrate = 10
+fallrate = 20
 
 goodrise = 5.0
 badrise = 3.0   # Should still allow for rescue below 10 mmHg w/perfect CPR
 
+
 # FUNCTIONS DETERMINING RISE/FALL RATES
 
 maxalg <- function(depth){
-  depth = depth/10
   if (mindepth < depth & depth < maxdepth){
     return(depthscore)
   }
@@ -153,8 +162,6 @@ maxalg <- function(depth){
 
 minalg <- function(depth){
   
-  depth = depth/10
-  
   if (depth == 0){
     return(recoilscore)
   }
@@ -162,24 +169,37 @@ minalg <- function(depth){
     return(recoilscore-depth) # score decreases linearly with partial recoil
 }
 
-timealg <- function(current, last){
+timealg <- function(current,last){
   
-  rate = (current - last)*2
-  ratescore = 1
-  
-  goodrates = c(100, 120)
-  weakrates = c(60, 160)
-  
-  
-  if (min(goodrates) < rate && rate < max(goodrates)){
-    return(ratescore)
+  if (current == last){
+    last = 1
   }
-  if (min(weakrates) < rate && rate < max(weakrates)){
-    return(ratescore-(2*abs(mean(weakrates)-rate)))
-  }
-  else
-    return(0)
+  
+  rate = 60/(current - last) 
+  
+  return(120-(abs(110-rate)))/50
 }
+
+#   IF FUNCTIONS BELOW NOT WORKING
+#   if (min(goodrates) < rate && rate < max(goodrates)){
+#     return(ratescore)
+#   }
+#   if (min(badrates) < rate && rate < max(badrates)){
+#     return(ratescore-(abs(mean(badrates)-rate))/30) 
+#   }
+#   
+#   # redundancy in the code below may seem bizarre, 
+#   # but it's the only way I could get rid of all error warnings
+#   
+#   if (max(badrates) < rate && rate > max(badrates)){
+#     return(slowpunish)
+#   }
+#   if (min(badrates) > rate && rate < min(badrates)){
+#     return(fastpunish)
+#   }
+#   else return(0)
+
+
 
 # cAPSCORE FUNCTION
 
@@ -209,11 +229,25 @@ for (i in 3:nrow(user)){
   
   if(score <= neardeath){riserate = badrise} # recovery rate is slower when mmHg < 10
   
+  # insert pause-punishing algorithm here 
+  # probably better just to have a steep fallrate and high compression bonuses
+  # that should incentivize not pausing pretty well
+  
   if(depth(i-2) < depth(i-1) & depth(i) < depth(i-1)){
+    print(score)
     allmax = rbind(allmax, c(depth(i-1),time(i-1))) # if max, store time + depth (for time reference)
-    score = score + riserate*(maxalg(depth(i-1)))
-                  + riserate*(timealg(tail(allmax, n=1),
-                            head(tail(allmax, n=2), n=1))) 
+    print(allmax)
+    score = print(score + riserate*(maxalg(depth(i-1)))
+                  + riserate*((timealg(tail(allmax, n=1),
+                            head(tail(allmax, n=2), n=1)))[2]))
+    
+    print(score + riserate*(maxalg(depth(i-1)))
+    + riserate*((timealg(tail(allmax, n=1),
+                         head(tail(allmax, n=2), n=1)))[2]))
+    
+    print(score)
+    
+    # timealg now returning a list of two numbers, the first of which makes no sense
   }
   
   if(depth(i-2) > depth(i-1) & depth(i) > depth(i-1)){
