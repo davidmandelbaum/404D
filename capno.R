@@ -102,43 +102,39 @@ minmax <- function(user){
 
 # SET SCORE VARIABLES
 
+constant = 200 # this factor controls the speed of ETCO2 movement. Higher = slower.
+
 mindepth = 4.7
 maxdepth = 6.2
 
 speed_ceiling = 140 # above this, rate is very poor
 speed_floor = 80 # below this, rate is very poor
 
-depthscore = 10
-recoilscore = depthscore
+depthscore = 75
+recoilscore = depthscore*0.8
 ratescore = 2
 
-goodrates = c(100, 120)
-badrates = c(60, 160)
-
 slowpunish = 12 # how much we punish each slow compression
-  # the ratio of this to fastpunish has to be high, since fast users take so many more hits
 fastpunish = 3 # how much we punish each fast compression
-depth_penalty = 1 # how much we punish for overly deep compressions
-shallow_penalty = 10 # how much we punish for overly shallow compressions
+depth_penalty = -350 # how much we punish for overly deep compressions
+shallow_penalty = 110 # how much we punish for overly shallow compressions
 
 maxscore = 1250 # whatever corresponds to 25 mmHg
 deathscore = 250 # whatever corresponds to 5 mmHg
 neardeath = deathscore + ((maxscore-deathscore)/4) # 80% of the way to death
 
-fallrate = 10
-
-goodrise = 2
+fallrate = 40
+goodrise = 0.2    # everything but shallow makes sense at -0.2, shallow makes sense at 0.16
 badrise = 0.6*goodrise   # Should still allow for rescue below 10 mmHg w/perfect CPR
 
 
 # TEST PLOTS
 
-start = 100
-plot(capscore(deep,start))
-lines(capscore(shallow,start),col="blue")
+start = 50
+plot(capscore(shallow,start))
+lines(capscore(deep,start),col="blue")
 lines(capscore(slow,start),col="red")
 lines(capscore(fast,start),col="green")
-
 
 
 # FUNCTIONS DETERMINING RISE/FALL RATES
@@ -151,6 +147,7 @@ maxalg <- function(depth){
     return(depthscore-(depth_penalty*(depth-maxdepth))) 
   }
   else return(depthscore-(shallow_penalty*(mindepth-depth)))
+  
 }
 
 minalg <- function(depth){
@@ -164,24 +161,20 @@ minalg <- function(depth){
 
 timealg <- function(current,last){
   
-  if (current == last){
-    last = 1 # prevents first rate from reading as "infinity"
-  }
-  
+  if (current == last){last = 1} # prevents first rate from reading as "infinity"
   rate = 60/(current-last) 
-  
   toofast = 0
   tooslow = 0
   
   if(rate>speed_ceiling){toofast = 1}
   if(rate<speed_floor){tooslow = 1}
   
-#   x = c(toofast,tooslow)
-#   print(x)
-  
-  return(ratescore*((((120-(2*(abs(110-rate))))/100)^5) # punish larger deviations more through exponent
+  x = (ratescore*((((120-(2*(abs(110-rate))))/30)^3) # punish larger deviations more through exponent
                     -(toofast*fastpunish)
                     -(tooslow*slowpunish)))
+  
+  return(x)
+  
 }
 
 
@@ -196,7 +189,7 @@ capscore <- function(user, start){
   allmax = NULL
   allmin = NULL
   
-  score = start*50 # presumed starting score of 1000
+  score = start*constant 
 
   time <- function(i){user[i,1]}
   depth <- function(i){user[i,2]}
@@ -217,8 +210,15 @@ for (i in 15:nrow(user)){
     allmax = rbind(allmax, c(depth(i-1),time(i-1))) # if max, store time + depth (for time reference)
     score = print(score + riserate*(maxalg(depth(i-1)))
                   + riserate*((timealg(tail(allmax, n=1),
-                            head(tail(allmax, n=2), n=1)))[2]))
-    # for some reason, just adding the score doesn't work, but adding print(score) does
+                                       head(tail(allmax, n=2), n=1)))[2]))
+    
+    
+#     score = print(score + riserate*(maxalg(depth(i-1)))
+#                   + riserate*(timealg(tail(allmax,1)[1],
+#                             head(tail(allmax,2),1)[1])))
+    
+    #improper syntax here before, not grabbing single elements of allmax
+    
   }
   
   if(depth(i-2) > depth(i-1) & depth(i) > depth(i-1)){
@@ -235,7 +235,7 @@ for (i in 15:nrow(user)){
   
   allscore <- c(allscore, score)
 }
-    return(allscore/50)
+    return(allscore/constant)
 }
 
 
