@@ -2,6 +2,8 @@ var b = require('bonescript');
 var exec = require('child_process').exec;
 var request = require('request');
 
+process.chdir('/root/404D/bbb/');
+
 var io = require('socket.io-client');
 
 var socket;
@@ -57,7 +59,7 @@ function bbb_run() {
 
   b.digitalWrite('P8_14', b.HIGH);
 
-  console.log('bbb_run() called for the ' + count.to_s + 'time');
+  console.log('bbb_run() called for the ' + count + 'time');
 
   if (socket) {
     console.log('calling connect again');
