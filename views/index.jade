@@ -13,7 +13,14 @@ block content
       a(href='/groups/'). LEADERBOARDS
     | Waiting for manikin connection
 
-  div#index_content
+  div.index_content#instructions
+    div.center-block
+      ol
+        li. Plug in manikin
+        li. Wait for blue power light to turn on
+        li. Press "Start Trial" button on manikin
+
+  div.index_content#form
     div#trial_type_form.center-block
       div.row
         div.col-md-6.col-sm-6.col-xs-6.center
@@ -30,10 +37,10 @@ block content
           div#username-content
             input#username.form-control.input-lg(type='text', name='username')
           br
-          input#add_to_group(type='hidden', name='add_to_group', value='no')
-          button.btn.btn-md.btn-default#group_button(type='button')
+          input#add_to_group_nonprof(type='hidden', name='add_to_group', value='no')
+          button.btn.btn-md.btn-default#group_button_nonprof(type='button')
             | ADD TO GROUP
-        div.form-group#group_controls
+        div.form-group#group_controls_nonprof
           select.selectpicker#group_name(name='group_name')
             each group in groups
               option(value='#{group.id}')= group.name
@@ -59,10 +66,10 @@ block content
           div#username-content
             input#username.form-control.input-lg(type='text', name='username')
           br
-          input#add_to_group(type='hidden', name='add_to_group', value='no')
-          button.btn.btn-md.btn-default#group_button(type='button')
+          input#add_to_group_prof(type='hidden', name='add_to_group', value='no')
+          button.btn.btn-md.btn-default#group_button_prof(type='button')
             | ADD TO GROUP
-        div.form-group#group_controls
+        div.form-group#group_controls_prof
           select.selectpicker#group_name(name='group_name')
             each group in groups
               option(value='#{group.id}')= group.name
@@ -87,6 +94,7 @@ block content
 
     socket.on('bbb_connect', function() {
       console.log('bbb connected');
+      $("#instructions").fadeOut();
       $("#manikin-info").html("Manikin connected");
       $("#manikin-info").addClass("connected");
       window.setTimeout( function() {
@@ -112,13 +120,24 @@ block content
       $("#non_prof_input_form").show();
     });
 
-    $("#group_button").click( function() {
+    $("#group_button_nonprof").click( function() {
       $(this).toggleClass("selected");
-      $("#group_controls").slideToggle();
-      if ($("#add_to_group").val() == "no") {
-        $("#add_to_group").val("yes");
+      $("#group_controls_nonprof").slideToggle();
+      if ($("#add_to_group_nonprof").val() == "no") {
+        $("#add_to_group_nonprof").val("yes");
       } 
       else {
-        $("#add_to_group").val("no");
+        $("#add_to_group_nonprof").val("no");
+      }
+    });
+
+    $("#group_button_prof").click( function() {
+      $(this).toggleClass("selected");
+      $("#group_controls_prof").slideToggle();
+      if ($("#add_to_group_prof").val() == "no") {
+        $("#add_to_group_prof").val("yes");
+      } 
+      else {
+        $("#add_to_group_prof").val("no");
       }
     });

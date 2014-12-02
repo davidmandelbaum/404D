@@ -6,6 +6,8 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var _ = require('underscore');
 var moment = require('moment');
+var moment_tz = require('moment-timezone');
+var slash = require('express-slash');
 
 var schedule = require('node-schedule');
 
@@ -51,7 +53,7 @@ var Group = mongoose.model('Group', groupSchema);
 function dateHelper(trials){
   var i = 0;
   for (i = 0; i < trials.length; i++){
-    trials[i].dt = moment(trials[i].datetime).format('MMM Do YYYY, h:mma');
+    trials[i].dt = moment(trials[i].datetime).tz('America/New_York').format('MMM Do YYYY, h:mma');
   }
   return trials;
 }
@@ -263,6 +265,7 @@ if (app.get('env') === 'development') {
 }
 
 app.use("/", router);
+app.use(slash());
 
 /// catch 404 and forward to error handler
 app.use(function(req, res, next) {
