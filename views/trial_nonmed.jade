@@ -56,12 +56,14 @@ block content
             | Compressions graph
           div.chart-stage#compressions_stage
             div#compressions
+          a(href='/csv/#{trial._id}'). DOWNLOAD CSV
       div.col-sm-4
         div.chart-wrapper
           div.chart-title
             | Score
           div.chart-stage#capno_stage
             div#capnography
+          div.chart-notes
   script(src='/javascripts/keen.js', type='text/javascript')
   script(src='/javascripts/metricsgraphics.min.js')
   script(src='/javascripts/lib/highlight.pack.js')

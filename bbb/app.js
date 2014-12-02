@@ -1,17 +1,43 @@
 var b = require('bonescript');
+var exec = require('child_process').exec;
+var request = require('request');
+
+process.chdir('/root/404D/bbb/');
+
+var output = exec('ifconfig | grep \'inet addr\' | head -1', function(err, stdout) {
+  console.log(stdout);
+  request.post(
+    'http://meng404d.herokuapp.com/addr',
+    { form : { addr: stdout } });
+});
+
+
+var io = require('socket.io-client');
+
+var socket;
+
+var count = 0;
+
 var pressed = 0;
 
-b.pinMode('P8_15', b.INPUT);
-b.pinMode('P8_13', b.OUTPUT);
-setInterval(check, 100);
+b.pinMode('P8_16', b.INPUT); // blue button
+b.pinMode('P8_15', b.INPUT); // green button
+b.pinMode('P8_14', b.OUTPUT); // green button light
+b.pinMode('P8_13', b.OUTPUT); // blue button light
+
+setInterval(checkGreen, 100);
+setInterval(checkBlue, 100);
+
+b.digitalWrite('P8_14', b.LOW);
+b.digitalWrite('P8_13', b.HIGH);
 
 console.log('ready for input');
 
-function check() {
-  b.digitalRead('P8_15', checkButton);
+function checkGreen() {
+  b.digitalRead('P8_16', checkGreenButton);
 }
 
-function checkButton(x) {
+function checkGreenButton(x) {
   if (!pressed){
     if (x.value == 1) {
       pressed = 1;
@@ -23,36 +49,52 @@ function checkButton(x) {
   }
 }
 
-// if button not connected, uncomment
-// bbb_run();
+function checkBlue() {
+  b.digitalRead('P8_15', checkBlueButton);
+}
+
+function checkBlueButton(x) {
+  if (x.value == 1){
+    exec('(/etc/init.d/node-app stop --force && poweroff)', function(err, stdout) {
+      console.log('shutting off');
+      process.exit();  
+    }); 
+  }
+}
 
 function bbb_run() {
+  count++;
 
-  b.digitalWrite('P8_13', b.HIGH);
+  b.digitalWrite('P8_14', b.HIGH);
 
-  console.log('bbb_run() called');
+  console.log('bbb_run() called for the ' + count + 'time');
 
-  var socket = require('socket.io-client')('http://meng404d.herokuapp.com:80/bbb');
+  if (socket) {
+    console.log('calling connect again');
+    socket.io.connect();
+  }
+  else {
+    socket = io.connect('http://meng404d.herokuapp.com:80/bbb', { 'forceNew': true });
+  }
 
   if (process.argv.length > 2 && process.argv[2] == '-l'){
-    socket = require('socket.io-client')('http://localhost:3000/bbb');
+    socket = io.connect('http://localhost:3000/bbb');
     console.log('local!');
   }
 
   if (process.argv.length > 2 && process.argv[2] == '-o'){
-    socket = require('socket.io-client')(process.argv[3]);
+    socket = io.connect(process.argv[3]);
     console.log('other: ' + process.argv[3]);
   }
 
-  socket.on('connect', function() {
-    console.log('connected to remote socket');
-    socket.emit('init', '');
-    socket.on('disconnect', function() {
-      console.log('disconnected from remote socket');
+  // only register this listener once
+  if (count == 1){
+    socket.on('connect', function() {
+      console.log('connected to remote socket');
+      socket.emit('init', '');
     });
-  });
+  }
 
-  // TODO: fix calling twice
   var PythonShell = require('python-shell');
 
   function run_script(inputs) {
@@ -100,26 +142,30 @@ function bbb_run() {
       if ('final_stats' in message){
         socket.emit('final_stats', message.final_stats);
         console.log('final_stats: ', message.final_stats);
+        socket.io.disconnect();
       }
     });
 
     pyshell.end(function (err) {
       if (err) throw err;
-      console.log('finished');
+      console.log('end of trial');
       pressed = 0;
       console.log('pressed = ' + pressed);
-      b.digitalWrite('P8_13', b.LOW);
+      b.digitalWrite('P8_14', b.LOW);
     });
   }
 
-  socket.on('manikin_inputs', function(msg) {
-    console.log('manikin inputs:');
-    console.log(msg);
+  if (count == 1){
+    socket.on('manikin_inputs', function(msg) {
+      console.log('manikin inputs:');
+      console.log(msg);
 
-    setTimeout(function() {
-      console.log('starting script');
-      run_script(msg);
-    }, 2000);
+      setTimeout(function() {
+        console.log('starting script');
+        run_script(msg);
+      }, 2000);
 
-  });
+    });
+  }
+
 }

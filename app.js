@@ -168,10 +168,26 @@ router.get('/depth', function(req, res) {
   res.render('depth');
 });
 
+router.post('/addr', function(req, res) {
+  console.log(req.body);
+  console.log("ADDR: " + req.body.addr);
+  io.emit('address', req.body.addr);
+  res.send('response');
+});
+
+router.get('/address', function(req, res) {
+  res.render('address');
+});
+
 router.get('/csv/:id', function(req, res) {
   Trial.findById(req.params.id, function(err, trial) {
-    var points_csv = trial.points;
-    points_csv.unshift( { "depth": "depth", "time": "time" });
+    console.log(trial);
+    var points_csv = [];
+    var i = 0;
+    for (i = 0; i < trial.points.length; i++) {
+      points_csv.push( { "time": trial.points[i].time, "depth": (-1*trial.points[i].depth) } );
+    }
+    points_csv.unshift( { "time": "time", "depth": "depth" });
     res.csv(points_csv);
   });
 });
