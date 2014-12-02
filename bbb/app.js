@@ -47,7 +47,7 @@ function checkBlue() {
 
 function checkBlueButton(x) {
   if (x.value == 1){
-    exec('poweroff', function(err, stdout) {
+    exec('(/etc/init.d/node-app stop && poweroff)', function(err, stdout) {
       console.log('shutting off');
       process.exit();  
     }); 
