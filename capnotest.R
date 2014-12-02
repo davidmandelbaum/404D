@@ -83,7 +83,6 @@ findmins <- function(data){
 
   rate = 60/(current - last) 
 
-   if (min(goodrates) < rate & rate < max(goodrates)){
      return(ratescore)
    }
      
@@ -94,3 +93,36 @@ findmins <- function(data){
    
    if (min(badrates) > rate){return(slowpunish)} 
    if (max(badrates) < rate){return(fastpunish)}
+
+   else return(0)
+
+
+
+
+
+
+# why is "fast" so low at the beginning?
+# just needed to drop the first few rows
+
+
+
+
+
+#   IF FUNCTIONS BELOW NOT WORKING
+#   if (min(goodrates) < rate && rate < max(goodrates)){
+#     return(ratescore)
+#   }
+#   if (min(badrates) < rate && rate < max(badrates)){
+#     return(ratescore-(abs(mean(badrates)-rate))/30) 
+#   }
+#   
+#   # redundancy in the code below may seem bizarre, 
+#   # but it's the only way I could get rid of all error warnings
+#   
+#   if (max(badrates) < rate && rate > max(badrates)){
+#     return(slowpunish)
+#   }
+#   if (min(badrates) > rate && rate < min(badrates)){
+#     return(fastpunish)
+#   }
+#   else return(0)

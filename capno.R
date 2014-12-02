@@ -1,25 +1,9 @@
 # TO DO
+# slow down the rate of decline
 
-# How important is recoil, relative to depth?
-  # importance should be roughly equivalent, missing X depth = missing X recoil
-  # Look for outcome studies based on people leaning during CPR
+# why does changing fastpunish change the fate of slow? In a massive way?
 
-
-
-# Fix timealg, which is not actually activating anymore
-# I don't think it was ever activating
-
-
-# Slow down the rate of decline, try to keep things realistic
-
-# state in correct units
-# BB values in cm and seconds, so build for that
-
-
-
-# Make all the rates much higher? These tiny time intervals
-# are doing something strange to david zero, I think
-
+# some kind of interaction between rate and depth? To make things not look so herky-jerky?
 
 
 setwd("C:/Users/Aaron/Dropbox/code")
@@ -38,10 +22,7 @@ for (i in 1:length(file_list)){
 
 # READ THE CSVs INDIVIDUALLY (no longer necessary)
 # 
-# fast = read.csv("fast.csv")
-# slow = read.csv("slow.csv")
-# shallow = read.csv("shallow.csv")
-# deep = read.csv("deep.csv")
+# fast = read.csv("fast.csv"), etc.
 
 
 # SMOOTH OUT DATASETS WITH DIFFERENT POINTS OF REFERENCE
@@ -95,7 +76,6 @@ swap <- function(user){
 # FUNCTION TO FIND MINS AND MAXES
 
 minmax <- function(user){
-  
   #   user = clean(user) # Watch out for this andthe below
   #   user = smooth(user)
   allmax = NULL
@@ -112,7 +92,11 @@ minmax <- function(user){
     }
   }  
   
-  return(c(colMeans(allmin)[1],colMeans(allmax)[1]))
+  maxnum = length(allmax)/2
+  minutes = time(i)/60
+  rate = maxnum/minutes
+  
+  return(c(colMeans(allmin)[1],colMeans(allmax)[1],rate))
 }
 
 
@@ -121,43 +105,52 @@ minmax <- function(user){
 mindepth = 4.7
 maxdepth = 6.2
 
-depthscore = 2.5
-recoilscore = 1.2
-ratescore = 1 # never activating now
+speed_ceiling = 140 # above this, rate is very poor
+speed_floor = 80 # below this, rate is very poor
+
+depthscore = 10
+recoilscore = depthscore
+ratescore = 2
 
 goodrates = c(100, 120)
 badrates = c(60, 160)
 
-slowpunish = -1 # how much we punish each slow compression
-fastpunish = -1 # how much we punish each fast compression
+slowpunish = 12 # how much we punish each slow compression
+  # the ratio of this to fastpunish has to be high, since fast users take so many more hits
+fastpunish = 3 # how much we punish each fast compression
+depth_penalty = 1 # how much we punish for overly deep compressions
+shallow_penalty = 10 # how much we punish for overly shallow compressions
 
 maxscore = 1250 # whatever corresponds to 25 mmHg
 deathscore = 250 # whatever corresponds to 5 mmHg
-neardeath = deathscore + ((maxscore-deathscore)/4)
+neardeath = deathscore + ((maxscore-deathscore)/4) # 80% of the way to death
 
-fallrate = 20
+fallrate = 10
 
-goodrise = 5.0
-badrise = 3.0   # Should still allow for rescue below 10 mmHg w/perfect CPR
+goodrise = 2
+badrise = 0.6*goodrise   # Should still allow for rescue below 10 mmHg w/perfect CPR
+
+
+# TEST PLOTS
+
+start = 100
+plot(capscore(deep,start))
+lines(capscore(shallow,start),col="blue")
+lines(capscore(slow,start),col="red")
+lines(capscore(fast,start),col="green")
+
 
 
 # FUNCTIONS DETERMINING RISE/FALL RATES
 
 maxalg <- function(depth){
-  if (mindepth < depth & depth < maxdepth){
+  if (mindepth < depth & depth < maxdepth){ # this works even though similar time function doesn't
     return(depthscore)
   }
   if (depth > maxdepth){
-    return(depthscore-(10*(depth-maxdepth))) 
-    # serious penalty for too-deep compression, you could break something
-    
-    # limit penalty in case of random spikes
-    
+    return(depthscore-(depth_penalty*(depth-maxdepth))) 
   }
-  else{
-    return(depthscore-(sqrt(mindepth)-(0.25*sqrt(depth)))) 
-    # probably not penalizing very shallow compressions steeply enough
-  }
+  else return(depthscore-(shallow_penalty*(mindepth-depth)))
 }
 
 minalg <- function(depth){
@@ -172,33 +165,24 @@ minalg <- function(depth){
 timealg <- function(current,last){
   
   if (current == last){
-    last = 1
+    last = 1 # prevents first rate from reading as "infinity"
   }
   
-  rate = 60/(current - last) 
+  rate = 60/(current-last) 
   
-  return(120-(abs(110-rate)))/50
+  toofast = 0
+  tooslow = 0
+  
+  if(rate>speed_ceiling){toofast = 1}
+  if(rate<speed_floor){tooslow = 1}
+  
+#   x = c(toofast,tooslow)
+#   print(x)
+  
+  return(ratescore*((((120-(2*(abs(110-rate))))/100)^5) # punish larger deviations more through exponent
+                    -(toofast*fastpunish)
+                    -(tooslow*slowpunish)))
 }
-
-#   IF FUNCTIONS BELOW NOT WORKING
-#   if (min(goodrates) < rate && rate < max(goodrates)){
-#     return(ratescore)
-#   }
-#   if (min(badrates) < rate && rate < max(badrates)){
-#     return(ratescore-(abs(mean(badrates)-rate))/30) 
-#   }
-#   
-#   # redundancy in the code below may seem bizarre, 
-#   # but it's the only way I could get rid of all error warnings
-#   
-#   if (max(badrates) < rate && rate > max(badrates)){
-#     return(slowpunish)
-#   }
-#   if (min(badrates) > rate && rate < min(badrates)){
-#     return(fastpunish)
-#   }
-#   else return(0)
-
 
 
 # cAPSCORE FUNCTION
@@ -212,7 +196,7 @@ capscore <- function(user, start){
   allmax = NULL
   allmin = NULL
   
-  score = start # try 20 mmHg to start with
+  score = start*50 # presumed starting score of 1000
 
   time <- function(i){user[i,1]}
   depth <- function(i){user[i,2]}
@@ -222,32 +206,19 @@ capscore <- function(user, start){
   
   # LOOP THROUGH AND UPDATE SCORE
   
-for (i in 3:nrow(user)){
+for (i in 15:nrow(user)){
   score = score - scorefall(i,i-1)
   
   if(score > neardeath){riserate = goodrise} # recovery rate is faster when mmHg > 10
   
   if(score <= neardeath){riserate = badrise} # recovery rate is slower when mmHg < 10
   
-  # insert pause-punishing algorithm here 
-  # probably better just to have a steep fallrate and high compression bonuses
-  # that should incentivize not pausing pretty well
-  
   if(depth(i-2) < depth(i-1) & depth(i) < depth(i-1)){
-    print(score)
     allmax = rbind(allmax, c(depth(i-1),time(i-1))) # if max, store time + depth (for time reference)
-    print(allmax)
     score = print(score + riserate*(maxalg(depth(i-1)))
                   + riserate*((timealg(tail(allmax, n=1),
                             head(tail(allmax, n=2), n=1)))[2]))
-    
-    print(score + riserate*(maxalg(depth(i-1)))
-    + riserate*((timealg(tail(allmax, n=1),
-                         head(tail(allmax, n=2), n=1)))[2]))
-    
-    print(score)
-    
-    # timealg now returning a list of two numbers, the first of which makes no sense
+    # for some reason, just adding the score doesn't work, but adding print(score) does
   }
   
   if(depth(i-2) > depth(i-1) & depth(i) > depth(i-1)){
@@ -264,7 +235,7 @@ for (i in 3:nrow(user)){
   
   allscore <- c(allscore, score)
 }
-    return(allscore)
+    return(allscore/50)
 }
 
 
@@ -275,13 +246,4 @@ for (i in 3:nrow(user)){
 # for (i in 2:length(data_list)){
 #   lines(capscore(read.csv(data_list[i])))
 # }
-
-# PLOT SPECIFIC DATASETS
-
-#   plot(capscore(daniel, 500000))
-#   lines(capscore(baxter, 500000), col="blue")
-#   lines(capscore(angie, 500000), col="red")
-# 
-#   plot(capscore(david, 1000))
-#   lines(capscore(david2, 1000), col="blue")
   
