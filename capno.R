@@ -1,61 +1,37 @@
 # TO DO
+# slow down the rate of decline
 
-# How important is recoil, relative to depth?
+# why does changing fastpunish change the fate of slow? In a massive way?
 
-# continue tweaking algorithm numbers
-# add ventilations
+# some kind of interaction between rate and depth? To make things not look so herky-jerky?
 
-# Add functionality for "switching off" between users?
-
-# Slow down the rate of decline, try to keep things realistic
-
-# divide everything by 50?
-
-
-# Make all the rates much higher? These tiny time intervals
-# are doing something strange to david zero, I think
-
-
-
-
-# DEBUGGING, 11/30
-
-# subscript out of bounds = never generating a max?
-# Nope, turns out I'd just done something funky to the files and not refreshed,
-# because the refresh function doesn't save variables OUTSIDE the function (of course)
-
-
-
-
-# IMPORT THE CSV FILES
 
 setwd("C:/Users/Aaron/Dropbox/code")
 
 setwd('404/csv')
 
-library(zoo)
 
-data_list <- list.files()
+# Import and assign variables to all CSVs 
 
-  baxter = read.csv("baxter.csv")
-  angie = read.csv("angie.csv")
-  charlie = read.csv("charlie.csv")
-  chocolate = read.csv("chocolate.csv")
-  david = read.csv("david.csv")
-  david2 = read.csv("david2.csv")
-  david3 = read.csv("david3.csv")
-  david4 = read.csv("david4.csv")
-  daniel = read.csv("daniel.csv")
-  farfell = read.csv("farfell.csv")
+file_list = list.files()
 
+for (i in 1:length(file_list)){  
+  assign(strsplit(file_list[i],".csv")[[1]],
+         read.csv(file_list[i]))
+}
+
+# READ THE CSVs INDIVIDUALLY (no longer necessary)
+# 
+# fast = read.csv("fast.csv"), etc.
 
 
 # SMOOTH OUT DATASETS WITH DIFFERENT POINTS OF REFERENCE
 
+depth_intent = 40 # average depth you'd like to smooth for
+
 smooth <- function(data){
-  sdepth <- data[2]*25/colMeans(data[2])
+  sdepth <- data[2]*depth_intent/colMeans(data[2])
   data <- data.frame(data[1],sdepth)
-#   return(data[2]*25/colMeans(data[2]))
 }
 
 # SHRINK DATASETS FOR TESTING
@@ -64,15 +40,19 @@ test <- function(data){
   data <- head(data, n = 100) 
 }
 
-# CLEAN OUTLIERS FROM THE DATASET
+# CLEAN OUTLIERS FROM THE DATASET 
+
+# note: this will not work on Laerdal data unless it is divided by 10
+
+toodeep = 7
+tooshallow = 0
 
 clean <- function(data){
   time <- data[1]
   depth <- data[2]
-  depth <- depth[ depth > 0 & depth < 80]
-  time <- head(time, n = length(depth))
+  time <- time[depth > tooshallow & depth < toodeep]
+  depth <- depth[depth > tooshallow & depth < toodeep]
   data <- data.frame(time, depth) 
-#   data <- as.matrix(data.frame(time,depth))
 }
 
 
@@ -88,14 +68,15 @@ swap <- function(user){
 # first, check if data frame contains negative number
 
 # if so, add 1 to all numbers, then repeat
+# turn those numbers into zero?
+# if most of the number s are negative, multiply everything by -1
 
 
 
 # FUNCTION TO FIND MINS AND MAXES
 
 minmax <- function(user){
-  
-  #   user = clean(user) # Watch out for this one
+  #   user = clean(user) # Watch out for this andthe below
   #   user = smooth(user)
   allmax = NULL
   allmin = NULL
@@ -111,49 +92,65 @@ minmax <- function(user){
     }
   }  
   
-  return(c(colMeans(allmin)[1],colMeans(allmax)[1]))
+  maxnum = length(allmax)/2
+  minutes = time(i)/60
+  rate = maxnum/minutes
+  
+  return(c(colMeans(allmin)[1],colMeans(allmax)[1],rate))
 }
 
+
 # SET SCORE VARIABLES
+
+constant = 50 # this factor controls the speed of ETCO2 movement. Higher = slower.
 
 mindepth = 4.7
 maxdepth = 6.2
 
-depthscore = 2.5
-recoilscore = 1.2
+speed_ceiling = 140 # above this, rate is very poor
+speed_floor = 80 # below this, rate is very poor
+
+depthscore = 50
+recoilscore = depthscore
+ratescore = 1
+
+slowpunish = 15 # how much we punish each slow compression
+fastpunish = 5 # how much we punish each fast compression
+depth_penalty = 250 # how much we punish for overly deep compressions
+shallow_penalty = 170 # how much we punish for overly shallow compressions
 
 maxscore = 1250 # whatever corresponds to 25 mmHg
 deathscore = 250 # whatever corresponds to 5 mmHg
-neardeath = deathscore + ((maxscore-deathscore)/4)
+neardeath = deathscore + ((maxscore-deathscore)/4) # 80% of the way to death
 
-fallrate = 10
+fallrate = 18
+goodrise = 0.3    # everything but shallow makes sense at -0.2, shallow makes sense at 0.16
+badrise = 0.6*goodrise   # Should still allow for rescue below 10 mmHg w/perfect CPR
 
-goodrise = 5.0
-badrise = 3.0   # Should still allow for rescue below 10 mmHg w/perfect CPR
+
+# TEST PLOTS
+
+start = 50
+plot(capscore(shallow,start))
+lines(capscore(deep,start),col="blue")
+lines(capscore(slow,start),col="red")
+lines(capscore(fast,start),col="green")
+
 
 # FUNCTIONS DETERMINING RISE/FALL RATES
 
 maxalg <- function(depth){
-  depth = depth/10
-  if (mindepth < depth & depth < maxdepth){
+  if (mindepth < depth & depth < maxdepth){ # this works even though similar time function doesn't
     return(depthscore)
   }
   if (depth > maxdepth){
-    return(depthscore-(10*(depth-maxdepth))) 
-    # serious penalty for too-deep compression, you could break something
-    
-    # limit penalty in case of random spikes
-    
+    return(depthscore-(depth_penalty*(depth-maxdepth))) 
   }
-  else{
-    return(depthscore-(sqrt(mindepth)-(0.25*sqrt(depth)))) 
-    # probably not penalizing very shallow compressions steeply enough
-  }
+  else return(depthscore-(shallow_penalty*(mindepth-depth)))
+  
 }
 
 minalg <- function(depth){
-  
-  depth = depth/10
   
   if (depth == 0){
     return(recoilscore)
@@ -162,24 +159,22 @@ minalg <- function(depth){
     return(recoilscore-depth) # score decreases linearly with partial recoil
 }
 
-timealg <- function(current, last){
+timealg <- function(current,last){
   
-  rate = (current - last)*2
-  ratescore = 1
+  if (current == last){last = 1} # prevents first rate from reading as "infinity"
+  rate = 60/(current-last) 
+  toofast = 0
+  tooslow = 0
   
-  goodrates = c(100, 120)
-  weakrates = c(60, 160)
+  if(rate>speed_ceiling){toofast = 1}
+  if(rate<speed_floor){tooslow = 1}
   
-  
-  if (min(goodrates) < rate && rate < max(goodrates)){
-    return(ratescore)
-  }
-  if (min(weakrates) < rate && rate < max(weakrates)){
-    return(ratescore-(2*abs(mean(weakrates)-rate)))
-  }
-  else
-    return(0)
+  x = (ratescore*((110-(abs(110-rate))^1.06) # raising exponent slightly really punishes speed
+                    -(toofast*fastpunish)
+                    -(tooslow*slowpunish)))
+  return(x)
 }
+
 
 # cAPSCORE FUNCTION
 
@@ -192,7 +187,7 @@ capscore <- function(user, start){
   allmax = NULL
   allmin = NULL
   
-  score = start # try 20 mmHg to start with
+  score = start*constant 
 
   time <- function(i){user[i,1]}
   depth <- function(i){user[i,2]}
@@ -202,7 +197,7 @@ capscore <- function(user, start){
   
   # LOOP THROUGH AND UPDATE SCORE
   
-for (i in 3:nrow(user)){
+for (i in 15:nrow(user)){
   score = score - scorefall(i,i-1)
   
   if(score > neardeath){riserate = goodrise} # recovery rate is faster when mmHg > 10
@@ -211,9 +206,16 @@ for (i in 3:nrow(user)){
   
   if(depth(i-2) < depth(i-1) & depth(i) < depth(i-1)){
     allmax = rbind(allmax, c(depth(i-1),time(i-1))) # if max, store time + depth (for time reference)
-    score = score + riserate*(maxalg(depth(i-1)))
-                  + riserate*(timealg(tail(allmax, n=1),
-                            head(tail(allmax, n=2), n=1))) 
+    score = (score + riserate*(maxalg(depth(i-1)))
+                  + riserate*((timealg(tail(allmax, n=1),
+                                       head(tail(allmax, n=2), n=1)))[2]))
+    
+    
+#     score = print(score + riserate*(maxalg(depth(i-1)))
+#                   + riserate*(timealg(tail(allmax,1)[1],
+#                             head(tail(allmax,2),1)[1])))
+    #improper syntax here before, not grabbing single elements of allmax
+    
   }
   
   if(depth(i-2) > depth(i-1) & depth(i) > depth(i-1)){
@@ -230,7 +232,8 @@ for (i in 3:nrow(user)){
   
   allscore <- c(allscore, score)
 }
-    return(allscore)
+    print(tail(allscore,1)/constant)
+    return(allscore/constant)
 }
 
 
@@ -241,13 +244,4 @@ for (i in 3:nrow(user)){
 # for (i in 2:length(data_list)){
 #   lines(capscore(read.csv(data_list[i])))
 # }
-
-# PLOT SPECIFIC DATASETS
-
-#   plot(capscore(daniel, 500000))
-#   lines(capscore(baxter, 500000), col="blue")
-#   lines(capscore(angie, 500000), col="red")
-# 
-#   plot(capscore(david, 1000))
-#   lines(capscore(david2, 1000), col="blue")
   
