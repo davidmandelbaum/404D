@@ -13,7 +13,7 @@ ADC.setup()
 
 try:
     time_limit = int(sys.argv[1])
-    window_length = 8
+    window_length = 6
 
     # globals
     y_vals = []
@@ -29,7 +29,7 @@ try:
     second_values = []
     data = []
     send_freq = .1
-    calc_freq = .87
+    calc_freq = .95
     last_diff_val = 0
 
     # capno alg

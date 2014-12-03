@@ -108,13 +108,13 @@ socket.on('status_msg', function(status_msg) {
   var time = parseFloat(status_msg.time);
   var rate = parseFloat(status_msg.rate);
   var depth = parseFloat(status_msg.depth);
-  var depthFixed = depth.toFixed(2);
+  var depthFixed = depth.toFixed(1);
   compressions_chart.series[0].points[0].update(rate);
   depth_chart.series[0].points[0].update(depth);
   $("#curr_depth").html(depthFixed + "cm");
   var capno = parseFloat(status_msg.capno).toFixed();
   $("#time").html(time + "s");
-  $("#rate").html(rate + " /m");
+  $("#rate").html(rate.toFixed() + " /m");
   if (rate > 120 || rate < 100) {
     $("#rate").addClass("bad");
     $("#rate").removeClass("good");
