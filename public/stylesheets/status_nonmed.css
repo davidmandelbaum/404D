@@ -96,6 +96,10 @@ body {
   /* margin-top: 100px; */
 }
 
+.compressions {
+  display: none;
+}
+
 #compressions_stage {
   height: 500px;
 }
@@ -360,6 +364,7 @@ body {
 
 .score {
   height: 400px;
+  display: none;
 }
 
 #rate {
