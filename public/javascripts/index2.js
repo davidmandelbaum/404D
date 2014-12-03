@@ -112,7 +112,7 @@ socket.on('status_msg', function(status_msg) {
   compressions_chart.series[0].points[0].update(rate);
   depth_chart.series[0].points[0].update(depth);
   $("#curr_depth").html(depthFixed + "cm");
-  var capno = parseFloat(status_msg.capno).toFixed(2);
+  var capno = parseFloat(status_msg.capno).toFixed(1);
   $("#time").html(time + "s");
   $("#rate").html(rate + " /m");
   if (rate > 120 || rate < 100) {
