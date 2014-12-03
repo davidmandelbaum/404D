@@ -283,35 +283,48 @@ body {
 }
 
 #harder {
-  position: absolute;
-  top: 70px;
-  background-color: red;
   font-family: 'Lato';
-  font-weight: 600;
-  color: #FFF;
-  height: 100px;
-  right: 27px;
   font-size: 22px;
-  padding-top: 18px;
-  width: 140px;
+  width: 190px;
+  font-weight: 600;
+  padding: 5px;
+  padding-top: 20px;
   text-align: center;
-  opacity: 0;
+  margin: 0 auto;
+  height: 70px;
+  margin-bottom: 0;
+  position: absolute;
+  left: 0;
+  right: 0;
+  opacity: 1;
+  top: 20px;
+  border-radius: 1px;
+  transition: background-color .5s;
+  transition: color .5s;
+  border-radius: 1px;
 }
 
 #softer {
-  position: absolute;
-  top: 70px;
-  background-color: red;
   font-family: 'Lato';
-  font-weight: 600;
-  color: #FFF;
-  height: 100px;
-  left: 27px;
-  padding-top: 18px;
   font-size: 22px;
-  width: 140px;
+  width: 190px;
+  font-weight: 600;
+  padding: 5px;
+  padding-top: 20px;
   text-align: center;
-  opacity: 0;
+  margin: 0 auto;
+  height: 70px;
+  left: 0;
+  right: 0;
+  position: absolute;
+  margin-bottom: 0;
+  right: 15px;
+  opacity: 1;
+  bottom: 20px;
+  border-radius: 1px;
+  transition: background-color .5s;
+  transition: color .5s;
+  border-radius: 1px;
 }
 
 .rate_and_depth {
@@ -345,28 +358,24 @@ body {
   box-shadow: 0px 0px 4px #B3B3B3;
 }
 
-#depth-stage {
-  position: relative;
-  text-align: center;
-  top: -20px;
-}
-
 #depth {
-  width: 50%;
-  height: 50px;
+  width: 120px;
+  left: 0;
+  right: 0;
   font-family: 'Lato';
-  font-size: 30px;
-  color: #FFF;
-  margin: 0 auto;
-  padding-top: 2px;
+  font-size: 32px;
+  font-weight: 600;
+  padding-top: 0px;
+  line-height: 1.5;
   text-align: center;
-  position: relative;
-  top: 5px;
+  height: 50px;
+  margin-bottom: 5px;
   border-radius: 2px;
-}
-
-.col-md-4 .chart-stage {
-  height: 200px;
+  position: absolute;
+  top: 209px;
+  margin-left: auto;
+  margin-right: auto;
+  box-shadow: 0px 0px 4px #B3B3B3;
 }
 
 .top_row .chart-wrapper {
@@ -374,8 +383,6 @@ body {
 }
 
 .top_row {
-  padding-left: 3px;
-  padding-right: 3px;
 }
 
 .bottom_row {
@@ -395,17 +402,24 @@ body {
   border: 1px solid #a20000;
 }
 
-#depth_gauge {
-  width: 500px;
-  height: 300px;
+.depth {
+  height: 500px;
 }
 
-.depth {
-  min-width: 530px;
+#depth-stage {
+  height: 460px;
 }
 
 #compressions_gauge {
   width: 270px;
   height: 176px;
   margin: 0 auto;
+}
+
+#depth_gauge {
+  width: 300px;
+  height: 300px;
+  margin: 0 auto;
+  position: relative;
+  margin-top: 80px;
 }

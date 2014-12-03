@@ -135,17 +135,17 @@ socket.on('status_msg', function(status_msg) {
     $("#depth").addClass("bad");
     $("#depth").removeClass("good");
     if (depth < 4.7){
-      $("#harder").fadeTo("fast", "1");
-      $("#softer").fadeTo("fast", "0");
+      $("#harder").addClass("active");
+      $("#softer").removeClass("active");
     }
     else {
-      $("#harder").fadeTo("fast", "0");
-      $("#softer").fadeTo("fast", "1");
+      $("#harder").removeClass("active");
+      $("#softer").addClass("active");
     }
   }
   else {
-    $("#harder").fadeTo("fast", "0");
-    $("#softer").fadeTo("fast", "0");
+    $("#harder").removeClass("active");
+    $("#softer").removeClass("active");
     $("#depth").addClass("good");
     $("#depth").removeClass("bad");
   }
