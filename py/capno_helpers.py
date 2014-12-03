@@ -55,3 +55,6 @@ def time_alg(current, last):
         - (too_slow*slowpunish)))
 
     return x
+
+def scorefall(time_x, time_y):
+    return fallrate*(time_x - time_y)

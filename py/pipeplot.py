@@ -45,6 +45,8 @@ try:
     deathscore = 1250
     neardeath = deathscore + ((maxscore-deathscore)/4)
 
+    score = score*constant
+
     init_depth = round(ADC.read("P9_36"), 3) - .01
 
     begin = json.dumps({"begin": "true"})
@@ -137,27 +139,28 @@ try:
 
         # capno alg
         if len(data) > 3:
-            score = (score - fallrate)
+            score = (score - scorefall(data[-1][0], data[-2][0]))
 
-            if score > 500:
+            if score > neardeath:
                 rise_rate = goodrise
-            elif score <= 500:
+
+            elif score <= neardeath:
                 rise_rate = badrise
+
             if data[-3][1] < data[-2][1] and data[-1][1] < data[-2][1]:
+
                 maxes.append((data[-2][1], data[-2][0]))
+
                 if len(maxes) > 2:
-                    time_diff = maxes[-2][1] - maxes[-1][1]
-                    score = score + (rise_rate * max_alg(data[-2][0])) \
-                                  + (rise_rate * time_alg(maxes[-1][0], maxes[-2][0]))
+                    score = score + (rise_rate * max_alg(data[-2][1])) \
+                                  + (rise_rate * time_alg(maxes[-1][1], maxes[-2][1]))
+                                  # should the previous line be [1] (time) or [0] (depth)??
 
             if data[-3][1] > data[-2][1] and data[-1][1] > data[-2][1]:
                 mins.append((data[-2][1], data[-2][0]))
-                score = score + (rise_rate*min_alg(data[-2][0]))
+                score = score + (rise_rate*min_alg(data[-2][1]))
 
-            if score > 1250:
-                score = 1250
-
-            if score < 250:
+            if score < deathscore:
                 score = 250
             
             scores.append((data[-2][0], score))
@@ -168,13 +171,6 @@ try:
     stats_out = json.dumps({ "final_stats": stats }) 
     sys.stdout.write(stats_out + "\n")
     sys.stdout.flush()
-
-    # open output file
-    file_out = open('../csv/out.csv', 'wb')
-    writer = csv.writer(file_out)
-    writer.writerow(['Time (s)', 'Depth (cm)'])
-    for y in y_vals:
-        writer.writerow([round(y[0], 4), round(y[1], 4)])
 
 except:
     raise
