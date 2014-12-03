@@ -56,11 +56,9 @@ body {
   left: 0px;
   display: block;
   opacity: .7;
-  display: none;
 }
 
 .begin_box {
-  display: none;
   position: absolute;
   margin: auto;
   top: 0;
