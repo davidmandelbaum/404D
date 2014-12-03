@@ -107,6 +107,20 @@ body {
   width: 100px;
 }
 
+#time {
+  font-weight: 600;
+  font-family: 'Lato';
+  font-size: 29px;
+  color: #545454;
+  background-color: #C3C3C3;
+  width: 100%;
+  height: 50px;
+  vertical-align: middle;
+  padding-top: 4px;
+  text-align: center;
+
+}
+
 #time-input {
   text-align: right;
 }
@@ -359,6 +373,11 @@ body {
   height: 230px;
 }
 
+.top_row {
+  padding-left: 3px;
+  padding-right: 3px;
+}
+
 .good {
   background-color: green;
   color: #eaeaea;
@@ -374,6 +393,10 @@ body {
 #depth_gauge {
   width: 500px;
   height: 300px;
+}
+
+.depth {
+  min-width: 530px;
 }
 
 #compressions_gauge {
