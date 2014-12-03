@@ -13,12 +13,12 @@ maxdepth = 6.2
 speed_ceiling = 140 # above this, rate is very poor
 speed_floor = 80 # below this, rate is very poor
 
-depthscore = 50
+depthscore = 45
 recoilscore = depthscore
 ratescore = 1
 
 fallrate = 18
-goodrise = 0.3 # everything but shallow makes sense at -0.2, shallow makes sense at 0.16
+goodrise = 0.25 # everything but shallow makes sense at -0.2, shallow makes sense at 0.16
 badrise = 0.6*goodrise # should still allow for rescue below 10mmHg w/ perfect CPR
 constant = 100
 maxscore = 1250
@@ -27,7 +27,7 @@ neardeath = deathscore + ((maxscore-deathscore)/4)
 
 slowpunish = 15 # how much we punish each slow compression
 fastpunish = 5 # how much we punish each fast compression
-depth_penalty = 250 # how much we punish for overly deep compressions
+depth_penalty = 300 # how much we punish for overly deep compressions
 shallow_penalty = 170 # how much we punish for overly shallow compressions
 
 def max_alg(depth):
