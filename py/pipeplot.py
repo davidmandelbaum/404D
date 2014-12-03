@@ -119,7 +119,7 @@ try:
             num_in = round(num_in, 2)
             time.sleep(.05)
 
-            if abs(old_num - num_in) > 0.03:
+            if abs(old_num - num_in) > 0.06:
                 y_vals_window.append((now, num_in))
                 y_vals.append((now, num_in))
                 second_values.append((now, num_in))
