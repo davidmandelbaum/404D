@@ -32,7 +32,7 @@ socket.on('begin', function(time) {
     min_x: 0,
     max_x: 10,
     // max_x: trial_time,
-    min_y: -6,
+    min_y: -7,
     max_y: 0,
     area: false,
     interpolate: "linear",
@@ -92,7 +92,7 @@ socket.on('data_points', function(data_points) {
     max_x: trial_time,
     // min_x: min_x,
     // max_x: max_x,
-    min_y: -6,
+    min_y: -7,
     max_y: 0,
     area: false,
     interpolate: "linear",
@@ -109,6 +109,7 @@ socket.on('status_msg', function(status_msg) {
   var rate = parseFloat(status_msg.rate);
   var depth = parseFloat(status_msg.depth).toFixed(2);
   compressions_chart.series[0].points[0].update(rate);
+  depth_chart.series[0].points[0].update(depth);
   $("#curr_depth").html(depth + "cm");
   var capno = parseFloat(status_msg.capno).toFixed(2);
   $("#time").html(time + "s");
@@ -212,7 +213,7 @@ socket.on('final_stats', function(final_stats) {
     height: 500,
     min_x: 0,
     max_x: trial_time,
-    min_y: -6,
+    min_y: -7,
     max_y: 0,
     area: false,
     interpolate: "linear",

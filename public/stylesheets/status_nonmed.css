@@ -107,6 +107,20 @@ body {
   width: 100px;
 }
 
+#capno {
+  font-weight: 600;
+  font-family: 'Lato';
+  font-size: 29px;
+  color: #545454;
+  background-color: #C3C3C3;
+  width: 100%;
+  height: 50px;
+  vertical-align: middle;
+  padding-top: 4px;
+  text-align: center;
+  position: absolute;
+}
+
 #time {
   font-weight: 600;
   font-family: 'Lato';
@@ -358,7 +372,7 @@ body {
 }
 
 #depth {
-  width: 120px;
+  width: 140px;
   left: 0;
   right: 0;
   font-family: 'Lato';
