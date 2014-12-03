@@ -58,7 +58,7 @@ block content
           div.chart-stage#compressions_stage
             div#compressions
       div.col-sm-4
-        div.chart-wrapper
+        div.chart-wrapper.score
           div.chart-title
             | Score
           div.chart-stage#capno_stage
@@ -85,6 +85,10 @@ block content
 
         title: {
           text: ''
+        },
+
+        tooltip: {
+          enabled: false
         },
 
         pane: [{
@@ -146,7 +150,7 @@ block content
               enabled: false
                 },
                 dial: {
-                  radius: '100%'
+                  radius: '115%'
                 }
             }
         },

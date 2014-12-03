@@ -3,26 +3,6 @@ var compressions = [];
 var capnography = [];
 var trial_time, starting_time;
 
-// var opts = {
-//   lines: 12, // The number of lines to draw
-//   angle: 0.15, // The length of each line
-//   lineWidth: 0.44, // The line thickness
-//   pointer: {
-//     length: 0.9, // The radius of the inner circle
-//     strokeWidth: 0.035, // The rotation offset
-//     color: '#000000' // Fill color
-//   },
-//   limitMax: 'false',   // If true, the pointer will not go past the end of the gauge
-//   percentColors: [[0.0, "#FC0000"], [0.50, "#F0FC00"], [0.80, "#F0FC00"], [1.0, "#24D600"]],
-//   strokeColor: '#E0E0E0',   // to see which ones work best for you
-//   generateGradient: true
-// };
-// 
-// var target = document.getElementById('depth_gauge'); // your canvas element
-// var gauge = new Gauge(target).setOptions(opts); // create sexy gauge!
-// gauge.maxValue = 6; // set max gauge value
-// gauge.animationSpeed = 4; // set animation speed (32 is default value)
-
 socket.on('begin', function(time) {
   $(".begin_box").removeClass("waiting_manikin");
   $("#begin_text").html("BEGIN IN 3");
@@ -133,21 +113,21 @@ socket.on('status_msg', function(status_msg) {
   var capno = parseFloat(status_msg.capno).toFixed(2);
   $("#time").html(time + "s");
   $("#rate").html(rate + " /m");
-  if (rate >= 120 || rate <= 100) {
+  if (rate > 120 || rate < 100) {
     $("#rate").addClass("bad");
     $("#rate").removeClass("good");
     if (rate >= 120) { 
-      $("#slower").fadeTo("fast", "1");
-      $("#faster").fadeTo("fast", "0");
+      $("#slower").addClass("active");
+      $("#faster").removeClass("active");
     }
     else {
-      $("#slower").fadeTo("fast", "0");
-      $("#faster").fadeTo("fast", "1");
+      $("#slower").removeClass("active");
+      $("#faster").addClass("active");
     }
   }
   else {
-    $("#slower").fadeTo("fast", "0");
-    $("#faster").fadeTo("fast", "0");
+    $("#slower").removeClass("active");
+    $("#faster").removeClass("active");
     $("#rate").addClass("good");
     $("#rate").removeClass("bad");
   }
