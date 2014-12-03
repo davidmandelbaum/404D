@@ -40,7 +40,7 @@ try:
     fallrate = 18
     goodrise = 0.3 # everything but shallow makes sense at -0.2, shallow makes sense at 0.16
     badrise = 0.6*goodrise # should still allow for rescue below 10mmHg w/ perfect CPR
-    constant = 1
+    constant = 50
     maxscore = 1250
     deathscore = 250
     neardeath = deathscore + ((maxscore-deathscore)/4)
@@ -163,7 +163,7 @@ try:
             if score < deathscore:
                 score = 250
             
-            scores.append((data[-2][0], score))
+            scores.append((data[-2][0], (score/constant)))
 
     stats = final_stats(y_vals, time_limit, data)
     stats["capno"] = score
