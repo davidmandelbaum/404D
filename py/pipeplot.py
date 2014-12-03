@@ -13,7 +13,7 @@ ADC.setup()
 
 try:
     time_limit = int(sys.argv[1])
-    window_length = 5
+    window_length = 7
 
     # globals
     y_vals = []
