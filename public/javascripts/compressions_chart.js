@@ -36,7 +36,11 @@ var compressions_chart = new Highcharts.Chart({
       tickPosition: 'outside',
       labels: {
         rotation: 'auto',
-        distance: 20
+        distance: 20,
+        style: {
+          fontSize: '16px',
+          fontFamily: 'Lato'
+        }
       },
       plotBands: [{
         from: 0,
