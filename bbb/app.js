@@ -120,8 +120,8 @@ function bbb_run() {
       console.log(message);
 
       if ('begin' in message){
-        socket.emit('begin', inputs.time*60);
-        console.log('begin; trial time = ' + inputs.time*60);
+        socket.emit('begin', time);
+        console.log('begin; trial time = ' + time);
       }
 
       if ('data_point' in message){
