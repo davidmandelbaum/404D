@@ -162,8 +162,10 @@ try:
 
             if score < deathscore:
                 score = 250
+
+            score = score/constant
             
-            scores.append((data[-2][0], (score/constant)))
+            scores.append((data[-2][0], score))
 
     stats = final_stats(y_vals, time_limit, data)
     stats["capno"] = score
