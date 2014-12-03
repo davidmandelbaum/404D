@@ -97,7 +97,7 @@ try:
                                         "time": now,
                                         "rate": comp_rate,
                                         "depth": comp_depth,
-                                        "capno": score }})
+                                        "capno": (score/constant) }})
 
             sys.stdout.write(status_out + "\n")
             sys.stdout.flush()
@@ -162,13 +162,11 @@ try:
 
             if score < deathscore:
                 score = 250
-
-            score = score/constant
             
-            scores.append((data[-2][0], score))
+            scores.append((data[-2][0], (score/constant)))
 
     stats = final_stats(y_vals, time_limit, data)
-    stats["capno"] = score
+    stats["capno"] = score/constant
 
     stats_out = json.dumps({ "final_stats": stats }) 
     sys.stdout.write(stats_out + "\n")
