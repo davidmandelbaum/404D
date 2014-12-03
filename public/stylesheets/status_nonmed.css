@@ -56,9 +56,11 @@ body {
   left: 0px;
   display: block;
   opacity: .7;
+  display: none;
 }
 
 .begin_box {
+  display: none;
   position: absolute;
   margin: auto;
   top: 0;
@@ -214,24 +216,56 @@ body {
   display: none;
 }
 
-#faster, #slower {
-  background-color: red;
-  color: #FFF;
+#faster {
   font-family: 'Lato';
   font-size: 22px;
-  width: 50%;
+  width: 120px;
   font-weight: 600;
   padding: 5px;
-  padding-top: 8px;
+  padding-top: 29px;
   text-align: center;
   margin: 0 auto;
-  height: 50px;
+  height: 120px;
   margin-bottom: 0;
-  opacity: 0;
+  right: 15px;
+  opacity: 1;
+  position: absolute;
+  top: 20px;
+  border-radius: 1px;
+  transition: background-color .5s;
+  transition: color .5s;
+  border-radius: 1px;
 }
 
-#faster {
-  margin-bottom: 5px;
+#slower {
+  font-family: 'Lato';
+  font-size: 22px;
+  width: 120px;
+  font-weight: 600;
+  padding: 5px;
+  padding-top: 29px;
+  text-align: center;
+  margin: 0 auto;
+  height: 120px;
+  margin-bottom: 0;
+  left: 15px;
+  opacity: 1;
+  position: absolute;
+  top: 20px;
+  border-radius: 1px;
+  transition: background-color .5s;
+  transition: color .5s;
+  border-radius: 1px;
+}
+
+.disabled {
+  background-color: #d7d7d7;
+  color: #e3dfdf;
+}
+
+.active {
+  background-color: red;
+  color: white;
 }
 
 #harder {
@@ -272,9 +306,10 @@ body {
 }
 
 #rate {
-  width: 50%;
-  margin: 0 auto;
+  width: 110px;
   color: #FFF;
+  left: 0;
+  right: 0;
   font-family: 'Lato';
   font-size: 30px;
   padding-top: 2px;
@@ -282,6 +317,10 @@ body {
   height: 50px;
   margin-bottom: 5px;
   border-radius: 2px;
+  position: absolute;
+  top: 90px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 #depth-stage {
@@ -309,7 +348,7 @@ body {
 }
 
 .top_row .chart-wrapper {
-  height: 259px;
+  height: 230px;
 }
 
 .good {
@@ -322,3 +361,13 @@ body {
   color: white;
 }
 
+#depth_gauge {
+  width: 500px;
+  height: 300px;
+}
+
+#compressions_gauge {
+  width: 270px;
+  height: 176px;
+  margin: 0 auto;
+}

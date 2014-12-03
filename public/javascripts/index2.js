@@ -128,7 +128,7 @@ socket.on('status_msg', function(status_msg) {
   var time = parseFloat(status_msg.time);
   var rate = parseFloat(status_msg.rate);
   var depth = parseFloat(status_msg.depth).toFixed(2);
-  // gauge.set(depth);
+  compressions_chart.series[0].points[0].update(rate);
   $("#curr_depth").html(depth + "cm");
   var capno = parseFloat(status_msg.capno).toFixed(2);
   $("#time").html(time + "s");

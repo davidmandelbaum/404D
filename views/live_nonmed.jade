@@ -7,9 +7,12 @@ block content
   link(href='/stylesheets/highlightjs-default.css', rel='stylesheet')
   link(href='/stylesheets/keen-dashboards.css', rel='stylesheet')
   link(href='/stylesheets/status_nonmed.css', rel='stylesheet')
+  script(src="//code.highcharts.com/highcharts.js")
+  script(src="//code.highcharts.com/highcharts-more.js")
+  script(src="//code.highcharts.com/modules/solid-gauge.js")
   div.container-fluid
     div.row
-      div.col-sm-6.col-md-3.top_row
+      div.col-sm-6.col-md-2.top_row
         div.chart-wrapper
           div.chart-title
             | Stats
@@ -24,10 +27,22 @@ block content
       div.col-sm-6.col-md-5.top_row
         div.chart-wrapper
           div.chart-title
+            | Rate
+          div.chart-stage
+            div#compressions_gauge
+            div#faster.disabled
+              | PUSH
+              | FASTER
+            div#rate.rate_and_depth
+            div#slower.disabled
+              | PUSH 
+              | SLOWER
+      div.col-sm-6.col-md-5.top_row
+        div.chart-wrapper
+          div.chart-title
             | Depth
           div.chart-stage#depth-stage
-            div#depth_gauge_window
-              canvas#depth_gauge
+            div#depth_gauge
             div#depth.rate_and_depth
             div#harder
               | PUSH
@@ -35,14 +50,6 @@ block content
             div#softer
               | PUSH
               | SOFTER
-      div.col-sm-6.col-md-4.top_row
-        div.chart-wrapper
-          div.chart-title
-            | Compressions
-          div.chart-stage
-            div#faster. PUSH FASTER
-            div#rate.rate_and_depth
-            div#slower. PUSH SLOWER
     div.row
       div.col-sm-8
         div.chart-wrapper
@@ -60,8 +67,96 @@ block content
   div.begin_box.waiting_manikin
     span#begin_text. WAITING FOR MANIKIN
   script(src='/javascripts/keen.js', type='text/javascript')
-  script(src='/javascripts/gauge.js', type='text/javascript')
-  script(src='/javascripts/index2.js')
   script(src='/javascripts/metricsgraphics.min.js')
   script(src='/javascripts/lib/highlight.pack.js')
-  //script(src='/javascripts/depth.js')
+  script(type='text/javascript').
+    var compressions_chart = new Highcharts.Chart({
+      chart: {
+        renderTo: 'compressions_gauge',
+        type: 'gauge',
+        plotBorderWidth: 0,
+        plotBackgroundColor: null,
+        backgroundColor: null,
+        height: 270,
+        style: {
+          fontFamily: 'Lato'
+        }
+        },
+
+        title: {
+          text: ''
+        },
+
+        pane: [{
+          startAngle: -60,
+            endAngle: 60,
+            background: null,
+            center: ['50%', '60%'],
+            size: '95%'
+        }],
+
+        yAxis: [{
+          min: 60,
+            max: 150,
+            minorTickPosition: 'outside',
+            minorTickLength: 5,
+            tickLength: 10,
+            tickPosition: 'outside',
+            labels: {
+              rotation: 'auto',
+                distance: 20
+            },
+            plotBands: [{
+              from: 0,
+                to: 85,
+                color: '#C02316',
+                innerRadius: '100%',
+                outerRadius: '110%'
+            },
+            { from: 100,
+                to: 120,
+                color: '#00ff00',
+                innerRadius: '100%',
+                outerRadius: '110%'},
+            { from: 85,
+                to: 100,
+                color: '#e6ff08',
+                innerRadius: '100%',
+                outerRadius: '110%'},
+            { from: 120,
+                to: 135,
+                color: '#e6ff08',
+                innerRadius: '100%',
+                outerRadius: '110%'},
+            { from: 135,
+                to: 160,
+             color: '#C02316',
+             innerRadius: '100%',
+             outerRadius: '110%'}],
+            pane: 0,
+            title: {
+              text: '',
+                y: -40
+            }
+        }],
+
+        plotOptions: {
+          gauge: {
+            dataLabels: {
+              enabled: false
+                },
+                dial: {
+                  radius: '100%'
+                }
+            }
+        },
+
+
+        series: [{
+          data: [0],
+            yAxis: 0
+        }]
+
+    });
+
+  script(src='/javascripts/index2.js')
