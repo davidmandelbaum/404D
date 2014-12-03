@@ -58,7 +58,7 @@ def time_alg(current, last):
     if rate < speed_floor:
         too_slow = 1
 
-    x = (ratescore * (110-exp((abs(110-rate)), 1.06)
+    x = (ratescore * (110-pow((abs(110-rate)), 1.06)
         - (too_fast*fastpunish)
         - (too_slow*slowpunish)))
 
