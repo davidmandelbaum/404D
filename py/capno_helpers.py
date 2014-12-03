@@ -26,7 +26,7 @@ deathscore = 1250
 neardeath = deathscore + ((maxscore-deathscore)/4)
 
 slowpunish = 15 # how much we punish each slow compression
-fastpunish = 5 # how much we punish each fast compression
+fastpunish = 200 # how much we punish each fast compression
 depth_penalty = 300 # how much we punish for overly deep compressions
 shallow_penalty = 170 # how much we punish for overly shallow compressions
 
