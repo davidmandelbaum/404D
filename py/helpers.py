@@ -67,7 +67,8 @@ def final_stats(y_vals, time_limit, data):
 
     depths_np = np.array(depths)
 
-    avg_depth = np.mean(depths_np)
+    if len(depths_np) > 0:
+        avg_depth = np.mean(depths_np)
 
     # print "Average Compression Depth: " + str(avg_depth) + "mm"
     stats["depth"] = str(round(avg_depth, 2))
