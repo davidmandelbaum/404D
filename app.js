@@ -113,7 +113,11 @@ router.post('/live', function(req, res) {
   }
   curr_trial.type = req.body.type;
   curr_trial.datetime = Date.now();
-  curr_trial.starting_capno = req.body.capno;
+  if (req.body.capno !== "")
+    curr_trial.starting_capno = req.body.capno;
+  else
+    curr_trial.starting_capno = 25;
+  console.log("starting capno = " + curr_trial.starting_capno);
   var mins, secs;
   if (req.body.mins !== "") {
     mins = parseInt(req.body.mins)*60;
