@@ -47,6 +47,7 @@ try:
 
     score = score*constant
 
+    # TODO: fix calibration
     init_depth = round(ADC.read("P9_36"), 3) - .01
 
     begin = json.dumps({"begin": "true"})
