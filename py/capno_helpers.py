@@ -19,8 +19,8 @@ ratescore = 1
 
 #fallrate = 18
 fallrate = 9 
-#goodrise = 0.25
-goodrise = 0.1 # everything but shallow makes sense at -0.2, shallow makes sense at 0.16
+#goodrise = 0.1
+goodrise = 0.05 # everything but shallow makes sense at -0.2, shallow makes sense at 0.16
 badrise = 0.6*goodrise # should still allow for rescue below 10mmHg w/ perfect CPR
 constant = 100
 maxscore = 1250
