@@ -23,7 +23,7 @@ try:
     nums = np.arange(0, time_limit, 10)
     old_num = 0
     # conversion = 7.59
-    conversion = 17
+    conversion = 14
     ylim = 7
     comp_status = 0
     depth_status = 0
