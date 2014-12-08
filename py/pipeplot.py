@@ -23,7 +23,7 @@ try:
     nums = np.arange(0, time_limit, 10)
     old_num = 0
     # conversion = 7.59
-    conversion = 14
+    conversion = 16
     ylim = 7
     comp_status = 0
     depth_status = 0
@@ -38,8 +38,8 @@ try:
     maxes = []
     mins = []
     score = int(sys.argv[2])
-    fallrate = 18
-    goodrise = 0.3 # everything but shallow makes sense at -0.2, shallow makes sense at 0.16
+    fallrate = 9
+    goodrise = 0.05 # everything but shallow makes sense at -0.2, shallow makes sense at 0.16
     badrise = 0.6*goodrise # should still allow for rescue below 10mmHg w/ perfect CPR
     constant = 100
     maxscore = 1250
