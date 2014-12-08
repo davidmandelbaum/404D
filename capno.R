@@ -116,7 +116,7 @@ ratescore = 1
 
 slowpunish = 15 # how much we punish each slow compression
 fastpunish = 5 # how much we punish each fast compression
-depth_penalty = 250 # how much we punish for overly deep compressions
+depth_penalty = 300 # how much we punish for overly deep compressions
 shallow_penalty = 170 # how much we punish for overly shallow compressions
 
 maxscore = 1250 # whatever corresponds to 25 mmHg
@@ -130,11 +130,12 @@ badrise = 0.6*goodrise   # Should still allow for rescue below 10 mmHg w/perfect
 
 # TEST PLOTS
 
-start = 50
-plot(capscore(shallow,start))
+start = 35
+plot(capscore(shallow,start),main="Capnography Score")
 lines(capscore(deep,start),col="blue")
 lines(capscore(slow,start),col="red")
 lines(capscore(fast,start),col="green")
+abline(h=20) # add horizontal line at y = 20 for reference
 
 
 # FUNCTIONS DETERMINING RISE/FALL RATES
@@ -169,7 +170,7 @@ timealg <- function(current,last){
   if(rate>speed_ceiling){toofast = 1}
   if(rate<speed_floor){tooslow = 1}
   
-  x = (ratescore*((110-(abs(110-rate))^1.06) # raising exponent slightly really punishes speed
+  x = (ratescore*((110-(abs(110-rate))^1.07) # raising exponent punishes speed (a little)
                     -(toofast*fastpunish)
                     -(tooslow*slowpunish)))
   return(x)
@@ -187,7 +188,7 @@ capscore <- function(user, start){
   allmax = NULL
   allmin = NULL
   
-  score = start*constant 
+  score = start*constant  
 
   time <- function(i){user[i,1]}
   depth <- function(i){user[i,2]}
