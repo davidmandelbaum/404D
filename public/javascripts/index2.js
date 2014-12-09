@@ -104,7 +104,7 @@ socket.on('data_points', function(data_points) {
     min_y: -7,
     max_y: 0,
     area: false,
-    interpolate: "bundle",
+    interpolate: "linear",
     x_label: "Time (s)",
     y_label: "Depth (cm)",
     baselines: baselines,
