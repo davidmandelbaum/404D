@@ -40,7 +40,7 @@ socket.on('begin', function(time) {
     min_y: -7,
     max_y: 0,
     area: false,
-    interpolate: "linear",
+    interpolate: "basis",
     x_label: "Time (s)",
     y_label: "Depth (cm)",
     baselines: baselines
@@ -104,7 +104,7 @@ socket.on('data_points', function(data_points) {
     min_y: -7,
     max_y: 0,
     area: false,
-    interpolate: "linear",
+    interpolate: "basis",
     x_label: "Time (s)",
     y_label: "Depth (cm)",
     baselines: baselines
@@ -227,7 +227,7 @@ socket.on('final_stats', function(final_stats) {
     min_y: -7,
     max_y: 0,
     area: false,
-    interpolate: "linear",
+    interpolate: "basis",
     x_label: "Time (s)",
     y_label: "Depth (cm)",
     baselines: baselines
