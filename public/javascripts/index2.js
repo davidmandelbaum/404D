@@ -3,6 +3,8 @@ var compressions = [];
 var capnography = [];
 var trial_time, starting_time;
 
+var baselines = [{value: 0, label: 'Release to here'}, {value: -7, label: 'Compress to here'}];
+
 socket.on('begin', function(time) {
   $(".begin_box").removeClass("waiting_manikin");
   $("#begin_text").html("BEGIN IN 3");
@@ -21,7 +23,6 @@ socket.on('begin', function(time) {
     $(".begin_box").fadeOut();
   }, 4000);
   trial_time = time;
-  var baselines = [{value: 0, label: 'Release to here'}, {value: -7, label: 'Compress to hear'}];
   data_graphic({
     title: "Compressions",
     data: compressions,
@@ -67,13 +68,15 @@ socket.on('data_points', function(data_points) {
     min_x = 0;
   }
   else {
-    min_x = Math.round(elapsed/10)*10 - 2;
+    // min_x = Math.round(elapsed/10)*10 - 2;
+    min_x = elapsed - 2;
   }
   if (elapsed < 10) {
     max_x = 10;
   }
   else {
-    max_x = Math.round(elapsed/10)*10 + 8;
+    // max_x = Math.round(elapsed/10)*10 + 8;
+    max_x = elapsed + 8;
   }
   // console.log("data points received");
   var i = 0;
@@ -170,7 +173,7 @@ socket.on('status_msg', function(status_msg) {
     area: false,
     interpolate: "linear",
     x_label: "Time (s)",
-    y_label: "ETCO2 (mmHg)"
+    y_label: "Score"
   });
 });
 
