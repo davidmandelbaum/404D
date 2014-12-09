@@ -228,3 +228,7 @@ socket.on('final_stats', function(final_stats) {
     baselines: baselines
   });
 });
+
+$("#capnography > svg > .x-axis > .label").attr("y", 275);
+$("#capnography > svg > .y-axis > .label").attr("y", 10);
+
