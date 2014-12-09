@@ -26,6 +26,7 @@ socket.on('begin', function(time) {
     $(".begin_box").fadeOut();
   }, 4000);
   trial_time = time;
+  var elapsed = (new Date() - starting_time)/1000;
   data_graphic({
     title: "Compressions",
     data: compressions,
@@ -34,8 +35,8 @@ socket.on('begin', function(time) {
     y_accessor: 'depth',
     width: 700,
     height: 500,
-    min_x: -4,
-    max_x: 6,
+    min_x: elapsed - 5,
+    max_x: elapsed + 5,
     min_y: -7,
     max_y: 0,
     area: false,
@@ -66,6 +67,7 @@ socket.on('begin', function(time) {
 socket.on('data_points', function(data_points) {
   var elapsed = (new Date() - starting_time)/1000;
   var min_x, max_x;
+  console.log('elapsed = ' + elapsed);
   min_x = elapsed - 5;
   max_x = elapsed + 5;
   // if (elapsed < 10) {
