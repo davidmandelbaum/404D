@@ -21,6 +21,7 @@ socket.on('begin', function(time) {
     $(".begin_box").fadeOut();
   }, 4000);
   trial_time = time;
+  var baselines = [{value: 0, label: 'Release to here'}, {value: -7, label: 'Compress to hear'}];
   data_graphic({
     title: "Compressions",
     data: compressions,
@@ -37,7 +38,8 @@ socket.on('begin', function(time) {
     area: false,
     interpolate: "linear",
     x_label: "Time (s)",
-    y_label: "Depth (cm)"
+    y_label: "Depth (cm)",
+    baselines: baselines
   });
   data_graphic({
     title: "Capnography",
@@ -95,7 +97,8 @@ socket.on('data_points', function(data_points) {
     area: false,
     interpolate: "linear",
     x_label: "Time (s)",
-    y_label: "Depth (cm)"
+    y_label: "Depth (cm)",
+    baselines: baselines
   });
 });
 
@@ -217,6 +220,7 @@ socket.on('final_stats', function(final_stats) {
     area: false,
     interpolate: "linear",
     x_label: "Time (s)",
-    y_label: "Depth (cm)"
+    y_label: "Depth (cm)",
+    baselines: baselines
   });
 });
