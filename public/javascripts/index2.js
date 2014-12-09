@@ -64,20 +64,22 @@ socket.on('begin', function(time) {
 socket.on('data_points', function(data_points) {
   var elapsed = (new Date() - starting_time)/1000;
   var min_x, max_x;
-  if (elapsed < 10) {
-    min_x = 0;
-  }
-  else {
-    // min_x = Math.round(elapsed/10)*10 - 2;
-    min_x = elapsed - 2;
-  }
-  if (elapsed < 10) {
-    max_x = 10;
-  }
-  else {
-    // max_x = Math.round(elapsed/10)*10 + 8;
-    max_x = elapsed + 8;
-  }
+  min_x = elapsed - 5;
+  max_x = elapsed + 5;
+  // if (elapsed < 10) {
+  //   min_x = 0;
+  // }
+  // else {
+  //   // min_x = Math.round(elapsed/10)*10 - 2;
+  //   min_x = elapsed - 5;
+  // }
+  // if (elapsed < 10) {
+  //   max_x = 10;
+  // }
+  // else {
+  //   // max_x = Math.round(elapsed/10)*10 + 8;
+  //   max_x = elapsed + 5;
+  // }
   // console.log("data points received");
   var i = 0;
   points = JSON.parse(data_points);
