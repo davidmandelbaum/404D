@@ -68,8 +68,8 @@ socket.on('data_points', function(data_points) {
   var elapsed = (new Date() - starting_time)/1000;
   var min_x, max_x;
   console.log('elapsed = ' + elapsed);
-  min_x = elapsed - 5;
-  max_x = elapsed + 5;
+  min_x = Math.round(elapsed) - 5;
+  max_x = Math.round(elapsed) + 5;
   // if (elapsed < 10) {
   //   min_x = 0;
   // }
