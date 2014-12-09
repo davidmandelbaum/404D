@@ -7,6 +7,7 @@ block content
   link(href='/stylesheets/highlightjs-default.css', rel='stylesheet')
   link(href='/stylesheets/keen-dashboards.css', rel='stylesheet')
   link(href='/stylesheets/status_nonmed.css', rel='stylesheet')
+  script(src='//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.7.0/underscore-min.js', type='text/javascript')
   script(src="//code.highcharts.com/highcharts.js")
   script(src="//code.highcharts.com/highcharts-more.js")
   script(src="//code.highcharts.com/modules/solid-gauge.js")
@@ -66,7 +67,9 @@ block content
                 div#capnography
   div#overlay
   div.begin_box.waiting_manikin
-    span#begin_text. WAITING FOR MANIKIN
+    span#begin_text
+      | WAITING FOR MANI
+      span#can. CAN
   script(src='/javascripts/keen.js', type='text/javascript')
   script(src='/javascripts/metricsgraphics.min.js')
   script(src='/javascripts/lib/highlight.pack.js')

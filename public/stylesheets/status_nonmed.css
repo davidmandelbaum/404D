@@ -93,11 +93,9 @@ body {
 }
 
 #compressions {
-  /* margin-top: 100px; */
 }
 
 .compressions {
-  display: none;
 }
 
 #compressions_stage {
@@ -147,7 +145,6 @@ body {
   vertical-align: middle;
   padding-top: 4px;
   text-align: center;
-
 }
 
 #time-input {
@@ -363,7 +360,7 @@ body {
 }
 
 .score {
-  height: 400px;
+  height: 300px;
 }
 
 #rate {
@@ -450,4 +447,8 @@ body {
   margin: 0 auto;
   position: relative;
   margin-top: 80px;
+}
+
+#can {
+  color: red;
 }

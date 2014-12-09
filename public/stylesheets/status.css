@@ -246,3 +246,11 @@ body {
 #left_link a {
   color: #363c8a;
 }
+
+#logo {
+  width: 400px;
+  display: block;
+  margin: 0 auto;
+  margin-top: 10px;
+  margin-bottom: 30px;
+}

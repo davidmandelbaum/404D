@@ -40,15 +40,14 @@ try:
     score = int(sys.argv[2])
     fallrate = 9
     goodrise = 0.05 # note: also impacts the fall rate, since steep negative scores get multiplied by it as well
-    badrise = 0.6*goodrise # should still allow for rescue below 10mmHg w/ perfect CPR
-    constant = 100
+    badrise = 0.6*goodrise # shouldstill allow for rescue below 10mmHg w/ perfect CPR
+    constant = 50 # moved from 100 to 50 to make for a more dramatic demo graph
     maxscore = 1250
     deathscore = 250
     neardeath = deathscore + ((maxscore-deathscore)/4)
 
     score = score*constant
 
-    # TODO: fix calibration
     init_depth = round(ADC.read("P9_36"), 3) - .01
 
     begin = json.dumps({"begin": "true"})
