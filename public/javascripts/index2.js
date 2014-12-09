@@ -107,7 +107,8 @@ socket.on('data_points', function(data_points) {
     interpolate: "bundle",
     x_label: "Time (s)",
     y_label: "Depth (cm)",
-    baselines: baselines
+    baselines: baselines,
+    transition_on_update: false
   });
 });
 
