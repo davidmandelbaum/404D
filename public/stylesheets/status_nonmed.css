@@ -448,3 +448,7 @@ body {
   position: relative;
   margin-top: 80px;
 }
+
+#can {
+  color: red;
+}

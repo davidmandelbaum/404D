@@ -5,6 +5,9 @@ var trial_time, starting_time;
 
 var baselines = [{value: 0, label: 'Release to here'}, {value: -7, label: 'Compress to here'}];
 
+$("#capnography > svg > .x-axis > .label").attr("y", 195);
+$("#capnography > svg > .y-axis > .label").attr("y", 20);
+
 socket.on('begin', function(time) {
   $(".begin_box").removeClass("waiting_manikin");
   $("#begin_text").html("BEGIN IN 3");
@@ -31,8 +34,8 @@ socket.on('begin', function(time) {
     y_accessor: 'depth',
     width: 700,
     height: 500,
-    min_x: -5,
-    max_x: 5,
+    min_x: -4,
+    max_x: 6,
     min_y: -7,
     max_y: 0,
     area: false,
@@ -56,7 +59,7 @@ socket.on('begin', function(time) {
     area: false,
     interpolate: "linear",
     x_label: "Time (s)",
-    y_label: "ETCO2 (mmHg)"
+    y_label: "Score"
   });
 });
 
@@ -228,7 +231,4 @@ socket.on('final_stats', function(final_stats) {
     baselines: baselines
   });
 });
-
-$("#capnography > svg > .x-axis > .label").attr("y", 275);
-$("#capnography > svg > .y-axis > .label").attr("y", 10);
 
