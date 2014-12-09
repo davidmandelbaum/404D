@@ -100,7 +100,7 @@ block content
     socket.on('bbb_connect', function() {
       console.log('bbb connected');
       $("#instructions").fadeOut();
-      $("#manikin-info").html("ManiCan connected");
+      $("#manikin-info").html("Mani<span id='can'>Can</span> connected");
       $("#manikin-info").addClass("connected");
       window.setTimeout( function() {
         $("#trial_type_form").slideDown();
