@@ -11,7 +11,9 @@ block content
   div#manikin-info.center-block.waiting
     div#left_link
       a(href='/groups/'). LEADERBOARDS
-    | Waiting for manikin connection
+    | Waiting for mani
+    span#can. can 
+    | connection
 
   div.index_content#instructions
     div.center-block
@@ -19,9 +21,9 @@ block content
       div#instructions_header
         | INSTRUCTIONS
       ol
-        li. Plug in manikin
+        li. Plug in ManiCan
         li. Wait for blue power light to turn on
-        li. Press "Start" button on manikin
+        li. Press "Start" button
 
   div.index_content#form
     div#trial_type_form.center-block
@@ -98,7 +100,7 @@ block content
     socket.on('bbb_connect', function() {
       console.log('bbb connected');
       $("#instructions").fadeOut();
-      $("#manikin-info").html("Manikin connected");
+      $("#manikin-info").html("ManiCan connected");
       $("#manikin-info").addClass("connected");
       window.setTimeout( function() {
         $("#trial_type_form").slideDown();
