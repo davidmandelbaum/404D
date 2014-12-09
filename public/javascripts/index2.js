@@ -21,24 +21,24 @@ socket.on('begin', function(time) {
     $(".begin_box").fadeOut();
   }, 4000);
   trial_time = time;
-  // data_graphic({
-  //   title: "Compressions",
-  //   data: compressions,
-  //   target: "#compressions",
-  //   x_accessor: 'time',
-  //   y_accessor: 'depth',
-  //   width: 700,
-  //   height: 500,
-  //   min_x: 0,
-  //   max_x: 10,
-  //   // max_x: trial_time,
-  //   min_y: -7,
-  //   max_y: 0,
-  //   area: false,
-  //   interpolate: "linear",
-  //   x_label: "Time (s)",
-  //   y_label: "Depth (cm)"
-  // });
+  data_graphic({
+    title: "Compressions",
+    data: compressions,
+    target: "#compressions",
+    x_accessor: 'time',
+    y_accessor: 'depth',
+    width: 700,
+    height: 500,
+    min_x: 0,
+    max_x: 10,
+    // max_x: trial_time,
+    min_y: -7,
+    max_y: 0,
+    area: false,
+    interpolate: "linear",
+    x_label: "Time (s)",
+    y_label: "Depth (cm)"
+  });
   data_graphic({
     title: "Capnography",
     data: capnography,
@@ -65,13 +65,13 @@ socket.on('data_points', function(data_points) {
     min_x = 0;
   }
   else {
-    min_x = elapsed - 5;
+    min_x = Math.round(elapsed/10)*10 - 2;
   }
   if (elapsed < 10) {
     max_x = 10;
   }
   else {
-    max_x = elapsed + 5;
+    max_x = Math.round(elapsed/10)*10 + 8;
   }
   // console.log("data points received");
   var i = 0;
@@ -79,26 +79,24 @@ socket.on('data_points', function(data_points) {
   for (i = 0; i < points.length; i++){
     compressions.push({"time": parseFloat(points[i][0]), "depth": -1*parseFloat(points[i][1])});
   }
-  // console.log(compressions);
-  // data_graphic({
-  //   title: "Compressions",
-  //   data: compressions,
-  //   target: "#compressions",
-  //   x_accessor: 'time',
-  //   y_accessor: 'depth',
-  //   width: 700,
-  //   height: 500,
-  //   min_x: 0,
-  //   max_x: trial_time,
-  //   // min_x: min_x,
-  //   // max_x: max_x,
-  //   min_y: -7,
-  //   max_y: 0,
-  //   area: false,
-  //   interpolate: "linear",
-  //   x_label: "Time (s)",
-  //   y_label: "Depth (cm)"
-  // });
+  console.log(compressions);
+  data_graphic({
+    title: "Compressions",
+    data: compressions,
+    target: "#compressions",
+    x_accessor: 'time',
+    y_accessor: 'depth',
+    width: 700,
+    height: 500,
+    min_x: min_x,
+    max_x: max_x,
+    min_y: -7,
+    max_y: 0,
+    area: false,
+    interpolate: "linear",
+    x_label: "Time (s)",
+    y_label: "Depth (cm)"
+  });
 });
 
 socket.on('status_msg', function(status_msg) {
@@ -204,21 +202,21 @@ socket.on('final_stats', function(final_stats) {
     $("#depth").removeClass("bad");
   }
   $("#ended").fadeIn().delay(2000).fadeOut();
-  // data_graphic({
-  //   title: "Compressions",
-  //   data: compressions,
-  //   target: "#compressions",
-  //   x_accessor: 'time',
-  //   y_accessor: 'depth',
-  //   width: 700,
-  //   height: 500,
-  //   min_x: 0,
-  //   max_x: trial_time,
-  //   min_y: -7,
-  //   max_y: 0,
-  //   area: false,
-  //   interpolate: "linear",
-  //   x_label: "Time (s)",
-  //   y_label: "Depth (cm)"
-  // });
+  data_graphic({
+    title: "Compressions",
+    data: compressions,
+    target: "#compressions",
+    x_accessor: 'time',
+    y_accessor: 'depth',
+    width: 700,
+    height: 500,
+    min_x: 0,
+    max_x: trial_time,
+    min_y: -7,
+    max_y: 0,
+    area: false,
+    interpolate: "linear",
+    x_label: "Time (s)",
+    y_label: "Depth (cm)"
+  });
 });

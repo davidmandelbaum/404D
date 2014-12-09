@@ -17,6 +17,7 @@ if ($("#capno_stage").length > 0)
 else
   capno_width = 300;
 
+var i = 0;
 data_graphic({
   title: "Compressions",
   data: compressions,
